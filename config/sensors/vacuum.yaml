@@ -1,0 +1,5 @@
+- platform: template
+  sensors:
+    vacuum:
+      friendly_name: "Dusty"
+      value_template: "{{states('vacuum.dusty')}}"

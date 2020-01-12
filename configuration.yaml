@@ -1,0 +1,38 @@
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+# http:
+#   base_url: example.duckdns.org:8123
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+alexa:
+  smart_home:
+automation: !include_dir_merge_list config/automations
+cover: !include config/covers.yaml
+group: !include config/groups.yaml
+homeassistant: !include config/home_assistant.yaml
+# intent_script: !include_dir_named config/intent_scripts
+panel_iframe: !include config/side_menu.yaml
+scene: !include config/scenes.yaml
+script: !include config/scripts.yaml
+sensor: !include_dir_merge_list config/sensors
+vacuum: !include config/vacuums.yaml
+zone: !include config/zones.yaml
+
+logger:
+  default: info
+  logs:
+    homeassistant.components.zwave: debug
+    openzwave: debug
+
+frontend:
+  themes: !include_dir_named config/themes
+
+# input_boolean:
+#   home_occupied:
+#     initial: on
+#     icon: 'mdi:home'

@@ -1,0 +1,4 @@
+# - platform: xbox_live
+#   api_key: !secret token_xbox
+#   xuid:
+#     - !secret user_xbox_xuid

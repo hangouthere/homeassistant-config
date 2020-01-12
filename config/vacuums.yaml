@@ -1,0 +1,4 @@
+- platform: xiaomi_miio
+  host: !secret ip_robovac
+  token: !secret token_robovac
+  name: 'Dusty'

@@ -1,0 +1,28 @@
+- alias: 'Entity Added'
+  initial_state: true
+  trigger:
+    platform: event
+    event_type: entity_registry_updated
+    event_data:
+      action: create
+  action:
+    service: notify.alexa_media_codex_s_echo_show
+    data_template:
+      message: "<voice name=\"Matthew\">An entity of type {{ trigger.event.data.entity_id.split('.')[0] }} has been added to the z-wave network</voice>."
+      data:
+        type: announce
+        method: speak
+- alias: 'Entity Removed'
+  initial_state: true
+  trigger:
+    platform: event
+    event_type: entity_registry_updated
+    event_data:
+      action: remove
+  action:
+    service: notify.alexa_media_codex_s_echo_show
+    data_template:
+      message: "<voice name=\"Matthew\">An entity of type {{ trigger.event.data.entity_id.split('.')[0] }} has been removed from the z-wave network</voice>."
+      data:
+        type: announce
+        method: speak

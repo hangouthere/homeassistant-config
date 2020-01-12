@@ -1,0 +1,3 @@
+- platform: myq
+  username: !secret user_myq
+  password: !secret pass_myq
