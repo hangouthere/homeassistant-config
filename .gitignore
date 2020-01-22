@@ -1,17 +1,23 @@
 # Cache Files
 __pycache__
-.storage
 .cloud
 .google.token
-tts
+.HA_VERSION
+.storage
 deps
+tts
+zwcfg*.xml
+zwscene.xml
 
 # Logs
 OZW_Log.txt
 *.log
 
 # Data and personal info
+alexa_media*.pickle
 home-assistant_v2.db
 ip_bans.yaml
-secrets.yaml
 known_devices.yaml
+options.xml
+pyozw.sqlite
+secrets.yaml

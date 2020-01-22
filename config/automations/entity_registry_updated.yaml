@@ -1,0 +1,45 @@
+- alias: 'Entity Added'
+  initial_state: true
+  trigger:
+    platform: event
+    event_type: entity_registry_updated
+    event_data:
+      action: create
+  action:
+    - service: system_log.write
+      data_template:
+        message: "{{ trigger }}"
+        level: info
+    # - condition: and
+    #   conditions:
+    #     - condition: template
+    #       value_template: "{{ trigger.event.data.entity_id.split('.')[0] != 'zwave' }}"
+    - service: notify.alexa_media_everywhere
+      data_template:
+        message: "<voice name=\"Matthew\">An entity of type {{ trigger.event.data.entity_id.split('.')[0] }} has been added to the Entity Registry</voice>."
+        data:
+          type: announce
+          method: speak
+
+- alias: 'Entity Removed'
+  initial_state: true
+  trigger:
+    platform: event
+    event_type: entity_registry_updated
+    event_data:
+      action: remove
+  action:
+    - service: system_log.write
+      data_template:
+        message: "{{ trigger }}"
+        level: info
+    # - condition: and
+    #   conditions:
+    #     - condition: template
+    #       value_template: "{{ trigger.event.data.entity_id.split('.')[0] != 'zwave' }}"
+    - service: notify.alexa_media_everywhere
+      data_template:
+        message: "<voice name=\"Matthew\">An entity of type {{ trigger.event.data.entity_id.split('.')[0] }} has been removed from the Entity Registry</voice>."
+        data:
+          type: announce
+          method: speak

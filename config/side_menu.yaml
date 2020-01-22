@@ -1,11 +1,17 @@
-node_red:
-  title: 'Node Red'
-  url: 'http://192.168.1.55:1880'
-  icon: 'mdi:resistor-nodes'
-  require_admin: true
+# node_red:
+#   title: 'Node Red'
+#   url: 'http://192.168.1.55:1880'
+#   icon: 'mdi:resistor-nodes'
+#   require_admin: true
 
 grafana:
-  title: 'Grafana'
-  url: 'http://192.168.1.55:3000/d/000000127/telegraf-system-dashboard?orgId=1&refresh=5s&var-datasource=InfluxDB&var-inter=10s&var-server=nfgarmy&var-mountpoint=All&var-cpu=All&var-disk=All&var-netif=All&kiosk=tv'
+  title: 'NFGArmy Metrics'
+  url: 'https://grafana.nerdfoundry.duckdns.org/d/000000127/telegraf-system-dashboard?orgId=1&refresh=5s&var-datasource=InfluxDB&var-inter=10s&var-server=nfgarmy&var-mountpoint=All&var-cpu=All&var-disk=All&var-netif=All&kiosk=tv'
   icon: 'mdi:chart-bar'
+  require_admin: true
+
+motioneye:
+  title: 'Motion Eye'
+  url: 'https://motioneye.nerdfoundry.duckdns.org'
+  icon: 'mdi:camera-iris'
   require_admin: true

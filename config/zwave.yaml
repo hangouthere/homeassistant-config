@@ -1,0 +1,4 @@
+network_key: !secret token_zwave
+device_config_domain:
+  light:
+    refresh_value: true
