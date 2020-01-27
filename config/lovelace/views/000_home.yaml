@@ -1,0 +1,58 @@
+- title: Home
+  path: home
+  icon: 'mdi:home'
+  badges:
+    - entity: sun.sun
+    - entity: input_boolean.cam_motion_front_door
+    - entity: person.codex
+    - entity: person.freckills
+    - entity: binary_sensor.updater
+  cards:
+    - type: picture-entity
+      aspect_ratio: 50%
+      camera_image: camera.front_door
+      entity: camera.front_door
+      show_state: false
+      hold_action:
+        action: navigate
+        navigation_path: !secret url_motioneye
+    - type: entities
+      title: Lock
+      entities:
+        - entity: lock.lock_front_door_status
+      show_header_toggle: false
+    - type: 'custom:auto-entities'
+      card:
+        show_header_toggle: true
+        title: All Fans
+        type: entities
+      filter:
+        include:
+          - domain: fan
+            options:
+              type: 'custom:fan-control-entity-row'
+      sort:
+        method: state
+        reverse: true
+    - type: 'custom:auto-entities'
+      card:
+        show_header_toggle: true
+        title: All Lights
+        type: entities
+      filter:
+        exclude:
+          - entity_id: /.*(alexa|echo|shuffle|repeat|disturb).*/
+        include:
+          - domain: light
+            options:
+              hold_action:
+                action: more-info
+              tap_action:
+                action: toggle
+              type: 'custom:slider-entity-row'
+          - domain: switch
+      sort:
+        method: state
+        reverse: true
+    - entity: weather.home
+      type: weather-forecast

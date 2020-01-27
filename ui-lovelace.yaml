@@ -1,0 +1,7 @@
+resources: !include config/lovelace/resources.yaml
+custom_header: !include config/lovelace/custom_header.yaml
+views: !include_dir_merge_list config/lovelace/views
+
+title: Loading... # Overridden by Custom Header
+swipe_nav:
+  animate: swipe

@@ -1,0 +1,15 @@
+- title: Devices
+  path: devices
+  icon: 'mdi:devices'
+  badges: []
+  cards:
+    - type: 'custom:auto-entities'
+      card:
+        show_header_toggle: false
+        title: 'Unavailable Entities'
+        type: entities
+      filter:
+        include:
+          - state: "unavailable"
+      sort:
+        method: name

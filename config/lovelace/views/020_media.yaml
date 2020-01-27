@@ -1,0 +1,37 @@
+- title: Media Players
+  path: media-players
+  icon: 'mdi:playlist-music'
+  badges: []
+  cards:
+    - entities:
+        - entity: media_player.everywhere
+          group: true
+          hide: null
+          info: short
+          power: true
+          source: icon
+          type: 'custom:mini-media-player'
+          volume: true
+        - controls: true
+          entity: media_player.codex_s_echo_show
+          group: true
+          hide: null
+          type: 'custom:mini-media-player'
+        - controls: true
+          entity: media_player.codex_s_echo_dot
+          group: true
+          hide: null
+          type: 'custom:mini-media-player'
+      type: entities
+    - entity: media_player.couchly
+      type: media-control
+    - entity: media_player.everywhere
+      type: media-control
+    - entity: media_player.codex_s_echo_show
+      type: media-control
+    - entity: media_player.codex_s_echo_dot
+      type: media-control
+    - artwork: full-cover
+      entity: media_player.couchly
+      source: icon
+      type: 'custom:mini-media-player'

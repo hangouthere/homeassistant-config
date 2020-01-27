@@ -1,0 +1,53 @@
+- title: System
+  path: system
+  icon: 'mdi:file-settings-variant-outline'
+  badges: []
+  cards:
+    - entity: alarm_control_panel.alexa_guard_3b269
+      type: alarm-panel
+    - type: vertical-stack
+      title: 'Battery Levels'
+      cards:
+        - type: 'custom:auto-entities'
+          card:
+            type: custom:bar-card
+            severity:
+              - value: 50
+                color: '#bf4040'
+              - value: 75
+                color: '#bf9540'
+              - value: 100
+                color: '#40bf40'
+            align: left
+            title_style:
+              font-size: 16px
+              padding: 10px
+            value_style:
+              font-size: 32px
+              opacity: 0.85
+              padding-left: 10px
+          filter:
+            include:
+              - entity_id: '*battery*'
+          sort:
+            method: state
+    - card:
+        show_header_toggle: false
+        title: Scripts
+        type: entities
+      filter:
+        include:
+          - domain: script
+      sort:
+        method: name
+      type: 'custom:auto-entities'
+    - card:
+        show_header_toggle: false
+        title: Automations
+        type: entities
+      filter:
+        include:
+          - domain: automation
+      sort:
+        method: name
+      type: 'custom:auto-entities'

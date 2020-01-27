@@ -21,6 +21,8 @@ homeassistant: !include config/home_assistant.yaml
 input_boolean: !include config/input_booleans.yaml
 # intent_script: !include_dir_named config/intent_scripts
 logger: !include config/logger.yaml
+lovelace:
+  mode: yaml
 media_player: !include config/media_players.yaml
 panel_iframe: !include config/side_menu.yaml
 scene: !include config/scenes.yaml

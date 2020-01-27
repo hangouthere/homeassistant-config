@@ -1,0 +1,20 @@
+active_tab_color: var(--state-icon-active-color)
+background: 'rgba(30, 32, 37, 0.85)'
+button_text:
+  options: '{{ time }}'
+compact_mode: true
+elements_color: var(--app-header-text-color)
+header_text: 'NFGArmy HQ - {{ viewTitle }}'
+hide_config: true
+hide_help: true
+hide_unused: true
+indicator_top: true
+split_mode: true
+swipe_animate: fade
+swipe_prevent_default: true
+tab_indicator_color: var(--state-icon-active-color)
+exceptions:
+  - conditions:
+      query_string: kiosk
+    config:
+      disable_sidebar: true

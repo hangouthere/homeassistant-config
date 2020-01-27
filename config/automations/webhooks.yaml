@@ -7,7 +7,7 @@
     service: input_boolean.turn_on
     entity_id: input_boolean.cam_motion_front_door
 
-- alias: 'Webhook - Cam Motion - On - Front Door'
+- alias: 'Webhook - Cam Motion - Off - Front Door'
   initial_state: true
   trigger:
     platform: webhook

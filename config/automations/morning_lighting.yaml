@@ -7,7 +7,7 @@
     - service: system_log.write
       data_template:
         message: "8.15am Automation Triggered - {{ trigger }}"
-        level: info
+        level: warning
     - condition: and
       conditions:
         - condition: sun
@@ -16,6 +16,6 @@
     - service: system_log.write
       data_template:
         message: "8.15am Automation - Before Sunrise, enabling lamp"
-        level: info
+        level: warning
     - service: light.turn_on
       entity_id: light.lamp
