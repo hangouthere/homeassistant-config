@@ -1,0 +1,17 @@
+- alias: 'Cam Motion - Front Door'
+  initial_state: true
+  trigger:
+    - platform: state
+      entity_id: input_boolean.cam_motion_front_door
+      to: 'on'
+    - platform: state
+      entity_id: input_boolean.cam_motion_front_door
+      to: 'off'
+  action:
+    - service: notify.alexa_media_codex_s_echo_dot
+      data_template:
+        message: > 
+          {% set status = "Started" if trigger.to_state.state != "off" else "Ended" %}
+          'Motion Detection {{ status }} at Front Door'
+        data:
+          type: tts

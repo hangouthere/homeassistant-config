@@ -1,0 +1,18 @@
+- alias: 'Sunset Lighting'
+  initial_state: true
+  trigger:
+    platform: sun
+    event: sunset
+    offset: "-00:22:00"
+  condition:
+    condition: state
+    entity_id: light.lamp
+    state: 'off'
+  action:
+    - service: light.turn_on
+      entity_id: light.lamp
+    - service: notify.alexa_media_codex_s_echo_dot
+      data:
+        message: 'Turning on lights for sunset'
+        data:
+          type: announce

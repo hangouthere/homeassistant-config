@@ -10,11 +10,15 @@ alexa:
 api:
 automation: !include_dir_merge_list config/automations
 camera: !include config/cameras.yaml
+cast:
+  media_player:
+    - host: 192.168.1.100
 cover: !include config/covers.yaml
 frontend:
-  themes: !include_dir_named config/themes
+  themes: !include_dir_merge_named ./themes
 group: !include config/groups.yaml
 homeassistant: !include config/home_assistant.yaml
+input_boolean: !include config/input_booleans.yaml
 # intent_script: !include_dir_named config/intent_scripts
 logger: !include config/logger.yaml
 media_player: !include config/media_players.yaml
@@ -29,7 +33,3 @@ vacuum: !include config/vacuums.yaml
 zone: !include config/zones.yaml
 zwave: !include config/zwave.yaml
 
-# input_boolean:
-#   home_occupied:
-#     initial: on
-#     icon: 'mdi:home'

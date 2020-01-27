@@ -1,0 +1,12 @@
+- alias: 'Vacuum Docked'
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: vacuum.dusty
+    to: 'docked'
+  action:
+    - service: notify.alexa_media_codex_s_echo_dot
+      data:
+        message: 'Dusty has completed his task!'
+        data:
+          type: announce

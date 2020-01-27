@@ -4,7 +4,7 @@
   mjpeg_url: !secret url_front_door_stream
   username: !secret user_motioneye
   password: !secret pass_motioneye
-- platform: generic
-  name: Front Door (Streaming Enabled)
-  still_image_url: !secret url_front_door_still
-  stream_source: !secret url_front_door_stream
+# - platform: generic
+#   name: Front Door (Streaming Enabled)
+#   still_image_url: !secret url_front_door_still
+#   stream_source: !secret url_front_door_stream

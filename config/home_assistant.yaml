@@ -1,13 +1,13 @@
-name: Home
+# customize: !include customize.yaml
+elevation: 195
 latitude: !secret lat_home
 longitude: !secret long_home
-elevation: 195
-unit_system: imperial
+name: Home
 time_zone: America/Los_Angeles
+unit_system: imperial
 # auth_providers:
 #   - type: homeassistant
 #   - type: trusted_networks
 #     trusted_networks:
 #       - 192.168.1.0/24
 #       - 172.0.0.0/8
-# customize: !include customize.yaml

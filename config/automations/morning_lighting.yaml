@@ -1,0 +1,21 @@
+- alias: 'Morning Lighting'
+  initial_state: true
+  trigger:
+    platform: time
+    at: "08:15:00"
+  action:
+    - service: system_log.write
+      data_template:
+        message: "8.15am Automation Triggered - {{ trigger }}"
+        level: info
+    - condition: and
+      conditions:
+        - condition: sun
+          before: sunrise
+          before_offset: "+00:15:00"
+    - service: system_log.write
+      data_template:
+        message: "8.15am Automation - Before Sunrise, enabling lamp"
+        level: info
+    - service: light.turn_on
+      entity_id: light.lamp

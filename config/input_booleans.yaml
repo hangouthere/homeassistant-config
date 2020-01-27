@@ -1,0 +1,8 @@
+home_occupied:
+  initial: 'on'
+  icon: 'mdi:home'
+
+cam_motion_front_door:
+  initial: 'off'
+  icon: 'mdi:eye-circle'
+  name: 'Front Door Cam Motion'

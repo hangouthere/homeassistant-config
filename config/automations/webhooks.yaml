@@ -1,0 +1,17 @@
+- alias: 'Webhook - Cam Motion - On - Front Door'
+  initial_state: true
+  trigger:
+    platform: webhook
+    webhook_id: cam_motion_on_front_door
+  action:
+    service: input_boolean.turn_on
+    entity_id: input_boolean.cam_motion_front_door
+
+- alias: 'Webhook - Cam Motion - On - Front Door'
+  initial_state: true
+  trigger:
+    platform: webhook
+    webhook_id: cam_motion_off_front_door
+  action:
+    service: input_boolean.turn_off
+    entity_id: input_boolean.cam_motion_front_door

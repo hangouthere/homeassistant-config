@@ -1,5 +1,5 @@
-default: info
-logs:
-    homeassistant.components.http: debug
-#   homeassistant.components.zwave: debug
-#   openzwave: debug
+default: warn
+# logs:
+    # homeassistant.components.http: debug
+    # homeassistant.components.zwave: debug
+    # openzwave: debug
