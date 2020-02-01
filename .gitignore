@@ -3,6 +3,7 @@ __pycache__
 .cloud
 .google.token
 .HA_VERSION
+.pip_progress
 .storage
 deps
 tts
