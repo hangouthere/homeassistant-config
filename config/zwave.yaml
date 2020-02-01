@@ -4,7 +4,6 @@ device_config:
     polling_intensity: 1
     refresh_value: true
 
-# device_config_domain:
-#   light:
-#     refresh_value: true
-#     delay: 2
+device_config_domain:
+  light:
+    refresh_value: true

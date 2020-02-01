@@ -11,14 +11,8 @@
         - type: 'custom:auto-entities'
           card:
             type: custom:bar-card
-            severity:
-              - value: 50
-                color: '#bf4040'
-              - value: 75
-                color: '#bf9540'
-              - value: 100
-                color: '#40bf40'
             align: left
+            unit_of_measurement: "%"
             title_style:
               font-size: 16px
               padding: 10px
@@ -26,12 +20,43 @@
               font-size: 32px
               opacity: 0.85
               padding-left: 10px
+            severity:
+              - value: 50
+                color: '#bf4040'
+              - value: 75
+                color: '#bf9540'
+              - value: 100
+                color: '#40bf40'
           filter:
             include:
-              - entity_id: '*battery*'
+              # - entity_id: '*battery*'
+              - attributes:
+                  battery_level: <=100
+                options:
+                  attribute: battery_level
+            exclude:
+              - domain: device_tracker
           sort:
-            method: state
-    - card:
+            method: attribute
+            attribute: battery_level
+    - type: 'custom:button-entity-row'
+      buttons:
+        - icon: 'mdi:refresh'
+          name: Reload All Things
+          service: script.reload_all_domains
+          style:
+              background: '#999900'
+              border-radius: 9999px
+              color: lightgray
+        - icon: 'mdi:refresh'
+          name: Restart HA
+          service: homeassistant.restart
+          style:
+              background: '#CC0000'
+              border-radius: 9999px
+              color: lightgray
+    - type: 'custom:auto-entities'
+      card:
         show_header_toggle: false
         title: Scripts
         type: entities
@@ -40,8 +65,8 @@
           - domain: script
       sort:
         method: name
-      type: 'custom:auto-entities'
-    - card:
+    - type: 'custom:auto-entities'
+      card:
         show_header_toggle: false
         title: Automations
         type: entities
@@ -50,4 +75,5 @@
           - domain: automation
       sort:
         method: name
-      type: 'custom:auto-entities'
+    
+

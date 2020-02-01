@@ -1,0 +1,67 @@
+###############################################################################################
+## Sensors
+########################################################################################
+
+sensor:
+  - platform: template
+    sensors:
+      # If heating is active, then set to target temp, otherwise set to 0
+      # This is for UI purposes
+      hvac_track_heat:
+        device_class: temperature
+        unit_of_measurement: '°F'
+        entity_id:
+          - sensor.hvac_action
+          - sensor.hvac_temp_target
+          - climate.thermostat_mode
+        value_template: >-
+          {%- set isOperating = is_state('sensor.hvac_action', 'heating') -%}
+          {%- set tempValue = states('sensor.hvac_temp_target') if isOperating else 0 -%}
+          {{tempValue}}
+
+  # Heating counts triggered for today
+  - platform: history_stats
+    name: hvac_count_heat_today
+    end: '{{ now() }}'
+    entity_id: sensor.hvac_action
+    start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+    state: heating
+    type: count
+
+  # Heating duration for today
+  - platform: history_stats
+    name: hvac_duration_heat_today
+    end: '{{ now() }}'
+    entity_id: sensor.hvac_action
+    start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+    state: heating
+    type: time
+
+  # Heating duration in last 24 hours
+  - platform: history_stats
+    name: hvac_duration_heat_last24hrs
+    end: '{{ now() }}'
+    entity_id: sensor.hvac_action
+    state: heating
+    type: time
+    duration:
+      hours: 24
+
+  # Heating duration for last 7 days
+  - platform: history_stats
+    name:  hvac_duration_heat_last7days
+    end: '{{ now() }}'
+    entity_id: sensor.hvac_action
+    state: heating
+    type: time
+    duration:
+      days: 7
+
+  # Heating duration since the filter was marked replaced
+  - platform: history_stats
+    name: hvac_duration_heat_sincechange
+    end: '{{ as_timestamp(now()) }}'
+    entity_id: sensor.hvac_action
+    start: "{{ as_timestamp(states('input_text.hvac_store_date_lastchange')) }}"
+    state: heating
+    type: time

@@ -1,0 +1,17 @@
+###############################################################################################
+## Codex Presence & Stats
+########################################################################################
+
+presence_battery_phone_codex:
+  friendly_name: "Display Value for Phone Battery, for Codex"
+  value_template: "{{ state_attr('device_tracker.phone_codex', 'battery_level') }}"
+  unit_of_measurement: "%"
+
+###############################################################################################
+## Frecs Presence & Stats
+########################################################################################
+
+presence_battery_phone_frecs:
+  friendly_name: "Display Value for Phone Battery, for Frecs"
+  value_template: "{{ state_attr('device_tracker.phone_frecs', 'battery_level') }}"
+  unit_of_measurement: "%"
