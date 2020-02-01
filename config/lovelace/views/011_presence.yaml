@@ -1,117 +1,17 @@
+####################
+# Presence Tab
+
 - title: Presence
   path: presence
   icon: 'mdi:tooltip-account'
-  badges: []
+
   cards:
     - type: vertical-stack
       cards:
         - type: horizontal-stack
           cards:
-          ########
-          # Codex Presence Cluster
-          ########
-            - type: custom:layout-card
-              layout: grid
-              gridcols: 25% auto 
-              gridrows: auto
-              cards:
-                - type: picture-entity
-                  gridcol: 1 / 2
-                  gridrow: 1 / 1
-                  entity: device_tracker.phone_codex
-                  show_name: false
-                  show_state: false
-                  state_image:
-                    'home': /local/people/detected_codex.png
-                    'not_home': /local/people/undetected_codex.png
-                  state_filter:
-                    'not_home': opacity(0.3)
-                  style: |
-                    ha-card {
-                      background: none;
-                      box-shadow: none;
-                    }
-                - type: vertical-stack
-                  gridcol: 2 / 2
-                  gridrow: 1 / 1
-                  cards:
-                    - type: markdown
-                      content: "{{ state_attr('device_tracker.phone_codex', 'friendly_name') }} is {{states('device_tracker.phone_codex').replace('_',' ').title()}}"
-                      style: |
-                        ha-card {
-                          background: rgba(48, 50, 54, 0.25);
-                          border: 1px solid rgba(255, 255, 255, 0.4);
-                          text-align: center;
-                        }
-
-                        ha-markdown.markdown.no-header {
-                          padding: 3px;
-                        }
-                    - type: custom:bar-card
-                      entity: sensor.presence_battery_phone_codex
-                      # color: '#DF6040'
-                      height: 20px
-                      icon: mdi:battery
-                      show_icon: true
-                      title_position: 'off'
-                      style: |
-                        ha-card {
-                          background: none;
-                          box-shadow: none;
-                        }
-
-          ########
-          # Frecs Presence Cluster
-          ########
-            - type: custom:layout-card
-              layout: grid
-              gridcols: auto 25%  
-              gridrows: auto
-              cards:
-                - type: picture-entity
-                  gridcol: 2 / 2
-                  gridrow: 1 / 1
-                  entity: device_tracker.phone_frecs
-                  show_name: false
-                  show_state: false
-                  state_image:
-                    'home': /local/people/detected_frecs.png
-                    'not_home': /local/people/undetected_frecs.png
-                  state_filter:
-                    'not_home': opacity(0.3)
-                  style: |
-                    ha-card {
-                      background: none;
-                      box-shadow: none;
-                    }
-                - type: vertical-stack
-                  gridcol: 1 / 2
-                  gridrow: 1 / 1
-                  cards:
-                    - type: markdown
-                      content: "{{ state_attr('device_tracker.phone_frecs', 'friendly_name') }} is {{states('device_tracker.phone_frecs').replace('_',' ').title()}}"
-                      style: |
-                        ha-card {
-                          background: rgba(48, 50, 54, 0.25);
-                          border: 1px solid rgba(255, 255, 255, 0.4);
-                          text-align: center;
-                        }
-
-                        ha-markdown.markdown.no-header {
-                          padding: 3px;
-                        }
-                    - type: custom:bar-card
-                      entity: sensor.presence_battery_phone_frecs
-                      color: "#df40c4"
-                      height: 20px
-                      icon: mdi:battery
-                      show_icon: true
-                      title_position: 'off'
-                      style: |
-                        ha-card {
-                          background: none;
-                          box-shadow: none;
-                        }
+            - !include ../templates/presence/codex.yaml
+            - !include ../templates/presence/frecs.yaml
 
     ###############
     # Map Tracker
@@ -126,11 +26,10 @@
           include:
             - domain: device_tracker
             - domain: zone
-      debug_cardmod: true
-      style:
-        $:
-          "auto-entities":
-            .: |
-              ha-card: {
-                color: red;
-              }
+      # style:
+      #   'hui-map-card': 
+      #     $: |
+      #       ha-card {
+      #         max-height: 200px;
+      #       }
+      

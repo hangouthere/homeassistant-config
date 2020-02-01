@@ -1,0 +1,29 @@
+####################
+# Thermostat Control
+
+type: 'custom:simple-thermostat'
+entity: climate.thermostat_mode
+hide:
+  temperature: true
+  state: true
+sensors:
+  - entity: sensor.thermostat_temp
+    name: 'Read Temp'
+    icon: mdi:home-thermometer-outline
+  - entity: sensor.thermostat_humidity
+    name: 'Humidity'
+    icon: mdi:water-percent
+  - entity: sensor.hvac_count_total_today
+    name: 'Triggers'
+    icon: mdi:power
+    unit: 'Cycles'
+control:
+  hvac:
+    _name: ''
+style: |
+  header {
+    display: none !important;
+  }
+  ha-card {
+    padding-top: 10px;
+  }

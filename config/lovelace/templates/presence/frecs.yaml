@@ -1,0 +1,58 @@
+####################
+# Frecs Presence Cluster
+
+type: custom:layout-card
+layout: grid
+gridcols: auto 25%
+gridrows: auto
+cards:
+  # Person Picture, fades out when `not_home`
+  - type: picture-entity
+    gridcol: 2 / 2
+    gridrow: 1 / 1
+    entity: device_tracker.phone_frecs
+    show_name: false
+    show_state: false
+    state_image:
+      'home': /local/people/detected_frecs.png
+      'not_home': /local/people/undetected_frecs.png
+    state_filter:
+      'not_home': opacity(0.3)
+    style: |
+      ha-card {
+        background: none;
+        box-shadow: none;
+      }
+
+  # Person Specs
+  - type: vertical-stack
+    gridcol: 1 / 2
+    gridrow: 1 / 1
+    cards:
+      # Display of Person State
+      - type: markdown
+        content: "{{ state_attr('device_tracker.phone_frecs', 'friendly_name') }} is {{states('device_tracker.phone_frecs').replace('_',' ').title()}}"
+        style: |
+          ha-card {
+            background: rgba(48, 50, 54, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            text-align: center;
+          }
+
+          ha-markdown.markdown.no-header {
+            padding: 3px;
+          }
+
+      # Display of Battery %
+      - type: custom:bar-card
+        entity: sensor.presence_battery_phone_frecs
+        color: "#df40c4"
+        height: 20px
+        icon: mdi:battery
+        show_icon: true
+        title_position: 'off'
+        style: |
+          ha-card {
+            background: none;
+            box-shadow: none;
+          }

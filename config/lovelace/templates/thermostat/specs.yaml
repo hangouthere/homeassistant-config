@@ -1,0 +1,53 @@
+####################
+# Specs Sheet
+
+type: entities
+entities:
+  # Inside vs Outside Temps
+  - type: custom:multiple-entity-row
+    entity: sensor.hvac_action
+    name: 'Vitals'
+    icon: mdi:heart-pulse
+    name_state: Mode
+    style: |
+      .state.entity {
+        text-transform: capitalize;
+      }
+    primary:
+      entity: sensor.outside_temp
+      name: 'Outside'
+    secondary:
+      entity: sensor.hvac_temp_target
+      name: 'Target'
+    tertiary:
+      entity: sensor.thermostat_temp
+      name: 'Read'
+
+  # Runtime Durations
+  - type: custom:multiple-entity-row
+    entity: sensor.hvac_duration_total_today
+    name: 'Durations'
+    icon: mdi:timelapse
+    name_state: Today
+    primary:
+      entity: sensor.hvac_duration_avg_last7days
+      name: 'Avg 7d'
+    secondary:
+      entity: sensor.hvac_duration_total_last7days
+      name: '7 Days'
+    tertiary:
+      entity: sensor.hvac_duration_total_last24hrs
+      name: '24 Hrs'
+
+  # Filter Lifetime
+  - type: custom:multiple-entity-row
+    entity: sensor.hvac_ttl_filter
+    name: 'Filter'
+    icon: mdi:calendar-repeat
+    name_state: Days Left
+    secondary:
+      entity: input_text.hvac_store_duration_filter_average
+      name: 'Exp Life'
+    tertiary:
+      entity: sensor.hvac_duration_total_sincechange
+      name: 'Since Change'

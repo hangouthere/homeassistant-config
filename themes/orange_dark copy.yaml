@@ -6,7 +6,12 @@
 #
 # Modified by nfgCodex to add lovelace-background
 Orange Dark v2:
-  lovelace-background: 'center / cover no-repeat url("/local/wp_carbon_fiber_001.png") fixed'
+  # Overrides by nfgCodex
+  lovelace-background: 'center / cover no-repeat url("/local/background.png") fixed'
+  paper-card-background-color: "rgba(48, 50, 54, 0.55)"
+  sidebar-background-color: "rgba(40, 42, 47, 0.85)"
+  ha-card-border-radius: "8px"
+  ha-card-box-shadow: "0px 0px 0px 2px rgba(255,255,255,0.25)"
 
   # Header:
   app-header-background-color: "#282A2F"
@@ -26,7 +31,6 @@ Orange Dark v2:
   sidebar-icon-color: var(--app-header-text-color)
   sidebar-text-color: '#BDC1C6'
   # sidebar-background-color: "#282A2F"
-  sidebar-background-color: "rgba(40, 42, 47, 0.85)"
   sidebar-selected-background-color: var(--primary-background-color)
   sidebar-selected-icon-color: "#DF6040"
   sidebar-selected-text-color: var(--sidebar-selected-icon-color)
@@ -50,10 +54,9 @@ Orange Dark v2:
   label-badge-gray: "#5F6267"
 
   # Cards
-  ha-card-border-radius: "15px"
-  ha-card-box-shadow: 0px
+  # ha-card-border-radius: "15px"
+  # ha-card-box-shadow: 0px
   # paper-card-background-color: "#303236"
-  paper-card-background-color: "rgba(48, 50, 54, 0.75)"
   paper-listbox-background-color: "#282A2F"
   # Switches
   switch-checked-button-color: "#DF6040"

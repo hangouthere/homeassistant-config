@@ -1,0 +1,15 @@
+type: vertical-stack
+title: Fans
+cards:
+  - type: 'custom:auto-entities'
+    card:
+      show_header_toggle: false
+      type: entities
+    filter:
+      include:
+        - domain: fan
+          options:
+            type: 'custom:fan-control-entity-row'
+    sort:
+      method: state
+      reverse: true

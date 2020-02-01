@@ -1,0 +1,2 @@
+media_player:
+  - host: !secret ip_tv_living_room
