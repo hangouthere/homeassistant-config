@@ -5,6 +5,20 @@
   cards:
     - type: 'custom:auto-entities'
       card:
+        type: entities
+        title: 'Presence Crap'
+      filter:
+        include:
+          - entity_id: '*presence*'
+    - type: 'custom:auto-entities'
+      card:
+        type: entities
+        title: 'Input Booleans'
+      filter:
+        include:
+          - domain: 'input_boolean'
+    - type: 'custom:auto-entities'
+      card:
         show_header_toggle: false
         title: 'Unavailable Entities'
         type: entities

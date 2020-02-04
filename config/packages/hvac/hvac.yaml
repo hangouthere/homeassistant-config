@@ -22,9 +22,10 @@ sensor:
     sensors:
       ######
       # Core Values
-      # These set the low-level tracking values, such as target temperature, 
+      # These set the low-level tracking values, such as target temperature,
       # and the current status of the HVAC Mode
-      
+
+      # Tracks the target temperature for the Thermostat
       hvac_temp_target:
         friendly_name: 'Thermostat Target Temperature'
         device_class: temperature
@@ -37,8 +38,8 @@ sensor:
         value_template: "{{ state_attr('climate.thermostat_mode', 'hvac_action') }}"
 
       ######
-      # Duration Values
-      # For reporting over common timeframes, we can see the duration of the entire system
+      # Cycle Counts
+      # For reporting over common timeframes, we can see the number of counts
 
       hvac_count_total_today:
         friendly_name: 'Total Count of HVAC System Triggers Today'
@@ -46,6 +47,21 @@ sensor:
           {%- set cool = states('sensor.hvac_count_cool_today') | int -%}
           {%- set heat = states('sensor.hvac_count_heat_today') | int -%}
           {{ cool + heat }}
+
+      hvac_count_total_sincechange:
+        friendly_name: 'Total Count of HVAC System Triggers Today'
+        value_template: >-
+          {%- set cool = states('sensor.hvac_count_cool_sincechange') | int -%}
+          {%- set heat = states('sensor.hvac_count_heat_sincechange') | int -%}
+          {{ cool + heat }}
+
+      hvac_count_avg_sincechange:
+        friendly_name: 'Daily Average Count of HVAC System from Last 7 Days'
+        value_template: "{{ ((states('sensor.hvac_count_total_sincechange') | float) / 7) | round(2) }}"
+
+      ######
+      # Duration Values
+      # For reporting over common timeframes, we can see the duration of the entire system
 
       hvac_duration_total_today:
         friendly_name: 'Total Duration of HVAC System Today'
@@ -64,12 +80,17 @@ sensor:
           {{ cool + heat }}
 
       hvac_duration_total_last7days:
-        friendly_name: 'Total Duration of HVAC System since the Filter was Marked Replaced'
+        friendly_name: 'Total Duration of HVAC System in the Last 7 Days'
         unit_of_measurement: 'h'
         value_template: >-
           {%- set cool = states('sensor.hvac_duration_cool_last7days') | float -%}
           {%- set heat = states('sensor.hvac_duration_heat_last7days') | float -%}
           {{ cool + heat }}
+
+      hvac_duration_avg_last7days:
+        friendly_name: 'Daily Average Duration of HVAC System from Last 7 Days'
+        unit_of_measurement: 'h'
+        value_template: "{{ ((states('sensor.hvac_duration_total_last7days') | float) / 7) | round(2) }}"
 
       hvac_duration_total_sincechange:
         friendly_name: 'Total Duration of HVAC System since the Filter was Marked Replaced'
@@ -79,17 +100,12 @@ sensor:
           {%- set heat = states('sensor.hvac_duration_heat_sincechange') | float -%}
           {{ cool + heat }}
 
-      hvac_duration_avg_last7days:
-        friendly_name: 'Daily Average Duration of HVAC System from Last 7 Days'
-        unit_of_measurement: 'h'
-        value_template: "{{ ((states('sensor.hvac_duration_total_last7days') | float) / 7) | round(2) }}"
-
       ######
       # Filter Values
       # Also for reporting, but focusing on the Filter itself
 
       hvac_ttl_filter:
-        friendly_name: 'How Much Life the Filter has'
+        friendly_name: 'How Much Life the Filter has since the Filter was Marked Replaced'
         unit_of_measurement: 'd'
         value_template: >-
           {%- set lastDuration = (states('input_text.hvac_store_duration_filter_average') | float) -%}
@@ -107,7 +123,7 @@ script:
     sequence:
     - service: system_log.write
       data_template:
-        level: warning
+        level: info
         message: |
           HVAC Filter Reset Triggered
             * Current Duration:  {{ states('sensor.hvac_duration_total_sincechange') }}
@@ -121,7 +137,7 @@ script:
     # Set Rolling Average of Filter Life Cycles
     #
     # EX: If Jan 1 it was marked changed, never changed before, we default to 90 days
-    #     Later, on April 20, we mark changed again, and calculate it was actually 111 days (if my math is right)... 
+    #     Later, on April 20, we mark changed again, and calculate it was actually 111 days (if my math is right)...
     #     So we average (90 + 111) / 2 | round(0) = 101 day filter expectancy, and keep doing this monthly to self calculate
     - service: input_text.set_value
       entity_id: input_text.hvac_store_duration_filter_average

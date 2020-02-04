@@ -11,7 +11,7 @@
   action:
     - service: light.turn_on
       entity_id: light.lamp
-    - service: notify.alexa_media_codex_s_echo_dot
+    - service: notify.alexa_media_codex_s_echo_show
       data:
         message: 'Turning on lights for sunset'
         data:

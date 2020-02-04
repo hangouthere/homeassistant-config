@@ -6,6 +6,7 @@
   animate: true
   hours_to_show: 12
   icon: 'mdi:thermometer-lines'
+  line_width: 2
   name: Thermostat (12hrs)
   points_per_hour: 30
   update_interval: 3600
@@ -43,6 +44,7 @@
   animate: true
   hours_to_show: 24
   icon: 'mdi:thermometer-lines'
+  line_width: 2
   name: Thermostat (24hrs)
   points_per_hour: 30
   update_interval: 3600

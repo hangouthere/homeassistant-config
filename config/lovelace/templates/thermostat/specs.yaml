@@ -39,6 +39,19 @@ entities:
       entity: sensor.hvac_duration_total_last24hrs
       name: '24 Hrs'
 
+  # Runtime Cycles
+  - type: custom:multiple-entity-row
+    entity: sensor.hvac_count_total_today
+    name: 'Cycles'
+    icon: mdi:run
+    name_state: Today
+    secondary:
+      entity: sensor.hvac_count_avg_sincechange
+      name: 'Avg Since Change'
+    tertiary:
+      entity: sensor.hvac_count_total_sincechange
+      name: 'Since Change'
+
   # Filter Lifetime
   - type: custom:multiple-entity-row
     entity: sensor.hvac_ttl_filter

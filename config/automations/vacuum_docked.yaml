@@ -5,7 +5,7 @@
     entity_id: vacuum.dusty
     to: 'docked'
   action:
-    - service: notify.alexa_media_codex_s_echo_dot
+    - service: notify.alexa_media_codex_s_echo_show
       data:
         message: 'Dusty has completed his task!'
         data:

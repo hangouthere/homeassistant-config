@@ -6,7 +6,7 @@
     - service: system_log.write
       data_template:
         message: "Motion Webhook Triggered - {{ trigger }}"
-        level: warning
+        level: info
     - entity_id: input_boolean.cam_motion_front_door
       service_template: >
         {% set service = 'turn_on' if trigger.query.on else 'turn_off' %}

@@ -5,6 +5,7 @@
   align_state: right
   animate: true
   hours_to_show: 1
+  line_width: 2
   name: Thermostat (60min)
   points_per_hour: 120
   update_interval: 15
@@ -41,6 +42,7 @@
   align_state: right
   animate: true
   hours_to_show: 1.75
+  line_width: 2
   name: Thermostat (90min)
   points_per_hour: 60
   update_interval: 15

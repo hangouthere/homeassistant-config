@@ -13,15 +13,13 @@
             - !include ../templates/presence/codex.yaml
             - !include ../templates/presence/frecs.yaml
 
-    ###############
     # Map Tracker
-    ###############
     - type: custom:mod-card
       card:
         type: custom:auto-entities
         card:
           type: map
-          default_zoom: 10
+          default_zoom: 12
         filter:
           include:
             - domain: device_tracker

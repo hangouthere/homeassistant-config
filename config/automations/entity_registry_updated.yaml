@@ -13,13 +13,15 @@
     - service: system_log.write
       data_template:
         message: "Entity Registry Updated Triggered - {{ trigger }}"
-        level: warning
+        level: info
     - service: notify.alexa_media_everywhere
       data_template:
         message: >
-          {% set status = "ADDED TO" if trigger.event.data.action != "remove" else "REMOVED FROM" %}
-          {% set domain = trigger.event.data.entity_id.split('.')[0].replace('_', ' ') %}
-          '<voice name="Matthew">An entity of type {{ domain }} has been {{ status }} the Entity Registry</voice>.'
+          {%- set status = "ADDED TO" if trigger.event.data.action != "remove" else "REMOVED FROM" -%}
+          {%- set splitVals = trigger.event.data.entity_id.split('.') -%}
+          {%- set domain = splitVals[0].replace('_', ' ') -%}
+          {%- set entID = splitVals[1].replace('_', ' ') -%}
+          '<voice name="Matthew">An entity, of type {{ domain }}, with ID of, {{ entID }}, has been {{ status }} the Entity Registry</voice>.'
         data:
           type: announce
           method: speak

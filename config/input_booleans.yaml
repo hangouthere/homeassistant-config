@@ -1,7 +1,12 @@
-home_occupied:
+presence_codex:
+  name: 'Presence - Codex Rollup'
   initial: 'on'
-  icon: 'mdi:home'
+
+presence_frecs:
+  name: 'Presence - Frecs Rollup'
+  initial: 'on'
 
 cam_motion_front_door:
-  icon: 'mdi:eye-circle'
   name: 'Front Door Cam Motion'
+  initial: 'off'
+  icon: 'mdi:eye-circle'

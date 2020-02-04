@@ -22,27 +22,36 @@ sensor:
   # Cooling counts triggered for today
   - platform: history_stats
     name: hvac_count_cool_today
-    end: '{{ now() }}'
     entity_id: sensor.hvac_action
     start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+    end: '{{ now() }}'
+    state: cooling
+    type: count
+
+  # Cooling counts triggered since the filter was changed
+  - platform: history_stats
+    name: hvac_count_heat_today
+    entity_id: sensor.hvac_action
+    start: "{{ as_timestamp(states('input_text.hvac_store_date_lastchange')) }}"
+    end: '{{ now() }}'
     state: cooling
     type: count
 
   # Cooling duration for today
   - platform: history_stats
     name: hvac_duration_cool_today
-    end: '{{ now() }}'
     entity_id: sensor.hvac_action
     start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+    end: '{{ now() }}'
     state: cooling
     type: time
 
   # Cooling duration in last 24 hours
   - platform: history_stats
     name: hvac_duration_cool_last24hrs
-    end: '{{ now() }}'
     entity_id: sensor.hvac_action
     state: cooling
+    end: '{{ now() }}'
     type: time
     duration:
       hours: 24
@@ -50,9 +59,9 @@ sensor:
   # Cooling duration for last 7 days
   - platform: history_stats
     name:  hvac_duration_cool_last7days
-    end: '{{ now() }}'
     entity_id: sensor.hvac_action
     state: cooling
+    end: '{{ now() }}'
     type: time
     duration:
       days: 7
@@ -60,8 +69,8 @@ sensor:
   # Cooling duration since the filter was marked replaced
   - platform: history_stats
     name: hvac_duration_cool_sincechange
-    end: '{{ as_timestamp(now()) }}'
     entity_id: sensor.hvac_action
     start: "{{ as_timestamp(states('input_text.hvac_store_date_lastchange')) }}"  
+    end: '{{ now() }}'
     state: cooling
     type: time

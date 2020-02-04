@@ -3,6 +3,7 @@
 
 type: 'custom:simple-thermostat'
 entity: climate.thermostat_mode
+step_size: 1
 hide:
   temperature: true
   state: true
