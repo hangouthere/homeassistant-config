@@ -30,7 +30,7 @@ sensor:
 
   # Heating counts triggered since the filter was changed
   - platform: history_stats
-    name: hvac_count_heat_today
+    name: hvac_count_heat_sincechange
     entity_id: sensor.hvac_action
     start: "{{ as_timestamp(states('input_text.hvac_store_date_lastchange')) }}"
     end: '{{ now() }}'

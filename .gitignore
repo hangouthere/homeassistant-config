@@ -16,7 +16,7 @@ OZW_Log.txt
 
 # Data and personal info
 alexa_media*.pickle
-home-assistant_v2.db
+home-assistant_v2.db*
 ip_bans.yaml
 known_devices.yaml
 options.xml

@@ -1,0 +1,85 @@
+## Presence Package
+
+###############################################################################################
+## Sensors
+########################################################################################
+
+sensor:
+  - platform: template
+    sensors:
+
+      ####################
+      # Presence Consensus
+      # Determines the State of Presence for the entire home (empty|partial|majority|full)
+      #
+      #   This is accomplished by searching through all input_boolean's for `.presence_` in the Entity ID
+      #   and then compared for various requirements:
+      #     - If NO ONE is home, returns `empty` 
+      #     - If EVERYONE is home, returns `full` 
+      #     - If WINNING MAJORITY COUNT of people are home, returns `majority`
+      #     - If no other match is found, returns `partial` (ie, less than majority is home)
+      #
+      #   ***NOTE***: This sensor must be *manually* updated, since HA cannot auto-detect the effected entities
+      #       (see also: `automations/presence.yaml`, for the Automation aliased as 'Presence - Needs Consensus Update')
+      presence_consensus:
+        friendly_name: 'Consensus state for presence in the house'
+        value_template: >-
+          {%- set ns = namespace(
+            _states = states.input_boolean, 
+            _contains = '\.presence_',
+            entities = []
+          ) -%}
+
+          {%- for _ent in  ns._states -%}
+            {% set ns.entities = ns.entities + [_ent] if (_ent | regex_search(ns._contains)) else ns.entities %}
+          {%- endfor -%}
+          {%- set entities_on = ns.entities | selectattr('state', 'eq', 'on') | map(attribute='entity_id') | list -%}
+          {%- set count_total = ns.entities | count -%}
+          {%- set count_on = entities_on | count -%}
+          {%- set majority_home = count_on > count_total / 2 -%}
+          {%- set full = count_on == count_total -%}
+          
+          {%- if 0 == count_on -%}
+            empty
+          {%- elif full -%}
+            full
+          {%- elif majority_home -%}
+            majority
+          {%- else -%}
+            partial
+          {%- endif -%}
+
+###############################################################################################
+## Automations
+########################################################################################
+
+automation:
+  # Trigger Consensus Update when a presence status per person changes
+  #   Each person should be represented by their own boolean for Consensus to operate properly
+  - alias: 'Presence - Needs Consensus Update'
+    initial_state: true
+    trigger:
+      - platform: state
+        entity_id: input_boolean.presence_codex
+      - platform: state
+        entity_id: input_boolean.presence_frecs
+    action:
+      - service: system_log.write
+        data_template:
+          message: "Presence Consensus Unknown, Needs Update - {{ trigger }}"
+          level: info
+      - service: homeassistant.update_entity
+        entity_id: sensor.presence_consensus
+
+  # Detect Consensus Change (ie, someone left or arrived)
+
+  - alias: 'Presence - Overall State'
+    initial_state: true
+    trigger:
+      - platform: state
+        entity_id: sensor.presence_consensus
+    action:
+      - service: system_log.write
+        data_template:
+          message: "Presence Consensus Change Triggered - {{ trigger }}"
+          level: warning

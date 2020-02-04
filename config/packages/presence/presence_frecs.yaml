@@ -1,0 +1,35 @@
+sensor:
+  - platform: template
+    sensors:
+      ####################
+      # Presence & Stats
+
+      # Sensor to track battery level of phone
+      presence_battery_phone_frecs:
+        friendly_name: 'Display Value for Phone Battery, for Frecs'
+        value_template: "{{ state_attr('device_tracker.phone_frecs', 'battery_level') }}"
+        unit_of_measurement: "%"
+
+automation:
+  # Detect Presence of Frecs
+  #  Currently only uses mobile app, but can/will expand for reliability
+  - alias: 'Presence - Frecs Detected'
+    initial_state: true
+    trigger:
+      - platform: state
+        entity_id: device_tracker.phone_frecs
+        to: 'home'
+        for:
+          minutes: 5
+      - platform: state
+        entity_id: device_tracker.phone_frecs
+        from: 'home'
+    action:
+      - service: system_log.write
+        data_template:
+          message: "Presence Change for Frecs Triggered - {{ trigger }}"
+          level: info
+      - entity_id: input_boolean.presence_frecs
+        service_template : >-
+          {%- set service = 'turn_on' if trigger.to_state.state == 'home' else 'turn_off' -%}
+          input_boolean.{{ service }}
