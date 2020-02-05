@@ -55,10 +55,6 @@ sensor:
           {%- set heat = states('sensor.hvac_count_heat_sincechange') | int -%}
           {{ cool + heat }}
 
-      hvac_count_avg_sincechange:
-        friendly_name: 'Daily Average Count of HVAC System from Last 7 Days'
-        value_template: "{{ ((states('sensor.hvac_count_total_sincechange') | float) / 7) | round(2) }}"
-
       ######
       # Duration Values
       # For reporting over common timeframes, we can see the duration of the entire system

@@ -81,5 +81,5 @@ automation:
     action:
       - service: system_log.write
         data_template:
-          message: "Presence Consensus Change Triggered - {{ trigger }}"
+          message: "Presence Consensus Change Triggered - {{ trigger.from_state.state }} -> {{ trigger.to_state.state }}"
           level: warning

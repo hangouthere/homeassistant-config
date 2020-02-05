@@ -3,3 +3,15 @@
   longitude: !secret long_home
   radius: 150
   icon: mdi:castle
+
+- name: 'HEB Dessau'
+  latitude: !secret lat_hebdessau
+  longitude: !secret long_hebdessau
+  radius: 175
+  icon: mdi:cart
+
+- name: 'Old House'
+  latitude: !secret lat_oldhouse
+  longitude: !secret long_oldhouse
+  radius: 150
+  icon: mdi:home-floor-negative-1

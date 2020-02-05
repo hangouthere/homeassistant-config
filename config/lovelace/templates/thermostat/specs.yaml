@@ -45,9 +45,6 @@ entities:
     name: 'Cycles'
     icon: mdi:run
     name_state: Today
-    secondary:
-      entity: sensor.hvac_count_avg_sincechange
-      name: 'Avg Since Change'
     tertiary:
       entity: sensor.hvac_count_total_sincechange
       name: 'Since Change'
