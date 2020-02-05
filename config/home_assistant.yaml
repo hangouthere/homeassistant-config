@@ -6,9 +6,3 @@ name: Home
 packages: !include_dir_named ./packages
 time_zone: America/Chicago
 unit_system: imperial
-# auth_providers:
-#   - type: homeassistant
-#   - type: trusted_networks
-#     trusted_networks:
-#       - 192.168.1.0/24
-#       - 172.0.0.0/8

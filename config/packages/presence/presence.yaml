@@ -22,7 +22,7 @@ sensor:
       #   ***NOTE***: This sensor must be *manually* updated, since HA cannot auto-detect the effected entities
       #       (see also: `automations/presence.yaml`, for the Automation aliased as 'Presence - Needs Consensus Update')
       presence_consensus:
-        friendly_name: 'Consensus state for presence in the house'
+        friendly_name: 'Consensus State for Presence in the House'
         value_template: >-
           {%- set ns = namespace(
             _states = states.input_boolean, 
@@ -72,7 +72,6 @@ automation:
         entity_id: sensor.presence_consensus
 
   # Detect Consensus Change (ie, someone left or arrived)
-
   - alias: 'Presence - Overall State'
     initial_state: true
     trigger:
@@ -83,3 +82,38 @@ automation:
         data_template:
           message: "Presence Consensus Change Triggered - {{ trigger.from_state.state }} -> {{ trigger.to_state.state }}"
           level: warning
+
+  # TESTIGN: House changed to or from partial
+  - alias: 'Presence - Partial On or Off'
+    initial_state: true
+    trigger:
+      - platform: state
+        entity_id: sensor.presence_consensus
+        to: 'partial'
+      - platform: state
+        entity_id: sensor.presence_consensus
+        from: 'partial'
+    action:
+      - service: notify.alexa_media_codex_s_echo_show
+        data_template:
+          message: >-
+            {%- set whichState = 'entered' if trigger.to_state.state == 'partial' else 'exited' -%}
+            Presence Consensus has {{ whichState }} partial state 
+          data:
+            type: tts
+
+  # House was empty, but now has someone arriving
+  #   - Unlock front door
+  #   - Primary entry lights on if sunset
+  - alias: 'Presence - Empty to Partial/Full'
+    initial_state: true
+    trigger:
+      - platform: state
+        entity_id: sensor.presence_consensus
+        from: 'empty'
+    action:
+      - service: notify.alexa_media_codex_s_echo_show
+        data:
+          message: 'House was empty but someone has arrived'
+          data:
+            type: tts

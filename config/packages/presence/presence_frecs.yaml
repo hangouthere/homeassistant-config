@@ -23,7 +23,9 @@ automation:
           minutes: 5
       - platform: state
         entity_id: device_tracker.phone_frecs
-        from: 'home'
+        to: 'not_home'
+        for:
+          minutes: 5
     action:
       - service: system_log.write
         data_template:

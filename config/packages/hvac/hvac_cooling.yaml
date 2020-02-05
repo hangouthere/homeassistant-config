@@ -1,5 +1,5 @@
 ###############################################################################################
-## Sensors
+## Cooling Sensors
 ########################################################################################
 
 sensor:
@@ -8,9 +8,10 @@ sensor:
       # If cooling is active, then set to target temp, otherwise set to 0
       # This is for UI purposes
       hvac_track_cool:
+        friendly_name: 'HVAC Tracking of Cooling'
         device_class: temperature
         unit_of_measurement: '°F'
-        entity_id: 
+        entity_id:
           - sensor.hvac_action
           - sensor.hvac_temp_target
           - climate.thermostat_mode
@@ -36,6 +37,8 @@ sensor:
     end: '{{ now() }}'
     state: cooling
     type: count
+
+  # TODO: Determine how to add a daily average
 
   # Cooling duration for today
   - platform: history_stats
@@ -70,7 +73,26 @@ sensor:
   - platform: history_stats
     name: hvac_duration_cool_sincechange
     entity_id: sensor.hvac_action
-    start: "{{ as_timestamp(states('input_text.hvac_store_date_lastchange')) }}"  
+    start: "{{ as_timestamp(states('input_text.hvac_store_date_lastchange')) }}"
     end: '{{ now() }}'
     state: cooling
     type: time
+
+###############################################################################################
+## Customizations
+########################################################################################
+
+homeassistant:
+  customize:
+    sensor.hvac_count_cool_today:
+      friendly_name: 'HVAC Trigger Counts (Cooling) - Today'
+    sensor.hvac_count_cool_sincechange:
+      friendly_name: 'HVAC Trigger Counts (Cooling) - Since Filter Changed'
+    sensor.hvac_duration_cool_today:
+      friendly_name: 'HVAC Duration (Cooling) - Today'
+    sensor.hvac_duration_cool_last24hrs:
+      friendly_name: 'HVAC Duration (Cooling) - Last 24 Hours'
+    sensor.hvac_duration_cool_last7days:
+      friendly_name: 'HVAC Duration (Cooling) - Last 7 Days'
+    sensor.hvac_duration_cool_sincechange:
+      friendly_name: 'HVAC Duration (Cooling) - Since Filter Changed'
