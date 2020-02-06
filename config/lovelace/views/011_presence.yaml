@@ -19,7 +19,7 @@
         type: custom:auto-entities
         card:
           type: map
-          default_zoom: 12
+          default_zoom: 13
         filter:
           include:
             - domain: device_tracker

@@ -38,8 +38,6 @@ sensor:
     state: cooling
     type: count
 
-  # TODO: Determine how to add a daily average
-
   # Cooling duration for today
   - platform: history_stats
     name: hvac_duration_cool_today

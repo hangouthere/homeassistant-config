@@ -55,6 +55,13 @@ sensor:
           {%- set heat = states('sensor.hvac_count_heat_sincechange') | int -%}
           {{ cool + heat }}
 
+      hvac_count_avg_sincechange:
+        friendly_name: 'Total Count Average per day since the Filter was Marked Replaced'
+        value_template: >-
+          {%- set daysSince = states('sensor.hvac_date_filter_dayssincechange') | int -%}
+          {%- set totalCounts = states('sensor.hvac_count_total_sincechange') | int -%}
+          {{ (totalCounts / daysSince) | round(2) }}
+
       ######
       # Duration Values
       # For reporting over common timeframes, we can see the duration of the entire system
@@ -100,6 +107,12 @@ sensor:
       # Filter Values
       # Also for reporting, but focusing on the Filter itself
 
+      hvac_date_filter_dayssincechange:
+        friendly_name: 'How Many Days Have Passed Since Filter Changed'
+        unit_of_measurement: 'd'
+        value_template: >-
+          {{ ((as_timestamp(now()) - as_timestamp(states('input_text.hvac_store_date_lastchange'))) | int / 60 / 1440) | round(0) }}
+
       hvac_ttl_filter:
         friendly_name: 'How Much Life the Filter has since the Filter was Marked Replaced'
         unit_of_measurement: 'd'
@@ -144,5 +157,5 @@ script:
           {%- if lastDuration > 0 -%}
             {{ (lastDuration + currentDuration) / 2 | round(0) }}
           {%- else -%}
-              90
+              183
           {%- endif -%}

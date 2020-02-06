@@ -38,8 +38,6 @@ sensor:
     state: heating
     type: count
 
-  # TODO: Determine how to add a daily average
-
   # Heating duration for today
   - platform: history_stats
     name: hvac_duration_heat_today

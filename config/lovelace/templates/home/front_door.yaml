@@ -17,6 +17,7 @@ cards:
   # Motion Detection Last Updated
   - type: entities
     entities:
+      # Motion Detected Status
       - type: custom:template-entity-row
         entity: input_boolean.cam_motion_front_door
         icon: mdi:eye
@@ -42,9 +43,5 @@ cards:
         tap_action:
           action: more-info
 
-  # Front Door Lock
-  - type: entities
-    title: Lock
-    show_header_toggle: false
-    entities:
+      # Lock Status / Actions
       - entity: lock.lock_front_door_status
