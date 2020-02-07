@@ -14,7 +14,7 @@
         - type: glance
           entities:
             - entity: sun.sun
-            - entity: input_boolean.cam_motion_front_door
+            - entity: input_boolean.motion_front_doorbell_cam
             - entity: person.codex
             - entity: person.freckills
             - entity: binary_sensor.updater

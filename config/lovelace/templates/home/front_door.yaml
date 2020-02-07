@@ -19,7 +19,7 @@ cards:
     entities:
       # Motion Detected Status
       - type: custom:template-entity-row
-        entity: input_boolean.cam_motion_front_door
+        entity: input_boolean.motion_front_doorbell_cam
         icon: mdi:eye
         name: "Motion was last detected:"
         secondary: >
@@ -37,9 +37,9 @@ cards:
             {{ 'Just now' if time < 1 else days + hours + minutes + seconds + ' ago' }}
           {%- endmacro -%}
 
-          {{ buildTimestamp(states.input_boolean.cam_motion_front_door.last_changed) }}
-        state: "{% if is_state('input_boolean.cam_motion_front_door', 'on')%} Detected {% else %} Idle {% endif %}"
-        active: "{{ is_state('input_boolean.cam_motion_front_door', 'on') }}"
+          {{ buildTimestamp(states.input_boolean.motion_front_doorbell_cam.last_changed) }}
+        state: "{% if is_state('input_boolean.motion_front_doorbell_cam', 'on')%} Detected {% else %} Idle {% endif %}"
+        active: "{{ is_state('input_boolean.motion_front_doorbell_cam', 'on') }}"
         tap_action:
           action: more-info
 

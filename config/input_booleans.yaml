@@ -6,7 +6,8 @@ presence_frecs:
   name: 'Presence - Frecs Rollup'
   initial: 'on'
 
-cam_motion_front_door:
-  name: 'Front Door Cam Motion'
+motion_front_doorbell_cam:
+  name: 'Motion - Front Doorbell Cam'
   initial: 'off'
   icon: 'mdi:eye-circle'
+

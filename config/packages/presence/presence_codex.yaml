@@ -6,7 +6,7 @@ sensor:
 
       # Sensor to track battery level of phone
       presence_battery_phone_codex:
-        friendly_name: 'Display Value for Phone Battery, for Codex'
+        friendly_name: 'Presence - Phone Battery, for Codex'
         value_template: "{{ state_attr('device_tracker.phone_codex', 'battery_level') }}"
         unit_of_measurement: "%"
 

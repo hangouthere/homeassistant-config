@@ -1,0 +1,12 @@
+>-
+  {{ [
+    "Yes, my Master",
+    "Oooh I love it when you tell me what to do",
+    "Anything you desire",
+    "Your Wish is My Command",
+    "I can do that",
+    "Leave it to me",
+    "Consider it done",
+    "Yes oh revered one",
+    "As you decree, so shall it be"
+  ] | random }}

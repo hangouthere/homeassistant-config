@@ -22,7 +22,7 @@ sensor:
       #   ***NOTE***: This sensor must be *manually* updated, since HA cannot auto-detect the effected entities
       #       (see also: `automations/presence.yaml`, for the Automation aliased as 'Presence - Needs Consensus Update')
       presence_consensus:
-        friendly_name: 'Consensus State for Presence in the House'
+        friendly_name: 'Presence - Consensus State for the House'
         value_template: >-
           {%- set ns = namespace(
             _states = states.input_boolean,
@@ -56,7 +56,7 @@ sensor:
 automation:
   # Trigger Consensus Update when a presence status per person changes
   #   Each person should be represented by their own boolean for Consensus to operate properly
-  - alias: 'Presence - Needs Consensus Update'
+  - alias: 'Presence - Force Update Consensus'
     initial_state: true
     trigger:
       - platform: state
@@ -86,7 +86,8 @@ automation:
           message: "Presence Consensus Change Triggered - {{ trigger.from_state.state }} -> {{ trigger.to_state.state }}"
           level: warning
 
-  # TESTIGN: House changed to or from partial
+  # TODO TESTING
+  # House changed to or from partial
   - alias: 'Presence - Partial On or Off'
     initial_state: true
     trigger:
@@ -105,6 +106,7 @@ automation:
           data:
             type: tts
 
+  # TODO TESTING
   # House was empty, but now has someone arriving
   #   - Unlock front door
   #   - Primary entry lights on if sunset
