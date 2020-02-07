@@ -71,7 +71,7 @@ sensor:
   - platform: history_stats
     name: hvac_duration_heat_sincechange
     entity_id: sensor.hvac_action
-    start: "{{ as_timestamp(states('input_text.hvac_store_date_lastchange')) }}"  
+    start: "{{ as_timestamp(states('input_text.hvac_store_date_lastchange')) }}"
     end: '{{ now() }}'
     state: heating
     type: time

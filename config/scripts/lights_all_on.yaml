@@ -1,0 +1,5 @@
+alias: 'Lights - Turn All On'
+description: 'Turns on all the lights in the entire house'
+sequence:
+  - service: light.turn_on
+    entity_id: all

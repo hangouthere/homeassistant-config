@@ -1,17 +1,17 @@
 # At night, LEDs on the switches are blindingly bright, so we mute them
-- alias: 'Switch Status LEDs OFF'
+- alias: 'Lights - Status LEDs OFF'
   initial_state: true
   trigger:
     platform: time
     at: "23:00:00"
   action:
-    - service: script.turn_off_switch_status
+    - service: script.lights_all_status_off
 
 # In the morning, let's get the LEDs on the switches back on
-- alias: 'Switch Status LEDs ON'
+- alias: 'Lights - Status LEDs ON'
   initial_state: true
   trigger:
     platform: time
     at: "06:00:00"
   action:
-    - service: script.turn_on_switch_status
+    - service: script.lights_all_status_on

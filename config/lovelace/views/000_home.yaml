@@ -22,7 +22,7 @@
     - !include ../templates/home/fans.yaml
 
     - !include ../templates/home/lighting.yaml
-      
+
     - type: vertical-stack
       title: Weather
       cards:

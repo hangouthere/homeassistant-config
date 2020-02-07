@@ -19,8 +19,10 @@ lovelace:
 media_player: !include config/media_players.yaml
 panel_iframe: !include config/side_menu.yaml
 scene: !include config/scenes.yaml
-script: !include config/scripts.yaml
-sensor: !include_dir_merge_list config/sensors
+script: !include_dir_named config/scripts
+sensor: 
+  - platform: template
+    sensors: !include_dir_merge_named config/sensor_templates
 stream:
 tts:
   - platform: google_translate

@@ -1,7 +1,7 @@
-- alias: 'Webhook - Cam Motion - Set - Front Door'
+- alias: 'Webhook - Motion - Set - Front Doorbell Cam'
   trigger:
     platform: webhook
-    webhook_id: cam_motion_front_door_set
+    webhook_id: motion_set_front_doorbell
   action:
     - service: system_log.write
       data_template:

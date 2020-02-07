@@ -25,9 +25,9 @@
             - domain: device_tracker
             - domain: zone
       # style:
-      #   'hui-map-card': 
+      #   'hui-map-card':
       #     $: |
       #       ha-card {
       #         max-height: 200px;
       #       }
-      
+

@@ -1,4 +1,4 @@
-- alias: 'Morning Lighting'
+- alias: 'Lights - Morning'
   initial_state: true
   trigger:
     platform: time

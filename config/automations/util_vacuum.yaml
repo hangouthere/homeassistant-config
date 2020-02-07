@@ -1,4 +1,4 @@
-- alias: 'Vacuum Docked'
+- alias: 'Util - Vacuum Docked'
   initial_state: true
   trigger:
     platform: state

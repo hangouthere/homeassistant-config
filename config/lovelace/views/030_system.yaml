@@ -43,7 +43,7 @@
       buttons:
         - icon: 'mdi:refresh'
           name: Reload All Things
-          service: script.reload_all_domains
+          service: script.homeassistant_reload_all
           style:
               background: '#999900'
               border-radius: 9999px
@@ -75,5 +75,3 @@
           - domain: automation
       sort:
         method: name
-    
-

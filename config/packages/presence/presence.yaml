@@ -14,8 +14,8 @@ sensor:
       #
       #   This is accomplished by searching through all input_boolean's for `.presence_` in the Entity ID
       #   and then compared for various requirements:
-      #     - If NO ONE is home, returns `empty` 
-      #     - If EVERYONE is home, returns `full` 
+      #     - If NO ONE is home, returns `empty`
+      #     - If EVERYONE is home, returns `full`
       #     - If WINNING MAJORITY COUNT of people are home, returns `majority`
       #     - If no other match is found, returns `partial` (ie, less than majority is home)
       #
@@ -25,7 +25,7 @@ sensor:
         friendly_name: 'Consensus State for Presence in the House'
         value_template: >-
           {%- set ns = namespace(
-            _states = states.input_boolean, 
+            _states = states.input_boolean,
             _contains = '\.presence_',
             entities = []
           ) -%}
@@ -38,7 +38,7 @@ sensor:
           {%- set count_on = entities_on | count -%}
           {%- set majority_home = count_on > count_total / 2 -%}
           {%- set full = count_on == count_total -%}
-          
+
           {%- if 0 == count_on -%}
             empty
           {%- elif full -%}
@@ -77,6 +77,9 @@ automation:
     trigger:
       - platform: state
         entity_id: sensor.presence_consensus
+    condition:
+      condition: template
+      value_template: "{{ 'unknown' != trigger.from_state.state }}"
     action:
       - service: system_log.write
         data_template:
@@ -98,7 +101,7 @@ automation:
         data_template:
           message: >-
             {%- set whichState = 'entered' if trigger.to_state.state == 'partial' else 'exited' -%}
-            Presence Consensus has {{ whichState }} partial state 
+            Presence Consensus has {{ whichState }} partial state
           data:
             type: tts
 

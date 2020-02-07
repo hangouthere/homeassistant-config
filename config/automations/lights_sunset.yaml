@@ -1,4 +1,4 @@
-- alias: 'Sunset Lighting'
+- alias: 'Lights - Sunset'
   initial_state: true
   trigger:
     platform: sun

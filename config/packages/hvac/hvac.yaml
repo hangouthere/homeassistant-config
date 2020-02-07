@@ -56,11 +56,12 @@ sensor:
           {{ cool + heat }}
 
       hvac_count_avg_sincechange:
+        entity_id: sensor.hvac_date_filter_dayssincechange
         friendly_name: 'Total Count Average per day since the Filter was Marked Replaced'
         value_template: >-
           {%- set daysSince = states('sensor.hvac_date_filter_dayssincechange') | int -%}
           {%- set totalCounts = states('sensor.hvac_count_total_sincechange') | int -%}
-          {{ (totalCounts / daysSince) | round(2) }}
+          {{ (totalCounts / daysSince) | round(2) if daysSince > 0 else 'N/A' }}
 
       ######
       # Duration Values
@@ -128,7 +129,7 @@ sensor:
 script:
   # Reset filter change date and set total runtime to zero
   hvac_reset_filter:
-    alias: 'Reset HVAC Filter Change Date'
+    alias: 'HVAC - Reset Filter Change Date'
     sequence:
     - service: system_log.write
       data_template:

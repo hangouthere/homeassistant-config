@@ -1,4 +1,4 @@
-- alias: 'Cam Motion - Front Door'
+- alias: 'Motion - Front Doorbell Cam'
   initial_state: true
   trigger:
     - platform: state
@@ -10,7 +10,7 @@
   action:
     - service: notify.alexa_media_codex_s_echo_show
       data_template:
-        message: > 
+        message: >
           {%- set status = 'Started' if trigger.to_state.state != 'off' else 'Ended' -%}
           'Motion Detection {{ status }} at Front Door'
         data:
