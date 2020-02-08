@@ -1,0 +1,103 @@
+- title: Remotes
+  path: remotes
+  icon: 'mdi:remote-tv'
+  badges: []
+  cards:
+    # - type: custom:layout-card
+    #   layout: grid
+    #   gridrows: 50px 50px 50px
+    #   gridcols: 50px 50px 50px
+    #   cards:
+    - type: "custom:roku-card"
+      entity: media_player.couchly
+      tv: true
+      volume_up:
+        show: false
+      volume_down:
+        show: false
+      volume_mute:
+        show: false
+      power:
+        tap_action:
+          action: call-service
+          service: androidtv.adb_command
+          service_data:
+            entity_id: media_player.couchly
+            command: POWER
+      back:
+        tap_action:
+          action: call-service
+          service: androidtv.adb_command
+          service_data:
+            entity_id: media_player.couchly
+            command: BACK
+      info:
+        tap_action:
+          action: call-service
+          service: androidtv.adb_command
+          service_data:
+            entity_id: media_player.couchly
+            command: MENU
+      home:
+        tap_action:
+          action: call-service
+          service: androidtv.adb_command
+          service_data:
+            entity_id: media_player.couchly
+            command: HOME
+      up:
+        tap_action:
+          action: call-service
+          service: androidtv.adb_command
+          service_data:
+            entity_id: media_player.couchly
+            command: UP
+      down:
+        tap_action:
+          action: call-service
+          service: androidtv.adb_command
+          service_data:
+            entity_id: media_player.couchly
+            command: DOWN
+      left:
+        tap_action:
+          action: call-service
+          service: androidtv.adb_command
+          service_data:
+            entity_id: media_player.couchly
+            command: LEFT
+      right:
+        tap_action:
+          action: call-service
+          service: androidtv.adb_command
+          service_data:
+            entity_id: media_player.couchly
+            command: RIGHT
+      select:
+        tap_action:
+          action: call-service
+          service: androidtv.adb_command
+          service_data:
+            entity_id: media_player.couchly
+            command: CENTER
+      reverse:
+        tap_action:
+          action: call-service
+          service: androidtv.adb_command
+          service_data:
+            entity_id: media_player.couchly
+            command: REVERSE
+      forward:
+        tap_action:
+          action: call-service
+          service: androidtv.adb_command
+          service_data:
+            entity_id: media_player.couchly
+            command: REWIND
+      play:
+        tap_action:
+          action: call-service
+          service: androidtv.adb_command
+          service_data:
+            entity_id: media_player.couchly
+            command: KEY_RESUME

@@ -1,0 +1,34 @@
+###############################################################################################
+## Inputs
+########################################################################################
+
+input_boolean:
+  tv_select_xbox_couchly:
+    name: 'Intent - (Trigger) Select XBOX Input'
+
+###############################################################################################
+## Automations
+########################################################################################
+
+automation:
+  - alias: 'Intent - (Process) Select XBOX input'
+    initial_state: true
+    trigger:
+      platform: state
+      entity_id: input_boolean.tv_select_xbox_couchly
+      to: 'on'
+    action:
+      - service: androidtv.adb_command
+        data:
+          entity_id: media_player.couchly
+          command: INPUT
+      - service: androidtv.adb_command
+        data:
+          entity_id: media_player.couchly
+          command: INPUT
+      - service: androidtv.adb_command
+        data:
+          entity_id: media_player.couchly
+          command: CENTER
+      - service: input_boolean.turn_off
+        entity_id: input_boolean.tv_select_xbox_couchly
