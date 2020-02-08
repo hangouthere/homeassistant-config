@@ -4,9 +4,9 @@
   radius: 150
   icon: mdi:castle
 
-- name: 'HEB Dessau'
-  latitude: !secret lat_hebdessau
-  longitude: !secret long_hebdessau
+- name: 'HEB North'
+  latitude: !secret lat_hebnorth
+  longitude: !secret long_hebnorth
   radius: 175
   icon: mdi:cart
 

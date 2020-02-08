@@ -1,0 +1,111 @@
+###############################################################################################
+## Inputs
+########################################################################################
+
+input_boolean:
+  # We're expecting guests, get ready for them!
+  intent_expecting_guests:
+    name: 'Intent - (Trigger) Expecting Guests'
+    initial: 'off'
+    icon: 'mdi:star-three-points-outline'
+
+###############################################################################################
+## Automations
+########################################################################################
+
+automation:
+  - alias: 'Intent - (Process) Expecting Guests'
+    initial_state: true
+    trigger:
+      - platform: state
+        entity_id: input_boolean.intent_expecting_guests
+        to: 'on'
+    action:
+      # Log it
+      - service: system_log.write
+        data_template:
+          message: 'Intent Expecting Guests Triggered On'
+          level: warning
+
+      # Announce it
+      - service: notify.alexa_media_codex_s_echo_show
+        data_template:
+          data:
+            type: announce
+            method: speak
+          message: >
+            <voice name="Brian">I see we're expecting guests, allow me to get the place ready!</voice>
+
+      # Call Arrival Expected Script
+      - service: script.lights_arrival_expected
+
+      #####
+      # Auto Shut Down Sequence
+      #####
+
+      # Wait 30 minutes
+      - delay: '00:30:00'
+
+      # CONDITION: Only continue if we're marked as still expecting guests
+      - condition: state
+        entity_id: input_boolean.intent_expecting_guests
+        state: 'on'
+
+      # Log it
+      - service: system_log.write
+        data_template:
+          message: 'Intent Expecting Guests Force Shutdown'
+          level: warning
+
+      # Announce self shutdown
+      - service: notify.alexa_media_codex_s_echo_show
+        data_template:
+          data:
+            type: announce
+            method: speak
+          message: >
+            <voice name="Brian">I'm not sure our guests are arriving any time soon. If necessary, you can have me set up again!</voice>
+
+      # Make boolean off
+      - service: input_boolean.turn_off
+        entity_id: input_boolean.intent_expecting_guests
+
+  - alias: 'Intent - (Process) Cancelling Guests'
+    initial_state: true
+    trigger:
+      - platform: state
+        entity_id: input_boolean.intent_expecting_guests
+        to: 'off'
+    action:
+      # Log it
+      - service: system_log.write
+        data_template:
+          message: 'Intent Expecting Guests Triggered Off'
+          level: warning
+
+      # Call Arrival Cancel Script
+      - service: script.lights_arrival_cancel
+
+  # Lock was unlocked while we're expecting guests
+  # We toggle brightness of Entry lights based on door lock status
+  - alias: 'Intent - (Process) Expecting Guests - Lock Changed'
+    initial_state: true
+    trigger:
+      - platform: state
+        entity_id: lock.lock_front_door_status
+    condition:
+      condition: state
+      entity_id: input_boolean.intent_expecting_guests
+      state: 'on'
+    action:
+      # Delay if locking. Iin case guests have arrived we don't want to immediately go dim
+      - delay: "{{ '00:02:00' if 'locked' == trigger.to_state.state else '0' }}"
+
+      # Turn the light high or low, fast or slow, based on lock state
+      - service: light.turn_on
+        data_template:
+          entity_id: light.entry
+          brightness_pct: >-
+            {{ 20 if 'locked' == trigger.to_state.state else 100 }}
+          transition:  >-
+            {{ 7 if 'locked' == trigger.to_state.state else 2 }}

@@ -88,7 +88,7 @@ automation:
 
   # TODO TESTING
   # House changed to or from partial
-  - alias: 'Presence - Partial On or Off'
+  - alias: 'Presence [Test] - Partial On or Off'
     initial_state: true
     trigger:
       - platform: state
@@ -110,7 +110,7 @@ automation:
   # House was empty, but now has someone arriving
   #   - Unlock front door
   #   - Primary entry lights on if sunset
-  - alias: 'Presence - Empty to Partial/Full'
+  - alias: 'Presence [Test] - Empty to Partial/Full'
     initial_state: true
     trigger:
       - platform: state

@@ -1,0 +1,67 @@
+automation:
+  # HA Has fully started!
+  # We can force some entities to update
+  #  This is necessary because some sensors are unavailable for parsing
+  #  upon initial startup
+  - alias: '_Lifecycle - HA Startup'
+    initial_state: true
+    trigger:
+      platform: homeassistant
+      event: start
+    action:
+      # Log it
+      - service: system_log.write
+        data_template:
+          message: "HA Started, Running Start Automation - {{ trigger }}"
+          level: warning
+      # Wait 30s for everything to settle down
+      - delay: '00:00:30'
+      # Update Entities
+      - service: homeassistant.update_entity
+        data:
+          entity_id: sensor.hvac_count_avg_sincechange
+
+  # ZWave is ready for interaction
+  - alias: '_Lifecycle - ZWave Ready'
+    initial_state: true
+    trigger:
+      platform: event
+      event_type: zwave.network_ready
+    action:
+      # Announce it
+      - service: notify.alexa_media_codex_s_echo_show
+        data:
+          message: 'Z Wave Network is Ready'
+          data:
+            type: tts
+
+  # Entity Registry has changed
+  - alias: '_Lifecycle - Entity Registry Updated (Create|Remove)'
+    initial_state: true
+    trigger:
+      - platform: event
+        event_type: entity_registry_updated
+        event_data:
+          action: create
+      - platform: event
+        event_type: entity_registry_updated
+        event_data:
+          action: remove
+    action:
+      # Log it
+      - service: system_log.write
+        data_template:
+          message: "Entity Registry Updated Triggered - {{ trigger }}"
+          level: info
+      # Announce it
+      - service: notify.alexa_media_everywhere
+        data:
+          type: announce
+          method: speak
+        data_template:
+          message: >
+            {%- set status = "ADDED TO" if trigger.event.data.action != "remove" else "REMOVED FROM" -%}
+            {%- set splitVals = trigger.event.data.entity_id.split('.') -%}
+            {%- set domain = splitVals[0].replace('_', ' ') -%}
+            {%- set entID = splitVals[1].replace('_', ' ') -%}
+            '<voice name="Matthew">An entity, of type {{ domain }}, with ID of, {{ entID }}, has been {{ status }} the Entity Registry</voice>.'

@@ -1,0 +1,88 @@
+script:
+  lights_toggle_outside:
+    alias: 'Lights - Toggle Outside'
+    description: 'Toggles Outside Lights'
+    fields:
+      toggle_state:
+        description: 'Whether to toggle "on" or "off"'
+        example: 'on'
+    sequence:
+      # Only continue if after sunset
+      - condition: sun
+        after: sunset
+
+      # Only continue of the lights are ON
+      - condition: template
+        value_template: >-
+          {%- set desiredState = 'off' if toggle_state == 'on' else 'on' -%}
+          {{ is_state('switch.driveway', desiredState)
+              or
+             is_state('light.patio', desiredState) }}
+
+      # Turn on/off Outside Lights
+      - service_template: "switch.turn_{{toggle_state}}"
+        entity_id: switch.driveway
+      - service_template: "light.turn_{{toggle_state}}"
+        entity_id: light.patio
+
+  # We're expecting arrival at the house!
+  # Turn on appropriate lights, if necessary!
+  lights_arrival_expected:
+    alias: 'Lights - Arrival Expected'
+    description: 'Prepares house for people to arrive at the house'
+    sequence:
+      # Only continue if after sunset
+      - condition: sun
+        after: sunset
+
+      # Turn outside lights on
+      - service: script.lights_toggle_outside
+        data:
+          toggle_state: 'on'
+
+      # Turn on Entry slowly
+      - service: light.turn_on
+        data:
+          entity_id: light.entry
+          brightness_pct: 20
+          transition: 10
+
+  # We're no longer expecting anyone, shut down the process
+  # Turn off the appropriate lights, and lock the front door
+  lights_arrival_cancel:
+    alias: 'Lights - Arrival Cancel'
+    description: 'Cancels expected arrival of people to the house'
+    sequence:
+      # Lock the front door, just in case
+      - service: lock.lock
+        entity_id: lock.lock_front_door_status
+
+      # Turn outside lights off
+      - service: script.lights_toggle_outside
+        data:
+          toggle_state: 'off'
+
+      # Only continue if the Entry light is on
+      - condition: state
+        entity_id: light.entry
+        state: 'on'
+
+      # Turn off Entry slowly
+      - service: light.turn_off
+        data:
+          entity_id: light.entry
+          transition: 4
+
+      # Waiiiiit forrrr iiiiit
+      - delay: '00:00:04'
+      # Quickly set to 100% (so it turns on full blast next time)
+      - service: light.turn_on
+        data:
+          entity_id: light.entry
+          brightness_pct: 100
+          transition: 0
+      # Quickly set to 0%
+      - service: light.turn_off
+        data:
+          entity_id: light.entry
+          transition: 0

@@ -1,0 +1,7 @@
+TestingThrowaway:
+  card:
+    type: simple
+    title: Testing Junk
+    content: 'Testing Junk with: {{ Query }}'
+  speech:
+    text: 'Yo, you just hit a test! I heard you say {{ Query }}'

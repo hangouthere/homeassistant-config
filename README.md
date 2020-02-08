@@ -69,7 +69,7 @@ To set the parameter, simply use `zwave.set_config_parameter` to assign a new pa
 {"node_id": "3", "parameter": "3", "size": "1", "value" : "2"}
 ```
 
-> **Note:** There are scripts and automations established for this within the repository! 
+> **Note:** There are scripts and automations established for this within the repository!
 
 ## Alexa Voice TTS
 
@@ -109,6 +109,13 @@ message: >
     <voice name="Amy"> This Is A Test in this voice </voice>
     <voice name="Brian"> This Is A Test in this voice </voice>
     <voice name="Emma"> This Is A Test in this voice </voice>
+
+data:
+    type: announce
+```
+
+```yaml
+message: >
     <voice name="Aditi"> This Is A Test in this voice </voice>
     <voice name="Raveena"> This Is A Test in this voice </voice>
     <voice name="Hans"> This Is A Test in this voice </voice>
@@ -124,10 +131,11 @@ message: >
     <voice name="Celine"> This Is A Test in this voice </voice>
     <voice name="Lea"> This Is A Test in this voice </voice>
     <voice name="Mathieu"> This Is A Test in this voice </voice>
+
 data:
     type: announce
 ```
 
-## Support 
+## Support
 
 While I offer this information for free, if you'd like to throw a few bones our way for Coffee or a new Game, you can do so on our [Donation page](http://rebrand.ly/nfgDono).

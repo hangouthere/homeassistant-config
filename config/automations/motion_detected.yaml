@@ -1,12 +1,8 @@
-- alias: 'Motion - Front Doorbell Cam'
+- alias: 'Motion - (Announce) Front Doorbell Cam'
   initial_state: true
   trigger:
     - platform: state
       entity_id: input_boolean.motion_front_doorbell_cam
-      to: 'on'
-    - platform: state
-      entity_id: input_boolean.motion_front_doorbell_cam
-      to: 'off'
   action:
     - service: notify.alexa_media_codex_s_echo_show
       data_template:

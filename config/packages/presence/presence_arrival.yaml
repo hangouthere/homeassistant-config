@@ -1,0 +1,132 @@
+###############################################################################################
+## Inputs
+########################################################################################
+
+input_boolean:
+  # Tracks if we're expecting arrival at the house
+  intent_expecting_arrival:
+    name: 'Intent - (Trigger) Expecting Arrival'
+    initial: 'off'
+    icon: 'mdi:star-three-points-outline'
+
+###############################################################################################
+## Automations
+########################################################################################
+
+automation:
+  - alias: 'Intent - (Process) Expecting Arrival'
+    initial_state: true
+    trigger:
+      - platform: state
+        entity_id: input_boolean.intent_expecting_arrival
+        to: 'on'
+    action:
+      # Log it
+      - service: system_log.write
+        data_template:
+          message: 'Intent Expecting Arrival Triggered On'
+          level: warning
+
+      # Turn on Living Room Lamp
+      - service: light.turn_on
+        entity_id: light.lamp
+
+      # Call Arrival Expected Script
+      - service: script.lights_arrival_expected
+
+      #####
+      # Auto Shut Down Sequence
+      #####
+
+      # Wait 30 minutes
+      - delay: '00:30:00'
+
+      # CONDITION: Only continue if we're marked as still expecting arrival
+      - condition: state
+        entity_id: input_boolean.intent_expecting_arrival
+        state: 'on'
+
+      # Log it
+      - service: system_log.write
+        data_template:
+          message: 'Intent Expecting Arrival Force Shutdown'
+          level: warning
+
+      # Make boolean off
+      - service: input_boolean.turn_off
+        entity_id: input_boolean.intent_expecting_arrival
+
+  # We're no longer expecting an Arrival
+  - alias: 'Intent - (Process) Cancelling Arrival'
+    initial_state: true
+    trigger:
+      - platform: state
+        entity_id: input_boolean.intent_expecting_arrival
+        to: 'off'
+    action:
+      # Log it
+      - service: system_log.write
+        data_template:
+          message: 'Intent Expecting Arrival Triggered Off'
+          level: warning
+      # Call Arrival Cancel Script
+      - service: script.lights_arrival_cancel
+
+  # Lock was unlocked while we're Expecting Arrival
+  # We toggle brightness of Entry lights based on door lock status
+  - alias: 'Intent - (Process) Expecting Arrival - Lock Unlocked'
+    initial_state: true
+    trigger:
+      - platform: state
+        entity_id: lock.lock_front_door_status
+        to: 'unlocked'
+    condition:
+      condition: state
+      entity_id: input_boolean.intent_expecting_arrival
+      state: 'on'
+    action:
+      # Turn the light high or low, fast or slow, based on lock state
+      - service: light.turn_on
+        data:
+          entity_id: light.entry
+          brightness_pct: 100
+
+      # Wait for 10 minutes
+      - delay: '00:10:00'
+
+      # CONDITION: Only continue if we're marked as still expecting arrival
+      - condition: state
+        entity_id: input_boolean.intent_expecting_arrival
+        state: 'on'
+
+      # Automatically Make boolean off if time runs out
+      - service: input_boolean.turn_off
+        entity_id: input_boolean.intent_expecting_arrival
+
+  - alias: 'Intent - (Process) Expecting Arrival - Lock Locked'
+    initial_state: true
+    trigger:
+      - platform: state
+        entity_id: lock.lock_front_door_status
+        to: 'locked'
+    condition:
+      condition: state
+      entity_id: input_boolean.intent_expecting_arrival
+      state: 'on'
+    action:
+      # Turn outside lights off
+      - service: script.lights_toggle_outside
+        data:
+          toggle_state: 'off'
+
+      # Automatically slowly turn the light off
+      - service: light.turn_off
+        data:
+          entity_id: light.entry
+          transition: 20
+
+      - delay: '00:00:15'
+
+      # Make boolean off
+      - service: input_boolean.turn_off
+        entity_id: input_boolean.intent_expecting_arrival

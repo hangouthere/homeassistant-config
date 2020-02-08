@@ -1,0 +1,12 @@
+RunScriptIntent:
+  card:
+    type: simple
+    title: Run Script
+    content: Ask Home Assistant to run {{ ScriptName }}.
+  action:
+    service: script.turn_on
+    data_template:
+      entity_id: script.{{ ScriptName | replace(" ", "_") }}
+  speech:
+    type: plain
+    text: !include ../_alexa_responses.yaml

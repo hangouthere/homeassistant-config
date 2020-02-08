@@ -1,0 +1,14 @@
+GetInfofromHA:
+  card:
+    type: simple
+    title: Get {{ SensorType }} information
+    content: Ask Home Assistant about {{ SensorType }}
+  speech:
+    text: >
+      {%- if SensorType.lower() == "temperature" -%}
+        Temperature in the house is {{ states('sensor.thermostat_temp') }} degrees, and it's {{ states('sensor.outside_temp') }} outside.
+      {%- elif SensorType.lower() == "humidity" -%}
+        No humidity yet, but chill for a bit and we got this!
+      {%- elif SensorType.lower() == "secret test" -%}
+        This is gonna be cool
+      {%- endif -%}

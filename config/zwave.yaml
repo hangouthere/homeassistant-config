@@ -1,7 +1,7 @@
 network_key: !secret token_zwave
 device_config:
   climate.thermostat_mode:
-    polling_intensity: 1
+    polling_intensity: 2
     refresh_value: true
 
 device_config_domain:

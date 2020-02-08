@@ -1,0 +1,68 @@
+automation:
+  # Lights toggle in the Morning
+  # Turn on at 8.15am, but only if before sunrise
+  - alias: 'Lights - Morning'
+    initial_state: true
+    trigger:
+      platform: time
+      at: "08:15:00"
+    action:
+      # Log it
+      - service: system_log.write
+        data_template:
+          message: "8.15am Automation Triggered - {{ trigger }}"
+          level: info
+      # Only continue if we're before sunrise (or up to 15min AFTER sunrise)
+      - condition: sun
+        before: sunrise
+        before_offset: "+00:15:00"
+      # Log it
+      - service: system_log.write
+        data_template:
+          message: "8.15am Automation - Before Sunrise, enabling lamp"
+          level: warning
+      # Turn on the lamp!
+      - service: light.turn_on
+        entity_id: light.lamp
+
+  # Lights toggle at Sunset
+  # Turn on at 25 minutes before Sunset,
+  #  but only if the lamp isn't already on
+  - alias: 'Lights - Sunset'
+    initial_state: true
+    trigger:
+      platform: sun
+      event: sunset
+      offset: "-00:25:00"
+    condition:
+      condition: state
+      entity_id: light.lamp
+      state: 'off'
+    action:
+      # Announce it
+      - service: notify.alexa_media_codex_s_echo_show
+        data:
+          message: 'Turning on lights for sunset'
+          data:
+            type: announce
+      # Turn on the lamp!
+      - service: light.turn_on
+        entity_id: light.lamp
+
+  # At night, LEDs on the switches are blindingly bright, so we mute them
+  - alias: 'Lights - Status LEDs OFF'
+    initial_state: true
+    trigger:
+      platform: time
+      at: "23:00:00"
+    action:
+      - service: script.lights_all_status_off
+
+  # In the morning, let's get the LEDs on the switches back on
+  - alias: 'Lights - Status LEDs ON'
+    initial_state: true
+    trigger:
+      platform: time
+      at: "06:00:00"
+    action:
+      - service: script.lights_all_status_on
