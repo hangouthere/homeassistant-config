@@ -1,3 +1,8 @@
+homeassistant:
+  customize:
+    device_tracker.phone_frecs:
+      entity_picture: "/local/people/detected_frecs.png"
+
 sensor:
   - platform: template
     sensors:

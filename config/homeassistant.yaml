@@ -1,4 +1,3 @@
-customize: !include customize.yaml
 elevation: 195
 latitude: !secret lat_home
 longitude: !secret long_home

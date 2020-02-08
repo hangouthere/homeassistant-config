@@ -10,7 +10,7 @@ cover: !include config/covers.yaml
 frontend:
   themes: !include_dir_merge_named ./themes
 group: !include config/groups.yaml
-homeassistant: !include config/home_assistant.yaml
+homeassistant: !include config/homeassistant.yaml
 input_boolean: !include config/input_booleans.yaml
 intent_script: !include_dir_merge_named config/intent_scripts
 logger: !include config/logger.yaml

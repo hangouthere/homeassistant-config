@@ -27,6 +27,10 @@ automation:
           message: 'Intent Expecting Arrival Triggered On'
           level: warning
 
+      # Only continue if after sunset
+      - condition: sun
+        after: sunset
+
       # Turn on Living Room Lamp
       - service: light.turn_on
         entity_id: light.lamp
