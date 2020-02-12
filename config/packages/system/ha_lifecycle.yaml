@@ -27,6 +27,10 @@ automation:
     trigger:
       platform: event
       event_type: zwave.network_ready
+    condition:
+      condition: state
+      entity_id: input_boolean.announce_level_info
+      state: 'on'
     action:
       # Announce it
       - service: notify.alexa_media_codex_s_echo_show

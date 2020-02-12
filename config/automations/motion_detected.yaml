@@ -3,6 +3,10 @@
   trigger:
     - platform: state
       entity_id: input_boolean.motion_front_doorbell_cam
+  condition:
+    condition: state
+    entity_id: input_boolean.announce_level_info
+    state: 'on'
   action:
     - service: notify.alexa_media_codex_s_echo_show
       data_template:

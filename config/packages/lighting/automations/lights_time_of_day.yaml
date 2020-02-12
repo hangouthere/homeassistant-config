@@ -39,15 +39,19 @@ automation:
       entity_id: light.lamp
       state: 'off'
     action:
-      # Announce it
+      # Turn on the lamp!
+      - service: light.turn_on
+        entity_id: light.lamp
+      # Announce it, if allowed
+      - condition:
+        condition: state
+        entity_id: input_boolean.announce_level_info
+        state: 'on'
       - service: notify.alexa_media_codex_s_echo_show
         data:
           message: 'Turning on lights for sunset'
           data:
             type: announce
-      # Turn on the lamp!
-      - service: light.turn_on
-        entity_id: light.lamp
 
   # At night, LEDs on the switches are blindingly bright, so we mute them
   - alias: 'Lights - Status LEDs OFF'

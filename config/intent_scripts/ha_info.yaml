@@ -6,6 +6,11 @@ GetInfofromHA:
   speech:
     text: >
       {%- if SensorType.lower() == "temperature" -%}
+        {%- set mode = state('climate.thermostat_mode') -%}
+        {%- set targetTemp = state('sensor.hvac_temp_target') -%}
+        {%- set readTemp = state('sensor.thermostat_temp') -%}
+        {%- set hvacAction = state('sensor.hvac_action') -%}
+        The thermostat is set to {{mode}} at {{targetTemp}}, and is reading {{readTemp}}, and is currently {{hvacAction}}.
         Temperature in the house is {{ states('sensor.thermostat_temp') }} degrees, and it's {{ states('sensor.outside_temp') }} outside.
       {%- elif SensorType.lower() == "humidity" -%}
         No humidity yet, but chill for a bit and we got this!
