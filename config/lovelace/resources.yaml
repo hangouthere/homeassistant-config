@@ -34,3 +34,5 @@
   type: module
 - url: /community_plugin/roku-card/roku-card.js
   type: module
+- url: /community_plugin/lovelace-paper-buttons-row/paper-buttons-row.js
+  type: module

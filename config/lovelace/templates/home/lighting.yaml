@@ -8,12 +8,13 @@ cards:
   ####################
   # Lighting Buttons
 
-  - type: 'custom:button-entity-row'
+  - type: 'custom:paper-buttons-row'
     buttons:
       - icon: 'mdi:lamp'
         name: Lamp Only
-        service: script.lights_lamp_only
+        entity: script.lights_lamp_only
         style:
+          button:
             box-shadow: "0px 1px 0px 0px #fff6af"
             background: "linear-gradient(to bottom, #ffec64 5%, #ffab23 100%)"
             background-color: "#ffec64"
@@ -25,13 +26,13 @@ cards:
             font-family: "Arial"
             font-size: "15px"
             font-weight: "bold"
-            padding: "6px 24px"
             text-decoration: "none"
             text-shadow: "0px 1px 0px #ffee66"
       - icon: 'mdi:lightbulb-off'
         name: All Off
-        service: script.lights_all_off
+        entity: script.lights_all_off
         style:
+          button:
             box-shadow: "0px 1px 0px 0px #3d4285"
             background: "linear-gradient(to bottom, #4E5396 5%, #3d4285 100%)"
             background-color: "#ffec64"
@@ -43,13 +44,13 @@ cards:
             font-family: "Arial"
             font-size: "15px"
             font-weight: "bold"
-            padding: "6px 24px"
             text-decoration: "none"
             text-shadow: "0px 1px 0px #4E5396"
       - icon: 'mdi:lightbulb-on'
         name: All On
-        service: script.lights_all_on
+        entity: script.lights_all_on
         style:
+          button:
             box-shadow: "0px 1px 0px 0px #3d4285"
             background: "linear-gradient(to bottom, #4E5396 5%, #3d4285 100%)"
             background-color: "#ffec64"
@@ -61,7 +62,6 @@ cards:
             font-family: "Arial"
             font-size: "15px"
             font-weight: "bold"
-            padding: "6px 24px"
             text-decoration: "none"
             text-shadow: "0px 1px 0px #4E5396"
 

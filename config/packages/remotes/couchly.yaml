@@ -18,6 +18,15 @@ automation:
       entity_id: input_boolean.tv_select_xbox_couchly
       to: 'on'
     action:
+      - service: script.select_xbox_input
+
+###############################################################################################
+## Scripts
+########################################################################################
+
+script:
+  select_xbox_input:
+    sequence:
       - service: androidtv.adb_command
         data:
           entity_id: media_player.couchly

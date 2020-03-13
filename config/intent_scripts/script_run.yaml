@@ -2,7 +2,8 @@ RunScriptIntent:
   card:
     type: simple
     title: Run Script
-    content: Ask Home Assistant to run {{ ScriptName }}.
+    content: >-
+      Asking Home Assistant to run script: {{ ScriptName | replace(" ", "_") }}
   action:
     service: script.turn_on
     data_template:

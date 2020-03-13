@@ -1,16 +1,18 @@
-type: 'custom:button-entity-row'
+type: 'custom:paper-buttons-row'
 buttons:
   - icon: 'mdi:refresh'
     name: Reload All Things
-    service: script.homeassistant_reload_all
+    entity: script.homeassistant_reload_all
     style:
+      button:
         background: '#999900'
         border-radius: 9999px
         color: lightgray
   - icon: 'mdi:refresh'
     name: Restart HA
-    service: homeassistant.restart
+    entity: homeassistant.restart
     style:
+      button:
         background: '#CC0000'
         border-radius: 9999px
         color: lightgray

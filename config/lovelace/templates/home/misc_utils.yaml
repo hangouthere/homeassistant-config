@@ -22,35 +22,50 @@ cards:
         </span>
 
     # Robo Vac Controls
-    - type: 'custom:button-entity-row'
+    - type: 'custom:paper-buttons-row'
       buttons:
         - icon: 'mdi:play'
-          service: vacuum.start
-          service_data:
-            entity_id: vacuum.dusty
+          tap_action:
+            action: call-service
+            service: vacuum.start
+            service_data:
+              entity_id: vacuum.dusty
           style:
-            - color: white
+            button:
+              color: white
         - icon: 'mdi:pause'
-          service: vacuum.pause
-          service_data:
-            entity_id: vacuum.dusty
+          tap_action:
+            action: call-service
+            service: vacuum.pause
+            service_data:
+              entity_id: vacuum.dusty
           style:
-            - color: white
+            button:
+              color: white
         - icon: 'mdi:stop'
-          service: vacuum.stop
-          service_data:
-            entity_id: vacuum.dusty
+          tap_action:
+            action: call-service
+            service: vacuum.stop
+            service_data:
+              entity_id: vacuum.dusty
           style:
-            - color: white
+            button:
+              color: white
         - icon: 'mdi:map-marker'
-          service: vacuum.locate
-          service_data:
-            entity_id: vacuum.dusty
+          tap_action:
+            action: call-service
+            service: vacuum.locate
+            service_data:
+              entity_id: vacuum.dusty
           style:
-            - color: white
+            button:
+              color: white
         - icon: 'mdi:home'
-          service: vacuum.return_to_base
-          service_data:
-            entity_id: vacuum.dusty
+          tap_action:
+            action: call-service
+            service: vacuum.return_to_base
+            service_data:
+              entity_id: vacuum.dusty
           style:
-            - color: white
+            button:
+              color: white

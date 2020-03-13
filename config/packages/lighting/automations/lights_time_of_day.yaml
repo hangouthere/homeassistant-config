@@ -15,7 +15,7 @@ automation:
       # Only continue if we're before sunrise (or up to 15min AFTER sunrise)
       - condition: sun
         before: sunrise
-        before_offset: "+00:15:00"
+        before_offset: "-00:15:00"
       # Log it
       - service: system_log.write
         data_template:
@@ -43,8 +43,7 @@ automation:
       - service: light.turn_on
         entity_id: light.lamp
       # Announce it, if allowed
-      - condition:
-        condition: state
+      - condition: state
         entity_id: input_boolean.announce_level_info
         state: 'on'
       - service: notify.alexa_media_codex_s_echo_show
@@ -67,6 +66,6 @@ automation:
     initial_state: true
     trigger:
       platform: time
-      at: "06:00:00"
+      at: "07:30:00"
     action:
       - service: script.lights_all_status_on
