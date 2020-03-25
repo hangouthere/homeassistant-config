@@ -3,28 +3,42 @@
   icon: 'mdi:devices'
   badges: []
   cards:
-    - type: 'custom:auto-entities'
-      card:
-        type: entities
-        title: 'Presence Crap'
-      filter:
-        include:
-          - entity_id: '*presence*'
+    - type: entities
+      title: Presence Crap
+      entities:
+        - type: custom:auto-entities
+          card:
+            type: custom:fold-entity-row
+            head:
+              type: section
+              label: Show More
+          filter:
+            include:
+              - entity_id: '*presence*'
     - !include ../templates/shared/refresh.yaml
-    - type: 'custom:auto-entities'
-      card:
-        type: entities
-        title: 'Input Booleans'
-      filter:
-        include:
-          - domain: 'input_boolean'
-    - type: 'custom:auto-entities'
-      card:
-        show_header_toggle: false
-        title: 'Unavailable Entities'
-        type: entities
-      filter:
-        include:
-          - state: "unavailable"
-      sort:
-        method: name
+    - type: entities
+      title: Input Booleans
+      entities:
+        - type: custom:auto-entities
+          card:
+            type: custom:fold-entity-row
+            head:
+              type: section
+              label: Show More
+          filter:
+            include:
+              - domain: 'input_boolean'
+    - type: entities
+      title: Unavailable Entities
+      entities:
+        - type: custom:auto-entities
+          card:
+            type: custom:fold-entity-row
+            head:
+              type: section
+              label: Show More
+          filter:
+            include:
+              - state: "unavailable"
+          sort:
+            method: name

@@ -13,15 +13,13 @@ entities:
       .state.entity {
         text-transform: capitalize;
       }
-    primary:
-      entity: sensor.outside_temp
-      name: 'Outside'
-    secondary:
-      entity: sensor.hvac_temp_target
-      name: 'Target'
-    tertiary:
-      entity: sensor.thermostat_temp
-      name: 'Read'
+    entities:
+      - entity: sensor.outside_temp
+        name: 'Outside'
+      - entity: sensor.hvac_temp_target
+        name: 'Target'
+      - entity: sensor.thermostat_temp
+        name: 'Read'
 
   # Runtime Durations
   - type: custom:multiple-entity-row
@@ -29,15 +27,13 @@ entities:
     name: 'Durations'
     icon: mdi:timelapse
     name_state: Today
-    primary:
-      entity: sensor.hvac_duration_avg_last7days
-      name: 'Avg 7d'
-    secondary:
-      entity: sensor.hvac_duration_total_last7days
-      name: '7 Days'
-    tertiary:
-      entity: sensor.hvac_duration_total_last24hrs
-      name: '24 Hrs'
+    entities:
+      - entity: sensor.hvac_duration_avg_last7days
+        name: 'Avg 7d'
+      - entity: sensor.hvac_duration_total_last7days
+        name: '7 Days'
+      - entity: sensor.hvac_duration_total_last24hrs
+        name: '24 Hrs'
 
   # Runtime Cycles
   - type: custom:multiple-entity-row
@@ -45,15 +41,13 @@ entities:
     name: 'Cycles'
     icon: mdi:run
     name_state: Today
-    primary:
-      entity: sensor.hvac_date_filter_dayssincechange
-      name: 'Days Since'
-    secondary:
-      entity: sensor.hvac_count_avg_sincechange
-      name: 'Avg/Day'
-    tertiary:
-      entity: sensor.hvac_count_total_sincechange
-      name: 'Since Change'
+    entities:
+      - entity: sensor.hvac_date_filter_dayssincechange
+        name: 'Days Since'
+      - entity: sensor.hvac_count_avg_sincechange
+        name: 'Avg/Day'
+      - entity: sensor.hvac_count_total_sincechange
+        name: 'Since Change'
 
   # Filter Lifetime
   - type: custom:multiple-entity-row
@@ -61,9 +55,8 @@ entities:
     name: 'Filter'
     icon: mdi:calendar-repeat
     name_state: Days Left
-    secondary:
-      entity: input_text.hvac_store_duration_filter_average
-      name: 'Exp Life'
-    tertiary:
-      entity: sensor.hvac_duration_total_sincechange
-      name: 'Since Change'
+    entities:
+      - entity: input_text.hvac_store_duration_filter_average
+        name: 'Exp Life'
+      - entity: sensor.hvac_duration_total_sincechange
+        name: 'Since Change'

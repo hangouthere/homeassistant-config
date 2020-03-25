@@ -40,23 +40,28 @@
             method: attribute
             attribute: battery_level
     - !include ../templates/shared/refresh.yaml
-    - type: 'custom:auto-entities'
-      card:
-        show_header_toggle: false
-        title: Scripts
-        type: entities
-      filter:
-        include:
-          - domain: script
-      sort:
-        method: name
-    - type: 'custom:auto-entities'
-      card:
-        show_header_toggle: false
-        title: Automations
-        type: entities
-      filter:
-        include:
-          - domain: automation
-      sort:
-        method: name
+    - type: entities
+      title: Scripts & Automations
+      entities:
+        - type: custom:auto-entities
+          card:
+            type: custom:fold-entity-row
+            head:
+              type: section
+              label: Scripts
+          filter:
+            include:
+              - domain: script
+          sort:
+            method: name
+        - type: custom:auto-entities
+          card:
+            type: custom:fold-entity-row
+            head:
+              type: section
+              label: Animations
+          filter:
+            include:
+              - domain: automation
+          sort:
+            method: name

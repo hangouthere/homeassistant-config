@@ -2,7 +2,7 @@
 # Lighting UI
 
 type: vertical-stack
-title: Lighting
+title: Lighting Control
 cards:
 
   ####################
@@ -28,6 +28,8 @@ cards:
             font-weight: "bold"
             text-decoration: "none"
             text-shadow: "0px 1px 0px #ffee66"
+            text-align: "center"
+            width: "120px"
       - icon: 'mdi:lightbulb-off'
         name: All Off
         entity: script.lights_all_off
@@ -46,6 +48,8 @@ cards:
             font-weight: "bold"
             text-decoration: "none"
             text-shadow: "0px 1px 0px #4E5396"
+            text-align: "center"
+            width: "120px"
       - icon: 'mdi:lightbulb-on'
         name: All On
         entity: script.lights_all_on
@@ -64,6 +68,8 @@ cards:
             font-weight: "bold"
             text-decoration: "none"
             text-shadow: "0px 1px 0px #4E5396"
+            text-align: "center"
+            width: "120px"
 
   ####################
   # Lighting Controls
@@ -72,27 +78,32 @@ cards:
   # Entities are automatic via `auto-entities`
   # "ON" states rise to the top!
 
-  - type: 'custom:auto-entities'
-    card:
-      show_header_toggle: false
-      type: entities
-    filter:
-      exclude:
-        - entity_id: /.*(alexa|echo|shuffle|repeat|disturb).*/
-      include:
-        - domain: light
-          options:
-            type: 'custom:slider-entity-row'
-            tap_action:
-              action: toggle
-            hold_action:
-              action: more-info
-        - domain: switch
-          options:
-            tap_action:
-              action: toggle
-            hold_action:
-              action: more-info
-    sort:
-      method: state
-      reverse: true
+  - type: entities
+    title: Lights
+    entities:
+      - type: custom:auto-entities
+        card:
+          type: custom:fold-entity-row
+          head:
+            type: section
+            label: Show More
+        filter:
+          exclude:
+            - entity_id: /.*(alexa|echo|shuffle|repeat|disturb).*/
+          include:
+            - domain: light
+              options:
+                type: 'custom:slider-entity-row'
+                tap_action:
+                  action: toggle
+                hold_action:
+                  action: more-info
+            - domain: switch
+              options:
+                tap_action:
+                  action: toggle
+                hold_action:
+                  action: more-info
+        sort:
+          method: state
+          reverse: true
