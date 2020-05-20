@@ -4,8 +4,9 @@ GetInfofromHA:
     title: Get {{ SensorType }} information
     content: &outMessage >
       {%- set tempNames = ["temperature", "temp", "thermostat"] -%}
+      {%- set vacuumNames = ["vacuum", "dusty"] -%}
       {%- if SensorType.lower() in tempNames -%}
-        {%- set mode = states ('climate.thermostat_mode') -%}
+        {%- set mode = states('climate.thermostat_mode') -%}
         {%- set outsideTemp = states('sensor.outside_temp') -%}
         {%- set targetTemp = states('sensor.hvac_temp_target') | int -%}
         {%- set readTemp = states('sensor.thermostat_temp').replace('.0', '') -%}
@@ -13,8 +14,11 @@ GetInfofromHA:
         {%- set humidity = states('sensor.thermostat_humidity') | int -%}
         It is {{outsideTemp}} degrees outside, and {{readTemp}} degrees inside the home with a {{ humidity }}% humidity level. 
         The thermostat is set to {{mode}} and is currently {{hvacAction}}, trying to maintain {{targetTemp}} degrees.
-      {%- elif SensorType.lower() == "humidity" -%}
-        No humidity yet, but chill for a bit and we got this!
+      {%- elif SensorType.lower() in vacuumNames -%}
+        {%- set mode = states('vacuum.dusty') -%}
+        {%- set status = state_attr('vacuum.dusty', 'status') -%}
+        {%- set battery = state_attr('vacuum.dusty', 'battery_level') -%}
+        Dusty is {{mode}} and currently {{status}}, with a battery level of {{battery}} percent.
       {%- elif SensorType.lower() == "secret test" -%}
         This is gonna be cool
       {%- else -%}

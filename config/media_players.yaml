@@ -1,4 +1,4 @@
   # Use the Python ADB implementation
   - platform: androidtv
     name: Couchly
-    host: 192.168.1.100
+    host: !secret ip_tv_living_room
