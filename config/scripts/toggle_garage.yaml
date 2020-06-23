@@ -5,9 +5,7 @@ sequence:
       data:
         type: announce
   - service: cover.open_cover
-    data:
-      entity_id: cover.garage_door
+    entity_id: cover.garage_door
   - delay: '00:03:00'
   - service: cover.close_cover
-    data:
-      entity_id: cover.garage_door
+    entity_id: cover.garage_door

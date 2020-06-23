@@ -1,0 +1,129 @@
+automation:
+  # Garage Door Left Open!
+  # - Announce every 15min about the garage door being left open
+  # - Before each announcement, check if the garage door is open first!
+  - alias: 'Security - Garage Auto Close'
+    initial_state: true
+    trigger:
+      - platform: state
+        entity_id: cover.garage_door
+        from: 'opening'
+        to: 'open'
+    action:
+      # Log it
+      - service: system_log.write
+        data_template:
+          message: "[Security:Garage] Door Opened - Initiating Auto Close Sequence"
+          level: warning
+      - service: notify.alexa_media_codex_s_echo_show
+        data:
+          message: 'Garage Door Opened... Initiating Auto Close Sequence'
+          data:
+            type: announce
+      # Wait 15m before proceeding
+      - delay: '00:15:00'
+      # Make sure garage is still open before going on
+      - condition: state
+        entity_id: cover.garage_door
+        state: 'open'
+      # Announce it
+      - service: notify.alexa_media_everywhere
+        data:
+          message: '<voice name="Matthew">The garage door has been open for 15 minutes. I will auto close it in 45 minutes</voice>'
+          data:
+            method: speak
+            type: announce
+      # Wait 15m before proceeding
+      - delay: '00:15:00'
+      # Make sure garage is still open before going on
+      - condition: state
+        entity_id: cover.garage_door
+        state: 'open'
+      # Announce it
+      - service: notify.alexa_media_everywhere
+        data:
+          message: '<voice name="Matthew">The garage door has been open for 30 minutes. I will auto close it in 30 minutes</voice>'
+          data:
+            method: speak
+            type: announce
+      # Wait 15m before proceeding
+      - delay: '00:15:00'
+      # Make sure garage is still open before going on
+      - condition: state
+        entity_id: cover.garage_door
+        state: 'open'
+      # Announce it
+      - service: notify.alexa_media_everywhere
+        data:
+          message: '<voice name="Matthew">The garage door has been open for 45 minutes. I will auto close it in 15 minutes</voice>'
+          data:
+            method: speak
+            type: announce
+      # Wait 10m before proceeding
+      - delay: '00:10:00'
+      # Make sure garage is still open before going on
+      - condition: state
+        entity_id: cover.garage_door
+        state: 'open'
+      # Announce it
+      - service: notify.alexa_media_everywhere
+        data:
+          message: '<voice name="Matthew">WARNING! The Garage Door Will Auto Close in 5 minutes!</voice>'
+          data:
+            method: speak
+            type: announce
+      # Wait 3m before proceeding
+      - delay: '00:03:00'
+      # Make sure garage is still open before going on
+      - condition: state
+        entity_id: cover.garage_door
+        state: 'open'
+      # Announce it
+      - service: notify.alexa_media_everywhere
+        data:
+          message: '<voice name="Matthew">WARNING! The Garage Door Will Auto Close in 2 minutes!</voice>'
+          data:
+            method: speak
+            type: announce
+      # Wait 1m before proceeding
+      - delay: '00:01:00'
+      # Make sure garage is still open before going on
+      - condition: state
+        entity_id: cover.garage_door
+        state: 'open'
+      # Announce it
+      - service: notify.alexa_media_everywhere
+        data:
+          message: '<voice name="Matthew">WARNING! The Garage Door Will Auto Close in 1 minute!</voice>'
+          data:
+            method: speak
+            type: announce
+      # Wait 1m before proceeding
+      - delay: '00:01:00'
+      # Make sure garage is still open before going on
+      - condition: state
+        entity_id: cover.garage_door
+        state: 'open'
+      # Announce it
+      - service: notify.alexa_media_everywhere
+        data:
+          message: '<voice name="Matthew">WARNING! Closing the garage door NOW!</voice>'
+          data:
+            method: speak
+            type: announce
+      # Close Garage Door!
+      - service: cover.close_cover
+        entity_id: cover.garage_door
+      # Wait 1m before proceeding
+      - delay: '00:01:00'
+      # Make sure garage is still open before going on
+      - condition: state
+        entity_id: cover.garage_door
+        state: 'open'
+      # Announce it
+      - service: notify.alexa_media_everywhere
+        data:
+          message: 'Error! Garage Door Did Not Close'
+          data:
+            method: all
+            type: announce

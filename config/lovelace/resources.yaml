@@ -9,7 +9,7 @@
 - url: /hacsfiles/mini-graph-card/mini-graph-card-bundle.js
   type: module
 - url: /hacsfiles/bar-card/bar-card.js
-  type: js
+  type: module
 - url: /hacsfiles/secondaryinfo-entity-row/secondaryinfo-entity-row.js
   type: js
 - url: /hacsfiles/lovelace-card-tools/card-tools.js

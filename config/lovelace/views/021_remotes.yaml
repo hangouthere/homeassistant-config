@@ -8,6 +8,21 @@
     #   gridrows: 50px 50px 50px
     #   gridcols: 50px 50px 50px
     #   cards:
+    - type: 'custom:paper-buttons-row'
+      buttons:
+        - icon: 'mdi:restart'
+          name: Reboot TV
+          tap_action:
+            action: call-service
+            service: androidtv.adb_command
+            service_data:
+              entity_id: media_player.couchly
+              command: reboot
+          style:
+            button:
+              background: '#999900'
+              border-radius: 9999px
+              color: lightgray
     - type: "custom:roku-card"
       entity: media_player.couchly
       tv: true

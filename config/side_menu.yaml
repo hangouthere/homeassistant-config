@@ -6,12 +6,12 @@
 
 grafana:
   title: 'NFGArmy Metrics'
-  url: 'https://grafana.nerdfoundry.duckdns.org/d/000000127/telegraf-system-dashboard?orgId=1&refresh=5s&var-datasource=InfluxDB&var-inter=10s&var-server=nfgarmy&var-mountpoint=All&var-cpu=All&var-disk=All&var-netif=All&kiosk=tv'
+  url: 'https://grafana.nfgarmy.com/d/000000127/telegraf-system-dashboard?orgId=1&refresh=5s&var-datasource=InfluxDB&var-inter=10s&var-server=nfgarmy&var-mountpoint=All&var-cpu=All&var-disk=All&var-netif=All&kiosk=tv'
   icon: 'mdi:chart-bar'
   require_admin: true
 
 motioneye:
   title: 'Motion Eye'
-  url: 'https://motioneye.nerdfoundry.duckdns.org'
+  url: 'https://motioneye.nfgarmy.com'
   icon: 'mdi:camera-iris'
   require_admin: true

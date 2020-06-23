@@ -2,3 +2,4 @@
   - platform: androidtv
     name: Couchly
     host: !secret ip_tv_living_room
+    apps: !include ./_app_mapping.yaml
