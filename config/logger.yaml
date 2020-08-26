@@ -1,6 +1,6 @@
 default: warn
 logs:
-    homeassistant.components.device_tracker: debug
-    # homeassistant.components.http: debug
-    # homeassistant.components.zwave: debug
-    # openzwave: debug
+  homeassistant.components.device_tracker: debug
+  # homeassistant.components.http: debug
+  # homeassistant.components.zwave: debug
+  # openzwave: debug

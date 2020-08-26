@@ -69,7 +69,17 @@ To set the parameter, simply use `zwave.set_config_parameter` to assign a new pa
 {"node_id": "3", "parameter": "3", "size": "1", "value" : "2"}
 ```
 
-> **Note:** There are scripts and automations established for this within the repository!
+| Parameter | Size | Default | Values                                                                       | Notes                                                                                                                                                                                  |
+| --------- | ---- | ------- | ---------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 3         | 1    | 0       | 0) On Inverted to Power<br>1) On with Power<br>2) Always Off<br>3) Always On | Good to turn off at night                                                                                                                                                              |
+| 16        | 1    | 0       | 0) Act as Dimmer<br>1) Act as Switch                                         | Currently no reason to change                                                                                                                                                          |
+| 19        | 1    | 0       | 0) Act Normal<br>1) Setup for Alternate Exclusion                            | ***WARNING* This is dangerous!**<br>Press two times ON button and two times OFF button, LED will flash 5 times if exclusion is successful.                                             |
+| 6         | 1    | 0       | 0-255, except 0 and 255                                                      | 0 seems to make the switch turn instantly on, but still dim off.<br>Any value >0 seems to make it turn on to 100% no matter what.                                                      |
+| 30        | 1    | 1       | 1-99                                                                         | Sets a threshold in power for minimum needed to power on.<br>To fine tune start-time of ramp-on power set this ~2-10 depending on power and bulb combo.                                |
+| 31        | 1    | 99      | 1-99                                                                         | Similar to parameter `#30`, but for Brightness.                                                                                                                                        |
+| 32        | 1    | 0       | 0-99                                                                         | Sets the default value to turn the light to when turned on.<br>0 disables the feature, and turns on to last setting used.<br>Any value >0 ramps the light up to that value on turn-on. |
+
+> **Note:** There are scripts and automations established for some of these within the repository!
 
 ## Alexa Voice TTS
 
