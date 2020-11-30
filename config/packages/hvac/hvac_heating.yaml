@@ -8,13 +8,13 @@ sensor:
       # If heating is active, then set to target temp, otherwise set to 0
       # This is for UI purposes
       hvac_track_heat:
-        friendly_name: 'HVAC Tracking of Heating'
+        friendly_name: "HVAC Tracking of Heating"
         device_class: temperature
-        unit_of_measurement: '°F'
-        entity_id:
-          - sensor.hvac_action
-          - sensor.hvac_temp_target
-          - climate.thermostat_mode
+        unit_of_measurement: "°F"
+        # entity_id:
+        #   - sensor.hvac_action
+        #   - sensor.hvac_temp_target
+        #   - climate.thermostat_mode
         value_template: >-
           {%- set isOperating = is_state('sensor.hvac_action', 'heating') -%}
           {%- set tempValue = states('sensor.hvac_temp_target') if isOperating else 0 -%}
@@ -24,8 +24,8 @@ sensor:
   - platform: history_stats
     name: hvac_count_heat_today
     entity_id: sensor.hvac_action
-    start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
-    end: '{{ now() }}'
+    start: "{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}"
+    end: "{{ now() }}"
     state: heating
     type: count
 
@@ -34,7 +34,7 @@ sensor:
     name: hvac_count_heat_sincechange
     entity_id: sensor.hvac_action
     start: "{{ as_timestamp(states('input_text.hvac_store_date_lastchange')) }}"
-    end: '{{ now() }}'
+    end: "{{ now() }}"
     state: heating
     type: count
 
@@ -42,8 +42,8 @@ sensor:
   - platform: history_stats
     name: hvac_duration_heat_today
     entity_id: sensor.hvac_action
-    start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
-    end: '{{ now() }}'
+    start: "{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}"
+    end: "{{ now() }}"
     state: heating
     type: time
 
@@ -52,17 +52,17 @@ sensor:
     name: hvac_duration_heat_last24hrs
     entity_id: sensor.hvac_action
     state: heating
-    end: '{{ now() }}'
+    end: "{{ now() }}"
     type: time
     duration:
       hours: 24
 
   # Heating duration for last 7 days
   - platform: history_stats
-    name:  hvac_duration_heat_last7days
+    name: hvac_duration_heat_last7days
     entity_id: sensor.hvac_action
     state: heating
-    end: '{{ now() }}'
+    end: "{{ now() }}"
     type: time
     duration:
       days: 7
@@ -72,7 +72,7 @@ sensor:
     name: hvac_duration_heat_sincechange
     entity_id: sensor.hvac_action
     start: "{{ as_timestamp(states('input_text.hvac_store_date_lastchange')) }}"
-    end: '{{ now() }}'
+    end: "{{ now() }}"
     state: heating
     type: time
 
@@ -83,14 +83,14 @@ sensor:
 homeassistant:
   customize:
     sensor.hvac_count_heat_today:
-      friendly_name: 'HVAC Trigger Counts (Heating) - Today'
+      friendly_name: "HVAC Trigger Counts (Heating) - Today"
     sensor.hvac_count_heat_sincechange:
-      friendly_name: 'HVAC Trigger Counts (Heating) - Since Filter Changed'
+      friendly_name: "HVAC Trigger Counts (Heating) - Since Filter Changed"
     sensor.hvac_duration_heat_today:
-      friendly_name: 'HVAC Duration (Heating) - Today'
+      friendly_name: "HVAC Duration (Heating) - Today"
     sensor.hvac_duration_heat_last24hrs:
-      friendly_name: 'HVAC Duration (Heating) - Last 24 Hours'
+      friendly_name: "HVAC Duration (Heating) - Last 24 Hours"
     sensor.hvac_duration_heat_last7days:
-      friendly_name: 'HVAC Duration (Heating) - Last 7 Days'
+      friendly_name: "HVAC Duration (Heating) - Last 7 Days"
     sensor.hvac_duration_heat_sincechange:
-      friendly_name: 'HVAC Duration (Heating) - Since Filter Changed'
+      friendly_name: "HVAC Duration (Heating) - Since Filter Changed"

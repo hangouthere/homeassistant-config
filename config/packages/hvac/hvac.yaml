@@ -56,7 +56,7 @@ sensor:
           {{ cool + heat }}
 
       hvac_count_avg_sincechange:
-        entity_id: sensor.hvac_date_filter_dayssincechange
+        # entity_id: sensor.hvac_date_filter_dayssincechange
         friendly_name: 'Total Count Average per day since the Filter was Marked Replaced'
         value_template: >-
           {%- set daysSince = states('sensor.hvac_date_filter_dayssincechange') | int -%}
@@ -131,32 +131,32 @@ script:
   hvac_reset_filter:
     alias: 'HVAC - Reset Filter Change Date'
     sequence:
-    - service: system_log.write
-      data_template:
-        level: info
-        message: |
-          HVAC Filter Reset Triggered
-            * Current Duration:  {{ states('sensor.hvac_duration_total_sincechange') }}
-            * Last Duration:  {{ states('input_text.hvac_store_duration_filter_average') }}
-    # Reset the change date to NOW
-    - service: input_text.set_value
-      entity_id: input_text.hvac_store_date_lastchange
-      data_template:
-        value: '{{ now() }}'
+      - service: system_log.write
+        data_template:
+          level: info
+          message: |
+            HVAC Filter Reset Triggered
+              * Current Duration:  {{ states('sensor.hvac_duration_total_sincechange') }}
+              * Last Duration:  {{ states('input_text.hvac_store_duration_filter_average') }}
+      # Reset the change date to NOW
+      - service: input_text.set_value
+        entity_id: input_text.hvac_store_date_lastchange
+        data_template:
+          value: '{{ now() }}'
 
-    # Set Rolling Average of Filter Life Cycles
-    #
-    # EX: If Jan 1 it was marked changed, never changed before, we default to 90 days
-    #     Later, on April 20, we mark changed again, and calculate it was actually 111 days (if my math is right)...
-    #     So we average (90 + 111) / 2 | round(0) = 101 day filter expectancy, and keep doing this monthly to self calculate
-    - service: input_text.set_value
-      entity_id: input_text.hvac_store_duration_filter_average
-      data_template:
-        value: >-
-          {%- set currentDuration = (states('sensor.hvac_duration_total_sincechange') | int) -%}
-          {%- set lastDuration = (states('input_text.hvac_store_duration_filter_average') | int) -%}
-          {%- if lastDuration > 0 -%}
-            {{ (lastDuration + currentDuration) / 2 | round(0) }}
-          {%- else -%}
-              183
-          {%- endif -%}
+      # Set Rolling Average of Filter Life Cycles
+      #
+      # EX: If Jan 1 it was marked changed, never changed before, we default to 90 days
+      #     Later, on April 20, we mark changed again, and calculate it was actually 111 days (if my math is right)...
+      #     So we average (90 + 111) / 2 | round(0) = 101 day filter expectancy, and keep doing this monthly to self calculate
+      - service: input_text.set_value
+        entity_id: input_text.hvac_store_duration_filter_average
+        data_template:
+          value: >-
+            {%- set currentDuration = (states('sensor.hvac_duration_total_sincechange') | int) -%}
+            {%- set lastDuration = (states('input_text.hvac_store_duration_filter_average') | int) -%}
+            {%- if lastDuration > 0 -%}
+              {{ (lastDuration + currentDuration) / 2 | round(0) }}
+            {%- else -%}
+                183
+            {%- endif -%}
