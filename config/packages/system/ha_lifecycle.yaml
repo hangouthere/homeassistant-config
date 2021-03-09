@@ -12,7 +12,7 @@ automation:
       # Log it
       - service: system_log.write
         data_template:
-          message: "HA Started, Running Start Automation - {{ trigger }}"
+          message: 'HA Started, Running Start Automation - {{ trigger }}'
           level: warning
       # Wait 30s for everything to settle down
       - delay: '00:00:30'
@@ -55,13 +55,14 @@ automation:
       # Log it
       - service: system_log.write
         data_template:
-          message: "Entity Registry Updated Triggered - {{ trigger }}"
+          message: 'Entity Registry Updated Triggered - {{ trigger }}'
           level: info
       # Announce it
       - service: notify.alexa_media_everywhere
         data:
-          type: announce
-          method: speak
+          data:
+            type: announce
+            method: all
         data_template:
           message: >
             {%- set status = "ADDED TO" if trigger.event.data.action != "remove" else "REMOVED FROM" -%}
