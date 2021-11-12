@@ -12,7 +12,7 @@ zwscene.xml
 
 # Logs
 OZW_Log.txt
-*.log
+*.log*
 
 # Data and personal info
 alexa_media*.pickle
