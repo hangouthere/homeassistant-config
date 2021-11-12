@@ -46,7 +46,7 @@ automation:
       - condition: state
         entity_id: input_boolean.announce_level_info
         state: 'on'
-      - service: notify.alexa_media_codex_s_echo_show
+      - service: notify.alexa_media_living_room_show
         data:
           message: 'Turning on lights for sunset'
           data:

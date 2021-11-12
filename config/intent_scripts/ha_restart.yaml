@@ -10,4 +10,4 @@ HARestartIntent:
       I'd be happy to serve you once more!
   action:
     - delay: '00:00:15'
-    - service: homeassistant.restart
+    #- service: homeassistant.restart

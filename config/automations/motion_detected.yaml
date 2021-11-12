@@ -8,7 +8,7 @@
     entity_id: input_boolean.announce_level_info
     state: 'on'
   action:
-    - service: notify.alexa_media_codex_s_echo_show
+    - service: notify.alexa_media_living_room_show
       data_template:
         message: >
           {%- set status = 'Started' if trigger.to_state.state != 'off' else 'Ended' -%}

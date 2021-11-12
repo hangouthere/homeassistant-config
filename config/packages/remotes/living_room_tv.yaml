@@ -3,19 +3,19 @@
 ########################################################################################
 
 input_boolean:
-  tv_select_xbox_couchly:
-    name: 'Intent - (Trigger) Select XBOX Input'
+  living_room_tv_select_hdmi1:
+    name: 'Intent - (Trigger) Select HDMI 1'
 
 ###############################################################################################
 ## Automations
 ########################################################################################
 
 automation:
-  - alias: 'Intent - (Process) Select XBOX input'
+  - alias: 'Intent - (Process) Select HDMI 1'
     initial_state: true
     trigger:
       platform: state
-      entity_id: input_boolean.tv_select_xbox_couchly
+      entity_id: input_boolean.living_room_tv_select_hdmi1
       to: 'on'
     action:
       - service: script.select_xbox_input
@@ -29,15 +29,15 @@ script:
     sequence:
       - service: androidtv.adb_command
         data:
-          entity_id: media_player.couchly
+          entity_id: media_player.living_room_tv
           command: INPUT
       - service: androidtv.adb_command
         data:
-          entity_id: media_player.couchly
+          entity_id: media_player.living_room_tv
           command: INPUT
       - service: androidtv.adb_command
         data:
-          entity_id: media_player.couchly
+          entity_id: media_player.living_room_tv
           command: CENTER
       - service: input_boolean.turn_off
-        entity_id: input_boolean.tv_select_xbox_couchly
+        entity_id: input_boolean.living_room_tv_select_hdmi1

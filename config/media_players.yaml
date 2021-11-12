@@ -1,5 +1,5 @@
-  # Use the Python ADB implementation
-  - platform: androidtv
-    name: Couchly
-    host: !secret ip_tv_living_room
-    apps: !include ./_app_mapping.yaml
+# Use the Python ADB implementation
+- platform: androidtv
+  name: Living_Room_TV
+  host: !secret ip_tv_living_room
+  apps: !include ./_app_mapping.yaml

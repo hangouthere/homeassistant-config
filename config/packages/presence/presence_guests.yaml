@@ -28,7 +28,7 @@ automation:
           level: warning
 
       # Announce it
-      - service: notify.alexa_media_codex_s_echo_show
+      - service: notify.alexa_media_living_room_show
         data_template:
           data:
             type: announce
@@ -58,7 +58,7 @@ automation:
           level: warning
 
       # Announce self shutdown
-      - service: notify.alexa_media_codex_s_echo_show
+      - service: notify.alexa_media_living_room_show
         data_template:
           data:
             type: announce

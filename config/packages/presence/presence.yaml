@@ -98,7 +98,7 @@ automation:
         entity_id: sensor.presence_consensus
         from: 'partial'
     action:
-      - service: notify.alexa_media_codex_s_echo_show
+      - service: notify.alexa_media_living_room_show
         data_template:
           message: >-
             {%- set whichState = 'entered' if trigger.to_state.state == 'partial' else 'exited' -%}
@@ -117,7 +117,7 @@ automation:
         entity_id: sensor.presence_consensus
         from: 'empty'
     action:
-      - service: notify.alexa_media_codex_s_echo_show
+      - service: notify.alexa_media_living_room_show
         data:
           message: 'House was empty but someone has arrived'
           data:

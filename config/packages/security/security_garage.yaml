@@ -15,7 +15,7 @@ automation:
         data_template:
           message: "[Security:Garage] Door Opened - Initiating Auto Close Sequence"
           level: warning
-      - service: notify.alexa_media_codex_s_echo_show
+      - service: notify.alexa_media_living_room_show
         data:
           message: 'Garage Door Opened... Initiating Auto Close Sequence'
           data:

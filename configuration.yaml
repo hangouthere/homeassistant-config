@@ -31,3 +31,8 @@ tts:
 weather: !include config/weather.yaml
 zone: !include config/zones.yaml
 zwave: !include config/zwave.yaml
+
+
+http:
+  use_x_forwarded_for : true
+  trusted_proxies: "172.18.0.0/24"

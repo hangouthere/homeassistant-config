@@ -1,11 +1,16 @@
 sequence:
-  - service: notify.alexa_media_codex_s_echo_show
+  - service: notify.alexa_media_living_room_show
     data:
-      message: 'Toggling Garage Door, waiting 3 minutes between'
+      message: 'Toggling Garage Door, waiting 15 minutes between'
       data:
         type: announce
   - service: cover.open_cover
     entity_id: cover.garage_door
-  - delay: '00:03:00'
+  - delay: '00:15:00'
+  - service: notify.alexa_media_living_room_show
+    data:
+      message: '15 minutes has been met, closing now. It should be aerated!'
+      data:
+        type: announce
   - service: cover.close_cover
     entity_id: cover.garage_door

@@ -16,7 +16,7 @@
             action: call-service
             service: androidtv.adb_command
             service_data:
-              entity_id: media_player.couchly
+              entity_id: media_player.living_room_tv
               command: reboot
           style:
             button:
@@ -24,7 +24,7 @@
               border-radius: 9999px
               color: lightgray
     - type: "custom:roku-card"
-      entity: media_player.couchly
+      entity: media_player.living_room_tv
       tv: true
       volume_up:
         show: false
@@ -37,82 +37,82 @@
           action: call-service
           service: androidtv.adb_command
           service_data:
-            entity_id: media_player.couchly
+            entity_id: media_player.living_room_tv
             command: POWER
       back:
         tap_action:
           action: call-service
           service: androidtv.adb_command
           service_data:
-            entity_id: media_player.couchly
+            entity_id: media_player.living_room_tv
             command: BACK
       info:
         tap_action:
           action: call-service
           service: androidtv.adb_command
           service_data:
-            entity_id: media_player.couchly
+            entity_id: media_player.living_room_tv
             command: MENU
       home:
         tap_action:
           action: call-service
           service: androidtv.adb_command
           service_data:
-            entity_id: media_player.couchly
+            entity_id: media_player.living_room_tv
             command: HOME
       up:
         tap_action:
           action: call-service
           service: androidtv.adb_command
           service_data:
-            entity_id: media_player.couchly
+            entity_id: media_player.living_room_tv
             command: UP
       down:
         tap_action:
           action: call-service
           service: androidtv.adb_command
           service_data:
-            entity_id: media_player.couchly
+            entity_id: media_player.living_room_tv
             command: DOWN
       left:
         tap_action:
           action: call-service
           service: androidtv.adb_command
           service_data:
-            entity_id: media_player.couchly
+            entity_id: media_player.living_room_tv
             command: LEFT
       right:
         tap_action:
           action: call-service
           service: androidtv.adb_command
           service_data:
-            entity_id: media_player.couchly
+            entity_id: media_player.living_room_tv
             command: RIGHT
       select:
         tap_action:
           action: call-service
           service: androidtv.adb_command
           service_data:
-            entity_id: media_player.couchly
+            entity_id: media_player.living_room_tv
             command: CENTER
       reverse:
         tap_action:
           action: call-service
           service: androidtv.adb_command
           service_data:
-            entity_id: media_player.couchly
+            entity_id: media_player.living_room_tv
             command: REVERSE
       forward:
         tap_action:
           action: call-service
           service: androidtv.adb_command
           service_data:
-            entity_id: media_player.couchly
+            entity_id: media_player.living_room_tv
             command: REWIND
       play:
         tap_action:
           action: call-service
           service: androidtv.adb_command
           service_data:
-            entity_id: media_player.couchly
+            entity_id: media_player.living_room_tv
             command: KEY_RESUME
