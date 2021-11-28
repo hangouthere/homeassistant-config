@@ -1,7 +1,0 @@
-elevation: 195
-latitude: !secret lat_home
-longitude: !secret long_home
-name: Home
-packages: !include_dir_named ./packages
-time_zone: America/Chicago
-unit_system: imperial

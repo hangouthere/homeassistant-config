@@ -25,8 +25,9 @@ automation:
   - alias: '_Lifecycle - ZWave Ready'
     initial_state: true
     trigger:
-      platform: event
-      event_type: zwave.network_ready
+      platform: state
+      entity_id: sensor.z_stick_gen5_usb_controller_node_status
+      to: 'alive'
     condition:
       condition: state
       entity_id: input_boolean.announce_level_info
@@ -36,6 +37,27 @@ automation:
       - service: notify.alexa_media_living_room_show
         data:
           message: 'Z Wave Network is Ready'
+          data:
+            type: tts
+
+  # ZWave is down
+  - alias: '_Lifecycle - ZWave Failed'
+    initial_state: true
+    trigger:
+      platform: state
+      entity_id: sensor.z_stick_gen5_usb_controller_node_status
+      to:
+        - 'unavailable'
+        - 'dead'
+    condition:
+      condition: state
+      entity_id: input_boolean.announce_level_info
+      state: 'on'
+    action:
+      # Announce it
+      - service: notify.alexa_media_living_room_show
+        data:
+          message: 'Z Wave Network has gone down!'
           data:
             type: tts
 

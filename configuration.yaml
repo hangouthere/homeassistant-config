@@ -2,37 +2,73 @@ default_config:
 
 alexa:
   smart_home:
+
 api:
+
 automation: !include_dir_merge_list config/automations
-camera: !include config/cameras.yaml
+
+camera:
+  - platform: mjpeg
+    name: Front Door
+    still_image_url: !secret url_front_door_still
+    mjpeg_url: !secret url_front_door_stream
+    username: !secret user_motioneye
+    password: !secret pass_motioneye
+
 # cast: !include config/cast.yaml
 # cover: !include config/covers.yaml
+
 frontend:
   themes: !include_dir_merge_named ./themes
-group: !include config/groups.yaml
-homeassistant: !include config/homeassistant.yaml
+
+homeassistant:
+  elevation: 195
+  latitude: !secret lat_home
+  longitude: !secret long_home
+  name: Home
+  packages: !include_dir_named ./config/packages
+  time_zone: America/Chicago
+  unit_system: imperial
+
 input_boolean: !include config/input_booleans.yaml
+
 intent_script: !include_dir_merge_named config/intent_scripts
+
 logger: !include config/logger.yaml
+
 lovelace:
   mode: yaml
   resources: !include config/lovelace/resources.yaml
-media_player: !include config/media_players.yaml
+
+media_player:
+  # Use the Python ADB implementation
+  - platform: androidtv
+    name: Living_Room_TV
+    host: !secret ip_tv_living_room
+    apps: !include config/_app_mapping.yaml
+
 panel_iframe: !include config/side_menu.yaml
-scene: !include config/scenes.yaml
+
 script: !include_dir_named config/scripts
+
 sensor:
   - platform: template
     sensors: !include_dir_merge_named config/sensor_templates
+
 stream:
+
 tts:
   - platform: google_translate
-# vacuum: !include config/vacuums.yaml
-weather: !include config/weather.yaml
-zone: !include config/zones.yaml
-zwave: !include config/zwave.yaml
 
+# vacuum: !include config/vacuums.yaml
+
+weather:
+  - platform: darksky
+    api_key: !secret token_darksky
+    mode: daily
+
+zone: !include config/zones.yaml
 
 http:
-  use_x_forwarded_for : true
-  trusted_proxies: "172.18.0.0/24"
+  use_x_forwarded_for: true
+  trusted_proxies: '172.18.0.0/24'
