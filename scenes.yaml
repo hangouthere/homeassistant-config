@@ -1,0 +1,26 @@
+- id: '1638069734932'
+  name: Movie Time
+  entities:
+    light.lamp:
+      supported_color_modes:
+      - brightness
+      friendly_name: Lamp
+      supported_features: 32
+      state: 'off'
+    light.dining_room:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 64
+      friendly_name: Dining
+      supported_features: 32
+      state: 'on'
+    light.kitchen:
+      supported_color_modes:
+      - brightness
+      color_mode: brightness
+      brightness: 26
+      friendly_name: Kitchen
+      supported_features: 32
+      state: 'on'
+  icon: mdi:movie-open

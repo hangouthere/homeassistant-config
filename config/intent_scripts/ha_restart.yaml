@@ -9,5 +9,10 @@ HARestartIntent:
       If you could be so kind as to wait while I restart my brain, 
       I'd be happy to serve you once more!
   action:
-    - delay: '00:00:15'
-    - service: homeassistant.restart
+    - service: system_log.write
+      data:
+        message: 'Alexa wants to restart HA'
+        level: warning
+    - service: input_boolean.turn_on
+      target:
+        entity_id: input_boolean.lifecycle_restart

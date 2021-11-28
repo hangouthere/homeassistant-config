@@ -18,6 +18,13 @@ camera:
 # cast: !include config/cast.yaml
 # cover: !include config/covers.yaml
 
+device_tracker:
+  - platform: tomato
+    host: !secret ip_router
+    username: !secret user_router
+    password: !secret pass_router
+    http_id: !secret extra_router_httpid
+
 frontend:
   themes: !include_dir_merge_named ./themes
 
@@ -36,6 +43,11 @@ intent_script: !include_dir_merge_named config/intent_scripts
 
 logger: !include config/logger.yaml
 
+logbook:
+  exclude:
+    entities:
+      - automation.lights_poll_lamp
+
 lovelace:
   mode: yaml
   resources: !include config/lovelace/resources.yaml
@@ -48,6 +60,8 @@ media_player:
     apps: !include config/_app_mapping.yaml
 
 panel_iframe: !include config/side_menu.yaml
+
+scene: !include scenes.yaml
 
 script: !include_dir_named config/scripts
 

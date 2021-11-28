@@ -1,3 +1,8 @@
+input_boolean:
+  lifecycle_restart:
+    name: '_Lifecycle - Restart HomeAssistant'
+    icon: 'mdi:restart-alert'
+
 automation:
   # HA Has fully started!
   # We can force some entities to update
@@ -15,11 +20,28 @@ automation:
           message: 'HA Started, Running Start Automation - {{ trigger }}'
           level: warning
       # Wait 30s for everything to settle down
-      - delay: '00:00:30'
-      # Update Entities
-      - service: homeassistant.update_entity
+      # ! FIXME: Do we need this still???
+      # - delay: '00:00:30'
+      # # Update Entities
+      # - service: homeassistant.update_entity
+      #   data:
+      #     entity_id: sensor.hvac_count_avg_sincechange
+
+  - alias: '_Lifecycle - HA Restart'
+    initial_state: true
+    trigger:
+      platform: state
+      entity_id: input_boolean.lifecycle_restart
+      to: 'on'
+    action:
+      - service: system_log.write
         data:
-          entity_id: sensor.hvac_count_avg_sincechange
+          message: 'Restarting Home Assistant!'
+          level: warning
+      - service: input_boolean.turn_off
+        target:
+          entity_id: input_boolean.lifecycle_restart
+      - service: homeassistant.restart
 
   # ZWave is ready for interaction
   - alias: '_Lifecycle - ZWave Ready'

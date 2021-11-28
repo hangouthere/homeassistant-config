@@ -1,6 +1,6 @@
 - title: System
   path: system
-  icon: 'mdi:file-settings-variant-outline'
+  icon: 'mdi:gesture-tap-button'
   badges: []
   cards:
     - entity: alarm_control_panel.alexa_guard_3b269
@@ -12,7 +12,7 @@
           card:
             type: custom:bar-card
             align: left
-            unit_of_measurement: "%"
+            unit_of_measurement: '%'
             title_style:
               font-size: 16px
               padding: 10px
@@ -59,7 +59,7 @@
             type: custom:fold-entity-row
             head:
               type: section
-              label: Animations
+              label: Automations
           filter:
             include:
               - domain: automation

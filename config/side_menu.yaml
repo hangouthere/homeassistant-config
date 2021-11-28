@@ -4,6 +4,12 @@
 #   icon: 'mdi:resistor-nodes'
 #   require_admin: true
 
+zwave:
+  title: 'Z-Wave Admin'
+  url: 'https://zwavejs.nfgarmy.com'
+  icon: 'mdi:z-wave'
+  require_admin: true
+
 grafana:
   title: 'NFGArmy Metrics'
   url: 'https://grafana.nfgarmy.com/d/000000127/telegraf-system-dashboard?orgId=1&refresh=5s&kiosk'
