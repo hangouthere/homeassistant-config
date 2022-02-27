@@ -9,7 +9,7 @@ cards:
       include:
         - domain: fan
           options:
-            type: 'custom:fan-control-entity-row'
+            type: 'custom:fan-percent-button-row'
     sort:
       method: state
       reverse: true

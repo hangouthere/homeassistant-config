@@ -1,0 +1,9 @@
+script:
+  front_door_to_living_room:
+    alias: 'Show Front Door Camera on Living Room TV'
+    sequence:
+      - service: cast.show_lovelace_view
+        data:
+          entity_id: media_player.living_room_tv_cast
+          dashboard_path: lovelace-cast
+          view_path: overview

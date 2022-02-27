@@ -4,10 +4,7 @@ HARestartIntent:
     title: Restart the Butler
     content: Restarting My Brain!
   speech:
-    text: >-
-      Configuration changes have been detected!
-      If you could be so kind as to wait while I restart my brain, 
-      I'd be happy to serve you once more!
+    text: !include ../_alexa_responses.yaml
   action:
     - service: system_log.write
       data:

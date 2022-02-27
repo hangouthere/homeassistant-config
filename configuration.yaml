@@ -15,9 +15,6 @@ camera:
     username: !secret user_motioneye
     password: !secret pass_motioneye
 
-# cast: !include config/cast.yaml
-# cover: !include config/covers.yaml
-
 device_tracker:
   - platform: tomato
     host: !secret ip_router
@@ -30,6 +27,7 @@ frontend:
 
 homeassistant:
   elevation: 195
+  external_url: !secret url_external
   latitude: !secret lat_home
   longitude: !secret long_home
   name: Home
@@ -51,11 +49,18 @@ logbook:
 lovelace:
   mode: yaml
   resources: !include config/lovelace/resources.yaml
+  dashboards:
+    lovelace-cast:
+      mode: yaml
+      title: Castable Dashboard
+      filename: ./ui-lovelace.cast.yaml
+      show_in_sidebar: true
+      require_admin: true
 
 media_player:
   # Use the Python ADB implementation
   - platform: androidtv
-    name: Living_Room_TV
+    name: Living Room TV
     host: !secret ip_tv_living_room
     apps: !include config/_app_mapping.yaml
 
@@ -70,6 +75,9 @@ sensor:
     sensors: !include_dir_merge_named config/sensor_templates
 
 stream:
+  ll_hls: true
+  part_duration: 1 # Range of 0.2 to 1.5
+  segment_duration: 5 # Range of 2 to 10
 
 tts:
   - platform: google_translate

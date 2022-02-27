@@ -21,7 +21,7 @@ cards:
       - type: custom:template-entity-row
         entity: input_boolean.motion_front_doorbell_cam
         icon: mdi:eye
-        name: "Motion was last detected:"
+        name: 'Motion was last detected:'
         secondary: >
           {%- macro formatvalue(name, value, sep='') -%}
             {%- set name = '{}s'.format(name) if value > 1 else name -%}
@@ -45,3 +45,17 @@ cards:
 
       # Lock Status / Actions
       - entity: lock.lock_front_door_status
+
+  # Cast Entity
+  - type: entities
+    entities:
+      - entity: media_player.living_room_tv_cast
+        name: 'Show Front Door Info on TV'
+        type: cast
+        dashboard: lovelace-cast
+        view: overview
+      - entity: media_player.living_room_tv_cast
+        name: 'Show Map on TV'
+        type: cast
+        dashboard: map
+        view: ''

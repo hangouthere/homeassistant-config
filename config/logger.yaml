@@ -1,7 +1,16 @@
 default: warn
-# logs:
-#   zwave_js_server: debug
-# homeassistant.components.device_tracker: debug
-# homeassistant.components.http: debug
-# homeassistant.components.zwave: debug
-# openzwave: debug
+logs:
+  homeassistant.core: error
+  homeassistant.components.websocket_api: error
+  homeassistant.components.recorder: error
+  pymyq: error
+  kasa.protocol: error
+  androidtv.androidtv.androidtv_async: error
+  adb_shell.adb_device_async: error
+  #   zwave_js_server: debug
+  #   homeassistant.components.device_tracker: debug
+  #   homeassistant.components.http: debug
+  # ALEXA--------------------
+  # custom_components.alexa_media: debug
+  # alexapy: debug
+  # authcaptureproxy: debug

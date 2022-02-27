@@ -1,0 +1,2 @@
+title: Castable Dashboard
+views: !include_dir_merge_list config/lovelace/views-cast

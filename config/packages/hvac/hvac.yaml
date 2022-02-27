@@ -44,23 +44,23 @@ sensor:
       hvac_count_total_today:
         friendly_name: 'Total Count of HVAC System Triggers Today'
         value_template: >-
-          {%- set cool = states('sensor.hvac_count_cool_today') | int -%}
-          {%- set heat = states('sensor.hvac_count_heat_today') | int -%}
+          {%- set cool = states('sensor.hvac_count_cool_today') | int(0) -%}
+          {%- set heat = states('sensor.hvac_count_heat_today') | int(0) -%}
           {{ cool + heat }}
 
       hvac_count_total_sincechange:
         friendly_name: 'Total Count of HVAC System Triggers Today'
         value_template: >-
-          {%- set cool = states('sensor.hvac_count_cool_sincechange') | int -%}
-          {%- set heat = states('sensor.hvac_count_heat_sincechange') | int -%}
+          {%- set cool = states('sensor.hvac_count_cool_sincechange') | int(0) -%}
+          {%- set heat = states('sensor.hvac_count_heat_sincechange') | int(0) -%}
           {{ cool + heat }}
 
       hvac_count_avg_sincechange:
         # entity_id: sensor.hvac_date_filter_dayssincechange
         friendly_name: 'Total Count Average per day since the Filter was Marked Replaced'
         value_template: >-
-          {%- set daysSince = states('sensor.hvac_date_filter_dayssincechange') | int -%}
-          {%- set totalCounts = states('sensor.hvac_count_total_sincechange') | int -%}
+          {%- set daysSince = states('sensor.hvac_date_filter_dayssincechange') | int(0) -%}
+          {%- set totalCounts = states('sensor.hvac_count_total_sincechange') | int(0) -%}
           {{ (totalCounts / daysSince) | round(2) if daysSince > 0 else 'N/A' }}
 
       ######
@@ -71,37 +71,37 @@ sensor:
         friendly_name: 'Total Duration of HVAC System Today'
         unit_of_measurement: 'h'
         value_template: >-
-          {%- set cool = states('sensor.hvac_duration_cool_today') | float -%}
-          {%- set heat = states('sensor.hvac_duration_heat_today') | float -%}
+          {%- set cool = states('sensor.hvac_duration_cool_today') | float(0) -%}
+          {%- set heat = states('sensor.hvac_duration_heat_today') | float(0) -%}
           {{ cool + heat }}
 
       hvac_duration_total_last24hrs:
         friendly_name: 'Total Duration of HVAC System for Last 24 Hours'
         unit_of_measurement: 'h'
         value_template: >-
-          {%- set cool = states('sensor.hvac_duration_cool_last24hrs') | float -%}
-          {%- set heat = states('sensor.hvac_duration_heat_last24hrs') | float -%}
+          {%- set cool = states('sensor.hvac_duration_cool_last24hrs') | float(0) -%}
+          {%- set heat = states('sensor.hvac_duration_heat_last24hrs') | float(0) -%}
           {{ cool + heat }}
 
       hvac_duration_total_last7days:
         friendly_name: 'Total Duration of HVAC System in the Last 7 Days'
         unit_of_measurement: 'h'
         value_template: >-
-          {%- set cool = states('sensor.hvac_duration_cool_last7days') | float -%}
-          {%- set heat = states('sensor.hvac_duration_heat_last7days') | float -%}
+          {%- set cool = states('sensor.hvac_duration_cool_last7days') | float(0) -%}
+          {%- set heat = states('sensor.hvac_duration_heat_last7days') | float(0) -%}
           {{ cool + heat }}
 
       hvac_duration_avg_last7days:
         friendly_name: 'Daily Average Duration of HVAC System from Last 7 Days'
         unit_of_measurement: 'h'
-        value_template: "{{ ((states('sensor.hvac_duration_total_last7days') | float) / 7) | round(2) }}"
+        value_template: "{{ ((states('sensor.hvac_duration_total_last7days') | float(0)) / 7) | round(2) }}"
 
       hvac_duration_total_sincechange:
         friendly_name: 'Total Duration of HVAC System since the Filter was Marked Replaced'
         unit_of_measurement: 'h'
         value_template: >-
-          {%- set cool = states('sensor.hvac_duration_cool_sincechange') | float -%}
-          {%- set heat = states('sensor.hvac_duration_heat_sincechange') | float -%}
+          {%- set cool = states('sensor.hvac_duration_cool_sincechange') | float(0) -%}
+          {%- set heat = states('sensor.hvac_duration_heat_sincechange') | float(0) -%}
           {{ cool + heat }}
 
       ######
@@ -112,14 +112,14 @@ sensor:
         friendly_name: 'How Many Days Have Passed Since Filter Changed'
         unit_of_measurement: 'd'
         value_template: >-
-          {{ ((as_timestamp(now()) - as_timestamp(states('input_text.hvac_store_date_lastchange'))) | int / 60 / 1440) | round(0) }}
+          {{ ((as_timestamp(now()) - as_timestamp(states('input_text.hvac_store_date_lastchange'))) | int(0) / 60 / 1440) | round(0) }}
 
       hvac_ttl_filter:
         friendly_name: 'How Much Life the Filter has since the Filter was Marked Replaced'
         unit_of_measurement: 'd'
         value_template: >-
-          {%- set lastDuration = (states('input_text.hvac_store_duration_filter_average') | float) -%}
-          {%- set currentDuration = (states('sensor.hvac_duration_total_sincechange') | float) -%}
+          {%- set lastDuration = (states('input_text.hvac_store_duration_filter_average') | float(0)) -%}
+          {%- set currentDuration = (states('sensor.hvac_duration_total_sincechange') | float(0)) -%}
           {{ (lastDuration - currentDuration) | round(2) }}
 
 ##############################################################################################
@@ -153,8 +153,8 @@ script:
         entity_id: input_text.hvac_store_duration_filter_average
         data_template:
           value: >-
-            {%- set currentDuration = (states('sensor.hvac_duration_total_sincechange') | int) -%}
-            {%- set lastDuration = (states('input_text.hvac_store_duration_filter_average') | int) -%}
+            {%- set currentDuration = (states('sensor.hvac_duration_total_sincechange') | int(0)) -%}
+            {%- set lastDuration = (states('input_text.hvac_store_duration_filter_average') | int(0)) -%}
             {%- if lastDuration > 0 -%}
               {{ (lastDuration + currentDuration) / 2 | round(0) }}
             {%- else -%}

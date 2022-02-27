@@ -1,0 +1,24 @@
+script:
+  find_phone_codex:
+    alias: 'Find Phone - Codex'
+    sequence:
+      - service: notify.mobile_app_codexphone
+        data:
+          title: Locating your phone...
+          message: Found it!
+          data:
+            ttl: 0
+            priority: high
+            channel: alarm_stream_max
+
+  find_phone_frecs:
+    alias: 'Find Phone - Frecs'
+    sequence:
+      - service: notify.mobile_app_frecsplus_6
+        data:
+          title: Locating your phone...
+          message: Found it!
+          data:
+            ttl: 0
+            priority: high
+            channel: alarm_stream_max

@@ -1,0 +1,74 @@
+####################
+# Home Tab
+
+- title: Overview
+  path: overview
+  icon: 'mdi:eye'
+  type: 'panel'
+
+  cards:
+    - type: vertical-stack
+      title: 'Front Door Status'
+      cards:
+        # Doorbell Cam
+        - type: picture-entity
+          aspect_ratio: 40%
+          camera_image: camera.front_door
+          entity: camera.front_door
+          show_state: false
+          hold_action:
+            action: navigate
+            navigation_path: !secret url_motioneye
+
+        - type: custom:html-template-card
+          ignore_line_breaks: true
+          content: >
+            {%- macro formatvalue(name, value, sep='') -%}
+              {%- set name = '{}s'.format(name) if value > 1 else name -%}
+              {{ '{} {}{}'.format(value, name, sep) if value >= 1 else '' }}
+            {%- endmacro -%}
+
+            {%- macro buildTimestamp(timeStamp) -%}
+              {%- set time = ((as_timestamp(now()) - as_timestamp(timeStamp))) -%}
+              {%- set seconds = formatvalue('second', ((time % 3600) % 60) | round(0), '') -%}
+              {%- set minutes = formatvalue('minute', ((time % 3600) // 60) | int, ', ') -%}
+              {%- set hours = formatvalue('hour', ((time % 86400) // 3600) | int, ', ') -%}
+              {%- set days = formatvalue('day', (time // 86400) | int, ', ') -%}
+              {{ 'Just now' if time < 1 else days + hours + minutes + seconds + ' ago' }}
+            {%- endmacro -%}
+
+            <ha-icon icon="mdi:eye"></ha-icon> Motion Last Detected: <br />{{ buildTimestamp(states.input_boolean.motion_front_doorbell_cam.last_changed) }}
+
+        - type: horizontal-stack
+          cards:
+            # Motion Detection Last Updated
+            - type: entities
+              entities:
+                # Motion Detected Status
+                - type: custom:template-entity-row
+                  entity: input_boolean.motion_front_doorbell_cam
+                  icon: mdi:eye
+                  name: 'Motion was last detected:'
+                  secondary: >
+                    {%- macro formatvalue(name, value, sep='') -%}
+                      {%- set name = '{}s'.format(name) if value > 1 else name -%}
+                      {{ '{} {}{}'.format(value, name, sep) if value >= 1 else '' }}
+                    {%- endmacro -%}
+
+                    {%- macro buildTimestamp(timeStamp) -%}
+                      {%- set time = ((as_timestamp(now()) - as_timestamp(timeStamp))) -%}
+                      {%- set seconds = formatvalue('second', ((time % 3600) % 60) | round(0), '') -%}
+                      {%- set minutes = formatvalue('minute', ((time % 3600) // 60) | int, ', ') -%}
+                      {%- set hours = formatvalue('hour', ((time % 86400) // 3600) | int, ', ') -%}
+                      {%- set days = formatvalue('day', (time // 86400) | int, ', ') -%}
+                      {{ 'Just now' if time < 1 else days + hours + minutes + seconds + ' ago' }}
+                    {%- endmacro -%}
+
+                    {{ buildTimestamp(states.input_boolean.motion_front_doorbell_cam.last_changed) }}
+                  state: "{% if is_state('input_boolean.motion_front_doorbell_cam', 'on')%} Detected {% else %} Idle {% endif %}"
+                  active: "{{ is_state('input_boolean.motion_front_doorbell_cam', 'on') }}"
+                  tap_action:
+                    action: more-info
+
+                # Lock Status / Actions
+                - entity: lock.lock_front_door_status

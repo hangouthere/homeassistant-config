@@ -18,14 +18,15 @@ automation:
       entity_id: input_boolean.living_room_tv_select_hdmi1
       to: 'on'
     action:
-      - service: script.select_xbox_input
+      - service: script.select_hdmi_input
 
 ###############################################################################################
 ## Scripts
 ########################################################################################
 
 script:
-  select_xbox_input:
+  select_hdmi_input:
+    alias: 'Intent - (Script) Select HDMI 1'
     sequence:
       - service: androidtv.adb_command
         data:
