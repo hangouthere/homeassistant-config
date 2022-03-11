@@ -18,6 +18,8 @@
             - entity: person.codex
             - entity: person.freckills
             - entity: binary_sensor.updater
+            - entity: input_boolean.miniheat_track_heater
+            - entity: switch.kasa_wifi_outlet
 
     - !include ../templates/home/fans.yaml
 

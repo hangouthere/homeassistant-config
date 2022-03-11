@@ -5,3 +5,7 @@ motion_front_doorbell_cam:
 announce_level_info:
   name: 'Announce - Info Level'
   icon: 'mdi:bullhorn-outline'
+
+miniheat_track_heater:
+  name: 'Mini Heater - Tracker'
+  icon: 'mdi:go-kart-track'
