@@ -2,7 +2,7 @@
   initial_state: true
   trigger:
     - platform: state
-      entity_id: input_boolean.miniheat_track_heater
+      entity_id: input_boolean.track_mini_heater
   action:
     - service: notify.alexa_media_living_room_show
       data_template:
@@ -20,7 +20,7 @@
       to: 'on'
   condition:
     condition: state
-    entity_id: input_boolean.miniheat_track_heater
+    entity_id: input_boolean.track_mini_heater
     state: 'off'
   action:
     - service: system_log.write
@@ -58,7 +58,7 @@
       attribute: hvac_action
   condition:
     condition: state
-    entity_id: input_boolean.miniheat_track_heater
+    entity_id: input_boolean.track_mini_heater
     state: 'on'
   action:
     - service_template: >
@@ -81,3 +81,4 @@
           'Mini Heater is now {{ status }}'
         data:
           type: tts
+

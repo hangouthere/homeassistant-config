@@ -19,6 +19,25 @@ automation:
       to: 'on'
     action:
       - service: script.select_hdmi_input
+  - alias: 'Intent - Switch Back to Android'
+    initial_state: true
+    trigger:
+      platform: state
+      entity_id: media_player.codexbox
+      to: 'off'
+    action:
+      # Switch TV back to Home when xbox goes off, but only if it's on
+      - if:
+          - alias: 'TV is on'
+            condition: state
+            entity_id: media_player.living_room_tv
+            state: 'idle'
+        then:
+          - alias: 'Switch the TV to Home'
+            service: androidtv.adb_command
+            entity_id: media_player.living_room_tv
+            data:
+              command: 'HOME'
 
 ###############################################################################################
 ## Scripts
@@ -28,6 +47,32 @@ script:
   select_hdmi_input:
     alias: 'Intent - (Script) Select HDMI 1'
     sequence:
+      - service: input_boolean.turn_off
+        entity_id: input_boolean.living_room_tv_select_hdmi1
+
+      - parallel:
+          - sequence:
+              # Turn on XBOX if it's off
+              - alias: 'Turn on the XBOX'
+                service: media_player.turn_on
+                entity_id: media_player.codexbox
+              - service: androidtv.adb_command
+                data:
+                  entity_id: media_player.living_room_tv
+                  command: HOME
+          # Turn on TV if it's off
+          - if:
+              - alias: "TV isn't on"
+                condition: state
+                entity_id: media_player.living_room_tv
+                state: 'off'
+            then:
+              - alias: 'Turn on the TV'
+                service: media_player.turn_on
+                entity_id: media_player.living_room_tv
+
+      # Press INPUT button 2x to move to HDMI1 selection,
+      # and press Center button
       - service: androidtv.adb_command
         data:
           entity_id: media_player.living_room_tv
@@ -40,5 +85,4 @@ script:
         data:
           entity_id: media_player.living_room_tv
           command: CENTER
-      - service: input_boolean.turn_off
-        entity_id: input_boolean.living_room_tv_select_hdmi1
+

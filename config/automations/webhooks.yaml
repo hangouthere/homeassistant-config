@@ -8,6 +8,6 @@
         message: "Motion Webhook Triggered - {{ trigger }}"
         level: info
     - entity_id: input_boolean.motion_front_doorbell_cam
-      service_template: >
-        {% set service = 'turn_on' if trigger.query.on else 'turn_off' %}
-        input_boolean.{{ service }}
+      service: >
+        {% set serviceName = 'turn_on' if 'on' in trigger.query else 'turn_off' %}
+        input_boolean.{{ serviceName }}

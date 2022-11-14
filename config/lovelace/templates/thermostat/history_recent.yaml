@@ -3,7 +3,7 @@
 
 - type: 'custom:mini-graph-card'
   align_state: right
-  animate: true
+  animate: false 
   hours_to_show: 1
   line_width: 2
   name: Thermostat (60min)
@@ -23,14 +23,16 @@
       name: Outside Temp
       show_fill: false
     - entity: sensor.hvac_track_heat
-      color: "#880000"
+      color: '#880000'
       name: Heating
+      show_line: false
       show_fill: true
       show_legend: false
       smoothing: false
     - entity: sensor.hvac_track_cool
-      color: "#000055"
+      color: '#000055'
       name: Cooling
+      show_line: false
       show_fill: true
       show_legend: false
       smoothing: false
@@ -40,7 +42,7 @@
 
 - type: 'custom:mini-graph-card'
   align_state: right
-  animate: true
+  animate: false
   hours_to_show: 1.75
   line_width: 2
   name: Thermostat (90min)
@@ -62,14 +64,16 @@
       show_fill: false
       show_legend: false
     - entity: sensor.hvac_track_heat
-      color: "#880000"
+      color: '#880000'
       name: Heating
+      show_line: false
       show_fill: true
       show_legend: false
       smoothing: false
     - entity: sensor.hvac_track_cool
-      color: "#000055"
+      color: '#000055'
       name: Cooling
+      show_line: false
       show_fill: true
       show_legend: false
       smoothing: false
