@@ -18,10 +18,15 @@
             - entity: person.codex
             - entity: person.freckills
             - entity: binary_sensor.docker_hub_update_available
-            - entity: input_boolean.track_solder_iron
             - entity: input_boolean.track_mini_heater
+              tap_action:
+                action: toggle
             - entity: switch.bathroom
+              tap_action:
+                action: toggle
             - entity: switch.christmas_lights
+              tap_action:
+                action: toggle
 
     - !include ../templates/home/fans.yaml
 
