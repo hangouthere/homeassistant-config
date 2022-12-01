@@ -20,7 +20,8 @@
             - entity: binary_sensor.docker_hub_update_available
             - entity: input_boolean.track_solder_iron
             - entity: input_boolean.track_mini_heater
-            - entity: switch.kasa_wifi_outlet
+            - entity: switch.bathroom
+            - entity: switch.christmas_lights
 
     - !include ../templates/home/fans.yaml
 

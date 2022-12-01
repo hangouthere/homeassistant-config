@@ -5,11 +5,3 @@ motion_front_doorbell_cam:
 announce_level_info:
   name: 'Announce - Info Level'
   icon: 'mdi:bullhorn-outline'
-
-track_mini_heater:
-  name: 'Tracker - Mini Heater'
-  icon: 'mdi:go-kart-track'
-
-track_solder_iron:
-  name: 'Tracker - Soldering Iron'
-  icon: 'mdi:firewire'
