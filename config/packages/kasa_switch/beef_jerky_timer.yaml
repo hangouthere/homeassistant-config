@@ -1,0 +1,21 @@
+automation:
+  - alias: 'Auto turn off dehydrator'
+    initial_state: true
+    trigger:
+      - platform: state
+        entity_id: switch.christmas_lights
+        to: 'on'
+        for: '08:30:00'
+    action:
+      - service: notify.alexa_media_living_room_show
+        data:
+          message: 'Auto shutting off Dehydrator'
+          data:
+            type: tts
+      - delay: '00:00:15'
+      - service: notify.alexa_media_living_room_show
+        data:
+          message: 'Auto shutting off Dehydrator'
+          data:
+            type: tts
+  

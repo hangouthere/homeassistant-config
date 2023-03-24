@@ -2,7 +2,7 @@
 ## Inputs
 ########################################################################################
 
-input_boolean:
+input_button:
   living_room_tv_select_hdmi1:
     name: 'Intent - (Trigger) Select HDMI 1'
 
@@ -15,8 +15,19 @@ automation:
     initial_state: true
     trigger:
       platform: state
-      entity_id: input_boolean.living_room_tv_select_hdmi1
+      entity_id: input_button.living_room_tv_select_hdmi1
+    action:
+      - service: script.select_hdmi_input
+  - alias: 'Intent - (Process) Select HDMI 1 on Xbox Turn-On'
+    initial_state: true
+    trigger:
+      platform: state
+      entity_id: media_player.codexbox
       to: 'on'
+    condition:
+      condition: state
+      entity_id: media_player.living_room_tv
+      state: 'off'
     action:
       - service: script.select_hdmi_input
   - alias: 'Intent - Switch Back to Android'
@@ -38,6 +49,20 @@ automation:
             entity_id: media_player.living_room_tv
             data:
               command: 'HOME'
+  - alias: 'Auto Turn Off XBOX'
+    initial_state: true
+    trigger:
+      platform: state
+      entity_id: media_player.living_room_tv
+      to: 'off'
+    condition:
+      condition: state
+      entity_id: media_player.codexbox
+      state: 'on'
+    action:
+      - alias: 'Turn OFF the XBOX'
+        service: media_player.turn_off
+        entity_id: media_player.codexbox
 
 ###############################################################################################
 ## Scripts
@@ -47,9 +72,6 @@ script:
   select_hdmi_input:
     alias: 'Intent - (Script) Select HDMI 1'
     sequence:
-      - service: input_boolean.turn_off
-        entity_id: input_boolean.living_room_tv_select_hdmi1
-
       - parallel:
           - sequence:
               # Turn on XBOX if it's off

@@ -26,6 +26,8 @@ homeassistant:
   packages: !include_dir_named ./config/packages
   time_zone: America/Chicago
   unit_system: imperial
+  currency: USD
+  country: US
 
 input_boolean: !include config/input_booleans.yaml
 
