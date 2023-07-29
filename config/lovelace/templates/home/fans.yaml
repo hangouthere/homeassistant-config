@@ -3,13 +3,14 @@ title: Fans
 cards:
   - type: 'custom:auto-entities'
     card:
-      show_header_toggle: false
-      type: entities
+      type: custom:layout-card
     filter:
       include:
         - domain: fan
           options:
-            type: 'custom:fan-percent-button-row'
+            type: tile
+            features:
+              - type: "fan-speed"
     sort:
       method: state
       reverse: true

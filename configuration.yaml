@@ -73,14 +73,8 @@ tts:
 
 # vacuum: !include config/vacuums.yaml
 
-weather:
-  - platform: darksky
-    api_key: !secret token_darksky
-    mode: daily
-
 zone: !include config/zones.yaml
 
 http:
   use_x_forwarded_for: true
   trusted_proxies: '172.18.0.0/24'
-

@@ -19,8 +19,9 @@
       supported_color_modes:
       - brightness
       color_mode: brightness
-      brightness: 26
+      brightness: 31
       friendly_name: Kitchen
       supported_features: 32
       state: 'on'
   icon: mdi:movie-open
+  metadata: {}

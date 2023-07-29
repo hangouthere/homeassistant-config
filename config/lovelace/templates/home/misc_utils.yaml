@@ -11,14 +11,14 @@ cards:
     # Garage Door
     - type: 'custom:secondaryinfo-entity-row'
       entity: cover.garage_door
-      secondary_info: '<span style="text-transform: capitalize;">[[ if("undefined" != {entity}.state, {entity}.state, "") ]]</span>'
+      secondary_info: '<span style="text-transform: capitalize;">{% if states.cover.garage_door -%} {{ states.cover.garage_door.state }} {% endif %}</span>'
 
     # Robo Vac
     - type: 'custom:secondaryinfo-entity-row'
       entity: vacuum.dusty
       secondary_info: >-
         <span style="text-transform: capitalize;">
-          [[ if(vacuum.dusty.attributes.error == "undefined", "", vacuum.dusty.attributes.error) ]]
+          {% if 'error' == states('vacuum.dusty') -%} {{ state_attr('vacuum.dusty', 'error') }} {% endif %}
         </span>
 
     # Robo Vac Controls

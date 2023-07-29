@@ -1,0 +1,17 @@
+### Flash
+# @description Flash Light n-repeat times, delayed by delay-milliseconds between flickers
+
+@color_r = 255
+@color_g = 0
+@color_b = 255
+
+POST https://homeassistant.nfgarmy.com/api/webhook/light_stream_flash?device=codex&color_r={{color_r}}&color_g={{color_g}}&color_b={{color_b}}&delay=300&repeat=5
+
+### Solid
+# @description Solid Light for a Duration
+
+@color_r = 0
+@color_g = 64
+@color_b = 64
+
+POST https://homeassistant.nfgarmy.com/api/webhook/light_stream_solid?device=codex&color_r={{color_r}}&color_g={{color_g}}&color_b={{color_b}}&duration=10000

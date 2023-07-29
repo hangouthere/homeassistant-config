@@ -26,14 +26,14 @@
     - entity: sensor.hvac_track_heat
       color: '#880000'
       name: Heating
-      show_line: false
+      show_line: true
       show_fill: true
       show_legend: false
       smoothing: false
     - entity: sensor.hvac_track_cool
       color: '#000055'
       name: Cooling
-      show_line: false
+      show_line: true
       show_fill: true
       show_legend: false
       smoothing: false
@@ -66,14 +66,14 @@
     - entity: sensor.hvac_track_heat
       color: '#880000'
       name: Heating
-      show_line: false
+      show_line: true
       show_fill: true
       show_legend: false
       smoothing: false
     - entity: sensor.hvac_track_cool
       color: '#000055'
       name: Cooling
-      show_line: false
+      show_line: true
       show_fill: true
       show_legend: false
       smoothing: false

@@ -32,8 +32,6 @@
   type: module
 - url: /hacsfiles/Home-Assistant-Lovelace-HTML-Jinja2-Template-card/html-template-card.js
   type: module
-- url: /hacsfiles/fan-percent-button-row/fan-percent-button-row.js
-  type: module
 # Stupid duplicates for Casting environmen t
 # - url: /local/community/lovelace-card-tools/card-tools.js
 #   type: module

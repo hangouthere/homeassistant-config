@@ -1,0 +1,65 @@
+automation:
+  - alias: 'Webhook - Twitch Trigger Lights - Flash'
+    trigger:
+      platform: webhook
+      webhook_id: 'light_stream_flash'
+    action:
+      - service: scene.create
+        data:
+          scene_id: before_lighting
+          snapshot_entities:
+          - light.wiz_rgbw_{{ trigger.query.device }}
+      - repeat:
+          count: '{{ trigger.query.repeat | int }}'
+          sequence:
+            - service: light.turn_on
+              data:
+                rgb_color:
+                  - '{{ trigger.query.color_r | int }}'
+                  - '{{ trigger.query.color_g | int }}'
+                  - '{{ trigger.query.color_b | int }}'
+                brightness_pct: 10
+              target:
+                entity_id: light.wiz_rgbw_{{ trigger.query.device }}
+            - delay:
+                milliseconds: '{{ trigger.query.delay | int }}'
+            - service: light.turn_on
+              data:
+                rgb_color:
+                  - '{{ trigger.query.color_r | int }}'
+                  - '{{ trigger.query.color_g | int }}'
+                  - '{{ trigger.query.color_b | int }}'
+                brightness_pct: 100
+              target:
+                entity_id: light.wiz_rgbw_{{ trigger.query.device }}
+            - delay:
+                milliseconds: '{{ trigger.query.delay | int }}'
+      - delay: "00:00:01"
+      - service: scene.turn_on
+        target:
+          entity_id: scene.before_lighting
+
+  - alias: 'Webhook - Twitch Trigger Lights - Solid'
+    trigger:
+      platform: webhook
+      webhook_id: 'light_stream_solid'
+    action:
+      - service: scene.create
+        data:
+          scene_id: before_lighting
+          snapshot_entities:
+          - light.wiz_rgbw_{{ trigger.query.device }}
+      - service: light.turn_on
+        data:
+          rgb_color:
+            - '{{ trigger.query.color_r | int }}'
+            - '{{ trigger.query.color_g | int }}'
+            - '{{ trigger.query.color_b | int }}'
+          brightness_pct: 100
+        target:
+          entity_id: light.wiz_rgbw_{{ trigger.query.device }}
+      - delay:
+          milliseconds: '{{ trigger.query.duration | int }}'
+      - service: scene.turn_on
+        target:
+          entity_id: scene.before_lighting

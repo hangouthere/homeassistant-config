@@ -36,7 +36,7 @@
       title: Weather
       cards:
         - type: custom:weather-card
-          entity: weather.dark_sky
+          entity: weather.forecast_home
           forecast: true
 
     - !include ../templates/home/misc_utils.yaml
