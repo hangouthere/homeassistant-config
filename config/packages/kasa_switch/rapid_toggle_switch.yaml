@@ -9,45 +9,19 @@ automation:
     trigger:
       - platform: state
         entity_id: input_button.rapid_toggle_switch
-    condition:
-      condition: state
-      entity_id: switch.pink_light
-      state: 'on'
+    # condition:
+    #   condition: state
+    #   entity_id: switch.pink_light
+    #   state: 'on'
     action:
-      - service: switch.turn_off
-        entity_id: switch.pink_light
-      - delay: 
-          milliseconds: 100
-      - service: switch.turn_on
-        entity_id: switch.pink_light
-      - delay: 
-          milliseconds: 1000
-      - service: switch.turn_off
-        entity_id: switch.pink_light
-      - delay: 
-          milliseconds: 100
-      - service: switch.turn_on
-        entity_id: switch.pink_light
-      - delay: 
-          milliseconds: 1000
-      - service: switch.turn_off
-        entity_id: switch.pink_light
-      - delay: 
-          milliseconds: 100
-      - service: switch.turn_on
-        entity_id: switch.pink_light
-      - delay: 
-          milliseconds: 1000
-      - service: switch.turn_off
-        entity_id: switch.pink_light
-      - delay: 
-          milliseconds: 100
-      - service: switch.turn_on
-        entity_id: switch.pink_light
-      - delay: 
-          milliseconds: 1000
-      - service: switch.turn_off
-        entity_id: switch.pink_light
-      - delay: 
-          milliseconds: 250
-      - service: switch.turn_on
+      - repeat:
+          count: 5
+          sequence:
+            - service: switch.turn_off
+              entity_id: switch.pink_light
+            - delay: 
+                milliseconds: 250
+            - service: switch.turn_on
+              entity_id: switch.pink_light
+            - delay: 
+                milliseconds: 1000
