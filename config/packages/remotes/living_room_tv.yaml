@@ -74,37 +74,49 @@ script:
     sequence:
       - parallel:
           - sequence:
-              # Turn on XBOX if it's off
-              - alias: 'Turn on the XBOX'
-                service: media_player.turn_on
-                entity_id: media_player.codexbox
               - service: androidtv.adb_command
                 data:
                   entity_id: media_player.living_room_tv
                   command: HOME
           # Turn on TV if it's off
           - if:
-              - alias: "TV isn't on"
+              - alias: 'Is TV is OFF?'
                 condition: state
                 entity_id: media_player.living_room_tv
                 state: 'off'
             then:
-              - alias: 'Turn on the TV'
+              - alias: "It's off, turn the TV ON!"
                 service: media_player.turn_on
                 entity_id: media_player.living_room_tv
 
       # Press INPUT button 2x to move to HDMI1 selection,
       # and press Center button
       - service: androidtv.adb_command
+        alias: 'Press INPUT Button'
         data:
           entity_id: media_player.living_room_tv
           command: INPUT
+      # Move cursor to absolute top. Max is 7 menu items on the TV
+      # and it doesn't loop around when we hit top, so let's just spam it 7x
+      - alias: 'Press UP Button 7x'
+        repeat:
+          count: 7
+          sequence:
+            - service: androidtv.adb_command
+              data:
+                entity_id: media_player.living_room_tv
+                command: UP
+      # Move cursor to HDMI1 (assuming the 7 presses above worked!)
+      - alias: 'Press DOWN Button 3x'
+        repeat:
+          count: 3
+          sequence:
+            - service: androidtv.adb_command
+              data:
+                entity_id: media_player.living_room_tv
+                command: DOWN
       - service: androidtv.adb_command
-        data:
-          entity_id: media_player.living_room_tv
-          command: INPUT
-      - service: androidtv.adb_command
+        alias: 'Press CENTER Button'
         data:
           entity_id: media_player.living_room_tv
           command: CENTER
-

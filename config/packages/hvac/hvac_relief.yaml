@@ -1,0 +1,50 @@
+## HVAC Relief
+
+input_boolean:
+  hvac_allow_relief:
+    name: "Allow HVAC Relief?"
+
+automation:
+  - alias: "HVAC Relief - Announce Gatekeeping Status"
+    initial_state: true
+    trigger:
+      - platform: state
+        entity_id: input_boolean.track_mini_heater
+    action:
+      - service: notify.alexa_media_living_room_show
+        data_template:
+          message: >
+            {%- set status = 'now tracking the main heater' if trigger.to_state.state == 'on' else 'in manual mode' -%}
+            'Mini Heater is {{ status }}'
+          data:
+            type: tts
+
+  - alias: HVAC Relief
+    condition:
+      condition: state
+      entity_id: input_boolean.hvac_allow_relief
+      state: "on"
+    trigger:
+      - platform: state
+        entity_id: climate.thermostat_mode
+        attribute: "hvac_action"
+        not_to: "idle"
+        for: "00:30:00"
+    action:
+      - service: notify.alexa_media_living_room_show
+        data:
+          message: "Triggered HVAC 30 minute limit"
+          data:
+            type: tts
+      - service: climate.turn_off
+        target:
+          entity_id: climate.thermostat_mode
+      - delay: "00:07:00"
+      - service: notify.alexa_media_living_room_show
+        data:
+          message: "Continuing HVAC Operations"
+          data:
+            type: tts
+      - service: climate.turn_on
+        target:
+          entity_id: climate.thermostat_mode

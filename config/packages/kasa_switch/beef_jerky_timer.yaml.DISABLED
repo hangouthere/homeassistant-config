@@ -1,0 +1,34 @@
+automation:
+  - alias: 'Auto turn off dehydrator'
+    initial_state: true
+    trigger:
+      - platform: state
+        entity_id: switch.jerky_maker
+        to: 'on'
+        for: '04:00:00'
+    action:
+      - service: notify.alexa_media_living_room_show
+        data:
+          message: 'Dehydrator has been on for 4 hours, you should check it'
+          data:
+            type: tts
+      - delay: '02:00:00'
+      - service: notify.alexa_media_living_room_show
+        data:
+          message: 'Dehydrator has been on for 6 hours, you should check it'
+          data:
+            type: tts
+      - delay: '02:00:00'
+      - service: notify.alexa_media_living_room_show
+        data:
+          message: 'Dehydrator has been on for 8 hours, you should check it'
+          data:
+            type: tts
+      - delay: '00:30:00'
+      - service: notify.alexa_media_living_room_show
+        data:
+          message: 'Auto shutting off Dehydrator in 30 seconds. If you wish to go longer, start it back up.'
+          data:
+            type: tts
+      - service: switch.turn_off
+        entity_id: switch.jerky_maker

@@ -7,11 +7,11 @@
 input_text:
   # Tracks the last time the filter was marked as changed
   hvac_store_date_lastchange:
-    name: 'Air Filter Last Changed Date'
+    name: "Air Filter Last Changed Date"
 
   hvac_store_duration_filter_average:
-    name: 'Average Number of Days Between Filter Changes'
-    unit_of_measurement: 'd'
+    name: "Average Number of Days Between Filter Changes"
+    unit_of_measurement: "d"
 
 ###############################################################################################
 ## Sensors
@@ -27,14 +27,14 @@ sensor:
 
       # Tracks the target temperature for the Thermostat
       hvac_temp_target:
-        friendly_name: 'Thermostat Target Temperature'
+        friendly_name: "Thermostat Target Temperature"
         device_class: temperature
-        unit_of_measurement: '°F'
+        unit_of_measurement: "°F"
         value_template: "{{ state_attr('climate.thermostat_mode', 'temperature') }}"
 
       # Tracks idle/cooling/heating
       hvac_action:
-        friendly_name: 'HVAC Action'
+        friendly_name: "HVAC Action"
         value_template: "{{ state_attr('climate.thermostat_mode', 'hvac_action') }}"
 
       ######
@@ -42,14 +42,14 @@ sensor:
       # For reporting over common timeframes, we can see the number of counts
 
       hvac_count_total_today:
-        friendly_name: 'Total Count of HVAC System Triggers Today'
+        friendly_name: "Total Count of HVAC System Triggers Today"
         value_template: >-
           {%- set cool = states('sensor.hvac_count_cool_today') | int(0) -%}
           {%- set heat = states('sensor.hvac_count_heat_today') | int(0) -%}
           {{ cool + heat }}
 
       hvac_count_total_sincechange:
-        friendly_name: 'Total Count of HVAC System Triggers Today'
+        friendly_name: "Total Count of HVAC System Triggers Today"
         value_template: >-
           {%- set cool = states('sensor.hvac_count_cool_sincechange') | int(0) -%}
           {%- set heat = states('sensor.hvac_count_heat_sincechange') | int(0) -%}
@@ -57,7 +57,7 @@ sensor:
 
       hvac_count_avg_sincechange:
         # entity_id: sensor.hvac_date_filter_dayssincechange
-        friendly_name: 'Total Count Average per day since the Filter was Marked Replaced'
+        friendly_name: "Total Count Average per day since the Filter was Marked Replaced"
         value_template: >-
           {%- set daysSince = states('sensor.hvac_date_filter_dayssincechange') | int(0) -%}
           {%- set totalCounts = states('sensor.hvac_count_total_sincechange') | int(0) -%}
@@ -68,37 +68,37 @@ sensor:
       # For reporting over common timeframes, we can see the duration of the entire system
 
       hvac_duration_total_today:
-        friendly_name: 'Total Duration of HVAC System Today'
-        unit_of_measurement: 'h'
+        friendly_name: "Total Duration of HVAC System Today"
+        unit_of_measurement: "h"
         value_template: >-
           {%- set cool = states('sensor.hvac_duration_cool_today') | float(0) -%}
           {%- set heat = states('sensor.hvac_duration_heat_today') | float(0) -%}
           {{ cool + heat }}
 
       hvac_duration_total_last24hrs:
-        friendly_name: 'Total Duration of HVAC System for Last 24 Hours'
-        unit_of_measurement: 'h'
+        friendly_name: "Total Duration of HVAC System for Last 24 Hours"
+        unit_of_measurement: "h"
         value_template: >-
           {%- set cool = states('sensor.hvac_duration_cool_last24hrs') | float(0) -%}
           {%- set heat = states('sensor.hvac_duration_heat_last24hrs') | float(0) -%}
           {{ cool + heat }}
 
       hvac_duration_total_last7days:
-        friendly_name: 'Total Duration of HVAC System in the Last 7 Days'
-        unit_of_measurement: 'h'
+        friendly_name: "Total Duration of HVAC System in the Last 7 Days"
+        unit_of_measurement: "h"
         value_template: >-
           {%- set cool = states('sensor.hvac_duration_cool_last7days') | float(0) -%}
           {%- set heat = states('sensor.hvac_duration_heat_last7days') | float(0) -%}
           {{ cool + heat }}
 
       hvac_duration_avg_last7days:
-        friendly_name: 'Daily Average Duration of HVAC System from Last 7 Days'
-        unit_of_measurement: 'h'
+        friendly_name: "Daily Average Duration of HVAC System from Last 7 Days"
+        unit_of_measurement: "h"
         value_template: "{{ ((states('sensor.hvac_duration_total_last7days') | float(0)) / 7) | round(2) }}"
 
       hvac_duration_total_sincechange:
-        friendly_name: 'Total Duration of HVAC System since the Filter was Marked Replaced'
-        unit_of_measurement: 'h'
+        friendly_name: "Total Duration of HVAC System since the Filter was Marked Replaced"
+        unit_of_measurement: "h"
         value_template: >-
           {%- set cool = states('sensor.hvac_duration_cool_sincechange') | float(0) -%}
           {%- set heat = states('sensor.hvac_duration_heat_sincechange') | float(0) -%}
@@ -109,14 +109,14 @@ sensor:
       # Also for reporting, but focusing on the Filter itself
 
       hvac_date_filter_dayssincechange:
-        friendly_name: 'How Many Days Have Passed Since Filter Changed'
-        unit_of_measurement: 'd'
+        friendly_name: "How Many Days Have Passed Since Filter Changed"
+        unit_of_measurement: "d"
         value_template: >-
           {{ ((as_timestamp(now()) - as_timestamp(states('input_text.hvac_store_date_lastchange'))) | int(0) / 60 / 1440) | round(0) }}
 
       hvac_ttl_filter:
-        friendly_name: 'How Much Life the Filter has since the Filter was Marked Replaced'
-        unit_of_measurement: 'd'
+        friendly_name: "How Much Life the Filter has since the Filter was Marked Replaced"
+        unit_of_measurement: "d"
         value_template: >-
           {%- set lastDuration = (states('input_text.hvac_store_duration_filter_average') | float(0)) -%}
           {%- set currentDuration = (states('sensor.hvac_duration_total_sincechange') | float(0)) -%}
@@ -129,7 +129,7 @@ sensor:
 script:
   # Reset filter change date and set total runtime to zero
   hvac_reset_filter:
-    alias: 'HVAC - Reset Filter Change Date'
+    alias: "HVAC - Reset Filter Change Date"
     sequence:
       - service: system_log.write
         data_template:
@@ -142,7 +142,7 @@ script:
       - service: input_text.set_value
         entity_id: input_text.hvac_store_date_lastchange
         data_template:
-          value: '{{ now() }}'
+          value: "{{ now() }}"
 
       # Set Rolling Average of Filter Life Cycles
       #
@@ -160,3 +160,15 @@ script:
             {%- else -%}
                 183
             {%- endif -%}
+
+  # Move Temp +/- by n-degrees. Mostly used by widget on Android.
+  hvac_change_by:
+    fields:
+      amount:
+        description: "How much to change by. Can be negative or positive."
+        example: "-1"
+    sequence:
+      - service: climate.set_temperature
+        entity_id: climate.thermostat_mode
+        data:
+          temperature: '{{ ( state_attr("climate.thermostat_mode", "temperature") | int ) + amount }}'

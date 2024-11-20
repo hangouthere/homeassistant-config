@@ -1,0 +1,7 @@
+alias: 'Restore Lights'
+sequence:
+  - service: scene.turn_on
+    target:
+      entity_id: scene.before_lighting
+    data:
+      transition: 8

@@ -1,0 +1,80 @@
+input_button:
+  rapid_toggle_switch:
+    name: "Rapid Toggle Switch"
+    icon: "mdi:flash-alert"
+
+automation:
+  - alias: "Rapid Toggle Switch"
+    initial_state: true
+    trigger:
+      - platform: state
+        entity_id: input_button.rapid_toggle_switch
+    # condition:
+    #   condition: state
+    #   entity_id: switch.pink_light
+    #   state: 'on'
+    action:
+      - service: scene.create
+        data:
+          scene_id: before_rapid_toggle
+          snapshot_entities: >
+            {% set switches = states.switch | rejectattr('state', 'eq', 'unavailable') | map(attribute='entity_id') | list %}
+            {% set lights = states.light | rejectattr('state', 'eq', 'unavailable') | map(attribute='entity_id') | list %}
+            {{ switches + lights }}
+      #######################################################################
+      - service: switch.turn_on
+        entity_id: switch.driveway
+      - service: light.turn_on
+        entity_id: light.patio
+        data:
+          transition: 0
+      #######################################################################
+      - delay:
+          seconds: 10
+      #######################################################################
+      - service: scene.turn_on
+        target:
+          entity_id: scene.before_rapid_toggle
+
+      # OLD FLASHING IMPLEMENTATION
+      # - repeat:
+      #     count: 5
+      #     sequence:
+      #       # - service: light.turn_off
+      #       #   entity_id: light.lamp
+      #       #   data:
+      #       #     transition: 0
+      #       - service: switch.turn_off
+      #         entity_id: switch.driveway
+      #       - service: light.turn_off
+      #         entity_id: light.patio
+      #         data:
+      #           transition: 0
+      #       # - service: switch.turn_off
+      #       #   entity_id: switch.pink_light
+      #       #   data:
+      #       #     transition: 0
+      #       #######################################################################
+      #       - delay:
+      #           milliseconds: 250
+      #       #######################################################################
+      #       # - service: light.turn_on
+      #       #   entity_id: light.lamp
+      #       #   data:
+      #       #     transition: 0
+      #       - service: switch.turn_on
+      #         entity_id: switch.driveway
+      #       - service: light.turn_on
+      #         entity_id: light.patio
+      #         data:
+      #           transition: 0
+      #       # - service: switch.turn_on
+      #       #   entity_id: switch.pink_light
+      #       #   data:
+      #       #     transition: 0
+      #       #######################################################################
+      #       - delay:
+      #           milliseconds: 1000
+      # - service: scene.turn_on
+      #   target:
+      #     entity_id: scene.before_rapid_toggle

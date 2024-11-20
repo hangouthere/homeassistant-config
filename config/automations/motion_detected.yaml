@@ -1,20 +1,38 @@
-- alias: 'Motion - (Announce) Front Doorbell Cam'
+- alias: "Motion - Front Doorbell Cam"
   initial_state: true
   trigger:
     - platform: state
       entity_id: input_boolean.motion_front_doorbell_cam
-  condition:
-    condition: state
-    entity_id: input_boolean.announce_level_info
-    state: 'on'
   action:
-    - service: notify.alexa_media_living_room_show
-      data_template:
-        message: >
-          {%- set status = 'Started' if trigger.to_state.state != 'off' else 'Ended' -%}
-          'Motion Detection {{ status }} at Front Door'
-        data:
-          type: tts
-    - service: input_button.press
-      target:
-        entity_id: input_button.rapid_toggle_switch
+    - if: "{{ is_state('input_boolean.announce_level_info', 'on') }}"
+      then:
+        - service: notify.alexa_media_living_room_show
+          data_template:
+            message: >
+              {%- set status = 'Started' if trigger.to_state.state != 'off' else 'Ended' -%}
+              'Motion Detection {{ status }} at Front Door'
+            data:
+              type: tts
+    #######################################################################
+    - if: "{{ trigger.to_state.state == 'on' }}"
+      then:
+        - service: scene.create
+          data:
+            scene_id: before_motion_detected
+            snapshot_entities: >
+              {% set switches = states.switch | rejectattr('state', 'eq', 'unavailable') | map(attribute='entity_id') | list %}
+              {% set lights = states.light | rejectattr('state', 'eq', 'unavailable') | map(attribute='entity_id') | list %}
+              {{ switches + lights }}
+    #######################################################################
+    - service: switch.turn_{{trigger.to_state.state}}
+      entity_id: switch.driveway
+    - service: light.turn_{{trigger.to_state.state}}
+      entity_id: light.patio
+      data:
+        transition: 0
+    #######################################################################
+    - if: "{{ trigger.to_state.state == 'off' }}"
+      then:
+        - service: scene.turn_on
+          target:
+            entity_id: scene.before_motion_detected

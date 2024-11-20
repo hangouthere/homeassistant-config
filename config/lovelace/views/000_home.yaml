@@ -3,7 +3,7 @@
 
 - title: Home
   path: home
-  icon: 'mdi:home'
+  icon: "mdi:home"
 
   cards:
     - !include ../templates/home/front_door.yaml
@@ -16,11 +16,17 @@
             - entity: sun.sun
             - entity: input_boolean.motion_front_doorbell_cam
             - entity: person.codex
-            - entity: person.freckills
+            - entity: person.freckles
             - entity: binary_sensor.docker_hub_update_available
             - entity: input_boolean.track_mini_heater
               tap_action:
                 action: toggle
+            - entity: input_button.rapid_toggle_switch
+              tap_action:
+                action: press
+            - entity: switch.jerky_maker
+              tap_action:
+                action: none
             - entity: switch.bathroom
               tap_action:
                 action: toggle
