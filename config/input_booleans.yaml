@@ -5,3 +5,7 @@ motion_front_doorbell_cam:
 announce_level_info:
   name: 'Announce - Info Level'
   icon: 'mdi:bullhorn-outline'
+
+monitor_motion:
+  name: 'Monitor - Motion'
+  icon: 'mdi:eye-circle'

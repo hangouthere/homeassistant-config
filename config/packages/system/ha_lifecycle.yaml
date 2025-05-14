@@ -1,14 +1,14 @@
 input_boolean:
   lifecycle_restart:
-    name: '_Lifecycle - Restart HomeAssistant'
-    icon: 'mdi:restart-alert'
+    name: "_Lifecycle - Restart HomeAssistant"
+    icon: "mdi:restart-alert"
 
 automation:
   # HA Has fully started!
   # We can force some entities to update
   #  This is necessary because some sensors are unavailable for parsing
   #  upon initial startup
-  - alias: '_Lifecycle - HA Startup'
+  - alias: "_Lifecycle - HA Startup"
     initial_state: true
     trigger:
       platform: homeassistant
@@ -17,7 +17,7 @@ automation:
       # Log it
       - service: system_log.write
         data_template:
-          message: 'HA Started, Running Start Automation - {{ trigger }}'
+          message: "HA Started, Running Start Automation - {{ trigger }}"
           level: warning
       # Wait 30s for everything to settle down
       # ! FIXME: Do we need this still???
@@ -27,16 +27,16 @@ automation:
       #   data:
       #     entity_id: sensor.hvac_count_avg_sincechange
 
-  - alias: '_Lifecycle - HA Restart'
+  - alias: "_Lifecycle - HA Restart"
     initial_state: true
     trigger:
       platform: state
       entity_id: input_boolean.lifecycle_restart
-      to: 'on'
+      to: "on"
     action:
       - service: system_log.write
         data:
-          message: 'Restarting Home Assistant!'
+          message: "Restarting Home Assistant!"
           level: warning
       - service: input_boolean.turn_off
         target:
@@ -44,47 +44,47 @@ automation:
       - service: homeassistant.restart
 
   # ZWave is ready for interaction
-  - alias: '_Lifecycle - ZWave Ready'
+  - alias: "_Lifecycle - ZWave Ready"
     initial_state: true
     trigger:
       platform: state
       entity_id: sensor.z_stick_gen5_usb_controller_node_status
-      to: 'alive'
+      to: "alive"
     condition:
       condition: state
       entity_id: input_boolean.announce_level_info
-      state: 'on'
+      state: "on"
     action:
       # Announce it
       - service: notify.alexa_media_living_room_show
         data:
-          message: 'Z Wave Network is Ready'
+          message: "Z Wave Network is Ready"
           data:
             type: tts
 
   # ZWave is down
-  - alias: '_Lifecycle - ZWave Failed'
+  - alias: "_Lifecycle - ZWave Failed"
     initial_state: true
     trigger:
       platform: state
       entity_id: sensor.z_stick_gen5_usb_controller_node_status
       to:
-        - 'unavailable'
-        - 'dead'
+        - "unavailable"
+        - "dead"
     condition:
       condition: state
       entity_id: input_boolean.announce_level_info
-      state: 'on'
+      state: "on"
     action:
       # Announce it
       - service: notify.alexa_media_living_room_show
         data:
-          message: 'Z Wave Network has gone down!'
+          message: "Z Wave Network has gone down!"
           data:
             type: tts
 
   # Entity Registry has changed
-  - alias: '_Lifecycle - Entity Registry Updated (Create|Remove)'
+  - alias: "_Lifecycle - Entity Registry Updated (Create|Remove)"
     initial_state: true
     trigger:
       - platform: event
@@ -99,10 +99,11 @@ automation:
       # Log it
       - service: system_log.write
         data_template:
-          message: 'Entity Registry Updated Triggered - {{ trigger }}'
-          level: info
+          message: "Entity Registry Updated Triggered - {{ trigger }}"
+          level: warning
       # Announce it
-      - service: notify.alexa_media_everywhere
+      - service: notify.alexa_media_living_room_show
+        # - service: notify.alexa_media_everywhere
         data:
           data:
             type: announce

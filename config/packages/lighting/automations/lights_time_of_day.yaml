@@ -11,7 +11,7 @@ automation:
       - service: system_log.write
         data_template:
           message: "8.15am Automation Triggered - {{ trigger }}"
-          level: info
+          level: warning
       # Only continue if we're before sunrise (or up to 15min AFTER sunrise)
       - condition: sun
         before: sunrise

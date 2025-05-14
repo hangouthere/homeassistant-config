@@ -1,13 +1,16 @@
-- alias: 'Webhook - Motion - Set - Front Doorbell Cam'
-  trigger:
-    platform: webhook
-    webhook_id: motion_set_front_doorbell
-  action:
-    - service: system_log.write
-      data_template:
-        message: "Motion Webhook Triggered - {{ trigger }}"
-        level: info
+- alias: "Webhook - Motion - Set - Front Doorbell Cam"
+  triggers:
+    - trigger: webhook
+      webhook_id: motion_set_front_doorbell
+      allowed_methods:
+        - "POST"
+      local_only: false
+  actions:
+    - action: system_log.write
+      data:
+        message: "Motion Webhook Triggered - {{trigger}}"
+        level: warning
     - entity_id: input_boolean.motion_front_doorbell_cam
-      service: >
+      action: >
         {% set serviceName = 'turn_on' if 'on' in trigger.query else 'turn_off' %}
         input_boolean.{{ serviceName }}

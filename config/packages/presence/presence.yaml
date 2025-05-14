@@ -7,7 +7,6 @@
 sensor:
   - platform: template
     sensors:
-
       ####################
       # Presence Consensus
       # Determines the State of Presence for the entire home (empty|partial|majority|full)
@@ -22,7 +21,7 @@ sensor:
       #   ***NOTE***: This sensor must be *manually* updated, since HA cannot auto-detect the effected entities
       #       (see also: `automations/presence.yaml`, for the Automation aliased as 'Presence - Needs Consensus Update')
       presence_consensus:
-        friendly_name: 'Presence - Consensus State for the House'
+        friendly_name: "Presence - Consensus State for the House"
         value_template: >-
           {%- set ns = namespace(
             _states = states.input_boolean,
@@ -56,7 +55,7 @@ sensor:
 automation:
   # Trigger Consensus Update when a presence status per person changes
   #   Each person should be represented by their own boolean for Consensus to operate properly
-  - alias: 'Presence - Force Update Consensus'
+  - alias: "Presence - Force Update Consensus"
     initial_state: true
     trigger:
       - platform: state
@@ -67,12 +66,12 @@ automation:
       - service: system_log.write
         data_template:
           message: "Presence Consensus Unknown, Needs Update - {{ trigger }}"
-          level: info
+          level: warning
       - service: homeassistant.update_entity
         entity_id: sensor.presence_consensus
 
   # Detect Consensus Change (ie, someone left or arrived)
-  - alias: 'Presence - Overall State'
+  - alias: "Presence - Overall State"
     initial_state: true
     trigger:
       - platform: state
@@ -88,15 +87,15 @@ automation:
 
   # TODO TESTING
   # House changed to or from partial
-  - alias: 'Presence [Test] - Partial On or Off'
+  - alias: "Presence [Test] - Partial On or Off"
     initial_state: true
     trigger:
       - platform: state
         entity_id: sensor.presence_consensus
-        to: 'partial'
+        to: "partial"
       - platform: state
         entity_id: sensor.presence_consensus
-        from: 'partial'
+        from: "partial"
     action:
       - service: notify.alexa_media_living_room_show
         data_template:
@@ -110,15 +109,15 @@ automation:
   # House was empty, but now has someone arriving
   #   - Unlock front door
   #   - Primary entry lights on if sunset
-  - alias: 'Presence [Test] - Empty to Partial/Full'
+  - alias: "Presence [Test] - Empty to Partial/Full"
     initial_state: true
     trigger:
       - platform: state
         entity_id: sensor.presence_consensus
-        from: 'empty'
+        from: "empty"
     action:
       - service: notify.alexa_media_living_room_show
         data:
-          message: 'House was empty but someone has arrived'
+          message: "House was empty but someone has arrived"
           data:
             type: tts

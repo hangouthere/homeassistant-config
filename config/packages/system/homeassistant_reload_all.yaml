@@ -1,12 +1,12 @@
 script:
   homeassistant_reload_all:
-    alias: '_Lifecycle - Reload Home Assistant'
-    description: 'Reloads all the internal domains (i.e., automations, persons, scripts, etc)'
+    alias: "_Lifecycle - Reload Home Assistant"
+    description: "Reloads all the internal domains (i.e., automations, persons, scripts, etc)"
     sequence:
       - service: system_log.write
         data:
-          message: 'Reloading Domains'
-          level: info
+          message: "Reloading Domains"
+          level: warning
       - service: automation.reload
       - service: frontend.reload_themes
       - service: homeassistant.reload_core_config

@@ -133,7 +133,7 @@ script:
     sequence:
       - service: system_log.write
         data_template:
-          level: info
+          level: warning
           message: |
             HVAC Filter Reset Triggered
               * Current Duration:  {{ states('sensor.hvac_duration_total_sincechange') }}
