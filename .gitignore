@@ -22,3 +22,4 @@ known_devices.yaml
 options.xml
 pyozw.sqlite
 secrets.yaml
+blueprints
