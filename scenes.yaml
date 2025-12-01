@@ -1,15 +1,15 @@
-- name: 'Set Movie Time Lights'
+- name: Set Movie Time Lights
   icon: mdi:movie-open
   entities:
     light.lamp:
       supported_color_modes:
-        - brightness
+      - brightness
       friendly_name: Lamp
       supported_features: 32
       state: 'off'
     light.dining_room:
       supported_color_modes:
-        - brightness
+      - brightness
       color_mode: brightness
       brightness: 64
       friendly_name: Dining
@@ -17,9 +17,10 @@
       state: 'on'
     light.kitchen:
       supported_color_modes:
-        - brightness
+      - brightness
       color_mode: brightness
       brightness: 31
       friendly_name: Kitchen
       supported_features: 32
       state: 'on'
+  id: 415ce3387fed4b23bef3fd0319f6a30a

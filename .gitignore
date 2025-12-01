@@ -23,3 +23,4 @@ options.xml
 pyozw.sqlite
 secrets.yaml
 blueprints
+.ha_run.lock

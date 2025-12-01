@@ -11,6 +11,7 @@ logs:
   androidtv.androidtv.androidtv_async: error
   adb_shell.adb_device_async: error
   homeassistant.components.webhook: debug
+  homeassistant.components.scene: debug
 #
 #
 # Enhanced Logging

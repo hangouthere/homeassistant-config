@@ -25,7 +25,7 @@ homeassistant:
   name: Home
   packages: !include_dir_named ./config/packages
   time_zone: America/Chicago
-  unit_system: us_customary 
+  unit_system: us_customary
   currency: USD
   country: US
 
@@ -37,9 +37,10 @@ logger: !include config/logger.yaml
 
 lovelace:
   mode: yaml
-  resources: !include config/lovelace/resources.yaml
+  resources:
+    !include config/lovelace/resources.yaml
     # dashboards: !include config/lovelace/dashboards.yaml
-  
+
   # dashboards:
   #   lovelace-cast:
   #     mode: yaml
@@ -70,4 +71,5 @@ zone: !include config/zones.yaml
 
 http:
   use_x_forwarded_for: true
-  trusted_proxies: '172.18.0.0/24'
+  trusted_proxies:
+    - "172.0.0.0/8"

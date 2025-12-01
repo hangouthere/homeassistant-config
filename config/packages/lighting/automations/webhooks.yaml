@@ -1,65 +1,85 @@
 automation:
-  - alias: 'Webhook - Twitch Trigger Lights - Flash'
+  - alias: "Webhook - Twitch Trigger Lights - Flash"
+    id: "webhook_twitch_lights_flash"
     trigger:
       platform: webhook
-      webhook_id: 'light_stream_flash'
-    action:
-      - service: scene.create
+      webhook_id: "light_stream_flash"
+      allowed_methods:
+        - "POST"
+      local_only: false
+    actions:
+      - service: system_log.write
+        data:
+          message: 'Twitch Light Triggered (Flash) --\n{{trigger}}'
+          level: warning
+      - action: scene.create
         data:
           scene_id: before_twitch_effect
           snapshot_entities:
             - light.wiz_rgbw_{{ trigger.query.device }}
       - repeat:
-          count: '{{ trigger.query.repeat | int }}'
+          count: "{{ trigger.query.repeat | int }}"
           sequence:
-            - service: light.turn_on
+            - action: light.turn_on
               data:
                 rgb_color:
-                  - '{{ trigger.query.color_r | int }}'
-                  - '{{ trigger.query.color_g | int }}'
-                  - '{{ trigger.query.color_b | int }}'
+                  - "{{ trigger.query.color_r | int }}"
+                  - "{{ trigger.query.color_g | int }}"
+                  - "{{ trigger.query.color_b | int }}"
                 brightness_pct: 10
               target:
                 entity_id: light.wiz_rgbw_{{ trigger.query.device }}
             - delay:
-                milliseconds: '{{ trigger.query.delay | int }}'
-            - service: light.turn_on
+                milliseconds: "{{ trigger.query.delay | int }}"
+            - action: light.turn_on
               data:
                 rgb_color:
-                  - '{{ trigger.query.color_r | int }}'
-                  - '{{ trigger.query.color_g | int }}'
-                  - '{{ trigger.query.color_b | int }}'
+                  - "{{ trigger.query.color_r | int }}"
+                  - "{{ trigger.query.color_g | int }}"
+                  - "{{ trigger.query.color_b | int }}"
                 brightness_pct: 100
               target:
                 entity_id: light.wiz_rgbw_{{ trigger.query.device }}
             - delay:
-                milliseconds: '{{ trigger.query.delay | int }}'
-      - delay: '00:00:01'
-      - service: scene.turn_on
+                milliseconds: "{{ trigger.query.delay | int }}"
+      - delay: "00:00:01"
+      - action: scene.turn_on
         target:
           entity_id: scene.before_twitch_effect
+      - delay: "00:00:05"
+  #      - action: scene.delete
+  #        target:
+  #          entity_id: scene.before_twitch_effect
 
-  - alias: 'Webhook - Twitch Trigger Lights - Solid'
+  - alias: "Webhook - Twitch Trigger Lights - Solid"
+    id: "webhook_twitch_lights_solid"
     trigger:
       platform: webhook
-      webhook_id: 'light_stream_solid'
-    action:
-      - service: scene.create
+      webhook_id: "light_stream_solid"
+      allowed_methods:
+        - POST
+      local_only: false
+    actions:
+      - action: scene.create
         data:
           scene_id: before_twitch_effect
           snapshot_entities:
             - light.wiz_rgbw_{{ trigger.query.device }}
-      - service: light.turn_on
+      - action: light.turn_on
         data:
           rgb_color:
-            - '{{ trigger.query.color_r | int }}'
-            - '{{ trigger.query.color_g | int }}'
-            - '{{ trigger.query.color_b | int }}'
+            - "{{ trigger.query.color_r | int }}"
+            - "{{ trigger.query.color_g | int }}"
+            - "{{ trigger.query.color_b | int }}"
           brightness_pct: 100
         target:
           entity_id: light.wiz_rgbw_{{ trigger.query.device }}
       - delay:
-          milliseconds: '{{ trigger.query.duration | int }}'
-      - service: scene.turn_on
+          milliseconds: "{{ trigger.query.duration | int }}"
+      - action: scene.turn_on
+        target:
+          entity_id: scene.before_twitch_effect
+      - delay: "00:00:05"
+      - action: scene.delete
         target:
           entity_id: scene.before_twitch_effect

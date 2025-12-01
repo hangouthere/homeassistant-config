@@ -1,0 +1,17 @@
+automation:
+  - alias: "Security - Front Door Siren Toggle"
+    mode: restart # cancels the delay if you unlock again within the 5 seconds
+    description: "5 s delay only when locking, instant off when unlocking – your exact style"
+    trigger:
+      - platform: state
+        entity_id: lock.lock_front_door_status
+    action:
+      - if:
+          - condition: state
+            entity_id: lock.lock_front_door_status
+            state: locked
+        then:
+          - delay: "00:00:05"
+      - service: "switch.turn_{{ 'on' if is_state('lock.lock_front_door_status', 'locked') else 'off' }}"
+        target:
+          entity_id: switch.front_door_siren_on_event
